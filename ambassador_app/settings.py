@@ -167,7 +167,7 @@ DATABASES = {
 }
 #DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-DATABASES['default']['NAME'] = 'ambassador'
+DATABASES['default']['NAME'] = 'dcmbh1rinao0aq'
 DATABASES['default']['USER'] = 'gczzmgiolslens'
 DATABASES['default']['PASSWORD'] = 'LqRf2RBtRAxOVL6zoG_ShRLJUq'
 
