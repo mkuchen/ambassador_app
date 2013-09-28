@@ -113,6 +113,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
+    "/templates",
 )
 
 INSTALLED_APPS = (
@@ -167,6 +168,8 @@ DATABASES = {
 #DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 DATABASES['default']['NAME'] = 'ambassador'
+DATABASES['default']['USER'] = 'root'
+DATABASES['default']['PASSWORD'] = 'test'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
