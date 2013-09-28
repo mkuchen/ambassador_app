@@ -127,7 +127,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
-    'ambassador_app.referral_center',
+    'referral_center',
 )
 
 # A sample logging configuration. The only tangible logging
