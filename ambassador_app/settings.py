@@ -111,6 +111,7 @@ ROOT_URLCONF = 'ambassador_app.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'ambassador_app.wsgi.application'
 
+SETTINGS_PATH = os.path.dirname(os.path.realpath(__file__))
 TEMPLATE_DIRS = ( os.path.join(SETTINGS_PATH, 'templates'), )
 
 INSTALLED_APPS = (
