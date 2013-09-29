@@ -1,5 +1,6 @@
 # Django settings for ambassador_app project.
 #DATABASE_URL = 'postgres://gczzmgiolslens:LqRf2RBtRAxOVL6zoG_ShRLJUq@ec2-23-23-211-161.compute-1.amazonaws.com:5432/dcmbh1rinao0aq'
+import os
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
