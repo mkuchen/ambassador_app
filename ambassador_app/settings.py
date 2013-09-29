@@ -171,7 +171,7 @@ DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 DATABASES['default']['NAME'] = 'dcmbh1rinao0aq'
 DATABASES['default']['USER'] = 'gczzmgiolslens'
 DATABASES['default']['PASSWORD'] = 'LqRf2RBtRAxOVL6zoG_ShRLJUq'
-DATABASES['default']['HOST'] = ''
+DATABASES['default']['HOST'] = 'LOCALHOST'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
