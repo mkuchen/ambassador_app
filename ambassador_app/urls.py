@@ -2,8 +2,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required, permission_required
 from referral_center.views import ReferralCreate
 # Uncomment the next two lines to enable the admin:
-# from django.contrib import admin
-# admin.autodiscover()
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
     # Examples:
