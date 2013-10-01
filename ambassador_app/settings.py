@@ -168,7 +168,7 @@ DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 DATABASES['default']['NAME'] = 'dcmbh1rinao0aq'
 DATABASES['default']['USER'] = 'gczzmgiolslens'
 DATABASES['default']['PASSWORD'] = 'LqRf2RBtRAxOVL6zoG_ShRLJUq'
-DATABASES['default']['HOST'] = 'LOCALHOST'
+DATABASES['default']['HOST'] = 'ec2-23-23-211-161.compute-1.amazonaws.com'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
