@@ -9,7 +9,8 @@ urlpatterns = patterns('',
     # Examples:
     # url(r'^$', 'ambassador_app.views.home', name='home'),
     # url(r'^ambassador_app/', include('ambassador_app.foo.urls')),
-    url(r'^$', ReferralCreate.as_view(template_name="login.html")),
+    url(r'^home/$', ReferralCreate.as_view(template_name="home.html")),
+    url(r'^', 'django.contrib.auth.views.login', {'template_name': 'login.html'})
     url(r'^accounts/login/$', 'django.contrib.auth.views.login', {'template_name': 'login.html'}),
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
