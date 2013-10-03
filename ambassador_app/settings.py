@@ -165,10 +165,10 @@ DATABASES = {
 }
 #DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-DATABASES['default']['NAME'] = 'dcmbh1rinao0aq'
-DATABASES['default']['USER'] = 'gczzmgiolslens'
-DATABASES['default']['PASSWORD'] = 'LqRf2RBtRAxOVL6zoG_ShRLJUq'
-DATABASES['default']['HOST'] = 'ec2-23-23-211-161.compute-1.amazonaws.com'
+DATABASES['default']['NAME'] = 'dfav6a5deb9nt3'
+DATABASES['default']['USER'] = 'wsyneblfwtknsg'
+DATABASES['default']['PASSWORD'] = 'Wb2qEmIDFCg6kdys1FSyqgLbiw'
+DATABASES['default']['HOST'] = 'ec2-54-225-127-246.compute-1.amazonaws.com'
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
