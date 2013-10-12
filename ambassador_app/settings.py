@@ -5,6 +5,8 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+LOGIN_REDIRECT_URL = '/accounts/login/'
+
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
     ('Mitch Kuchenberg', 'mkuchen@umich.edu'),

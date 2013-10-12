@@ -1,16 +1,17 @@
 <!DOCTYPE html>
-{% load staticfiles %}
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>HTML5 boilerplate – all you really need…</title>
-    <link rel="stylesheet" href="css/style.css">
-    <!--[if IE]>
-        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-</head>
+	<head>
+	    <meta charset="utf-8">
+	    <title>HTML5 boilerplate – all you really need…</title>
+	    {% load staticfiles %}
+	    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	    <!--[if IE]>
+	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+	</head>
 
-<body id="home">
-	{% block content %} {% endblock %}
-</body>
+	<body id="home">
+		{% block content %} {% endblock %}
+		{% block javascript %} {% endblock %}
+	</body>
 </html>

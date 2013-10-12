@@ -1,8 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<h1> Grow the web with referrals!</h1>
 <form action="" method="post">{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" value="Create" />
+	{{ form.non_field_errors }}
+	<div class="fieldWrapper">
+		{{ form.link_title.errors }}
+		<label for="id_link_title">Add a link:</label>
+		{{ form.link_title }}
+	</div>
+	<input type="submit" value="Add" />
 </form>
+
+<a href="/logout/">LOGOUT</a>
 {% endblock %}
