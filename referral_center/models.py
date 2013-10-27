@@ -7,6 +7,7 @@ class Referral(models.Model):
 	clicks = models.IntegerField(default=0)
 	owner = models.ForeignKey(User, blank=True, null=True, default=None)
 
+
 """
 class Referral_Hist(models.Model):
 	date = models.DateTimeField('date calculated')
