@@ -33,20 +33,21 @@ class HomeView(CreateView):
 	template_name = 'home.html'
 	model = Referral
 	success_url = 'home/'
-	fields = ['link_title']
-	
+	fields = ['link_title', 'link_url']
+	"""
 	def get_form(self, data=None, files=None, **kwargs):
 		user = self.request.user
 		if user.is_staff:
-			return AdminLinkForm(data, files, owner=user, **kwargs)
+			return AdminLinkForm(data, files, **kwargs)
 		else:
-			return LinkForm(data, files, owner=user, **kwargs)
+			return LinkForm(data, files, **kwargs)
+	"""
 	"""
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
 	"""
-	
+
 class LogoutView(GenericView):
 	template_name = 'logged_out.html'
 
