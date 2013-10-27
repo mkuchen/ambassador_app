@@ -2,6 +2,7 @@ from django.db import models
 
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
+	link_url = models.CharField(max_length=500)
 	clicks = models.IntegerField(default=0)
 
 """

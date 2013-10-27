@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
+from referral_center.forms import AdminLinkForm, LinkForm
 from referral_center.models import Referral
 from vanilla import CreateView, FormView, TemplateView, GenericView
 from ambassador_app.mixins import *
@@ -32,17 +33,20 @@ class HomeView(CreateView):
 	template_name = 'home.html'
 	model = Referral
 	success_url = 'home/'
-	#fields=['username', 'password']
+	fields = ['link_title']
+	
+	def get_form(self, data=None, files=None, **kwargs):
+		user = self.request.user
+		if user.is_staff:
+			return AdminLinkForm(data, files, owner=user, **kwargs)
+		else:
+			return LinkForm(data, files, owner=user, **kwargs)
 	"""
-	def get_context_data(self, **kwargs):
-		kwargs['user'] = self.request.user
-		return kwargs
-	"""
-
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		return render(request, self.template_name)
-
+	"""
+	
 class LogoutView(GenericView):
 	template_name = 'logged_out.html'
 
