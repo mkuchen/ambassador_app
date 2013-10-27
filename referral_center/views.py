@@ -18,35 +18,24 @@ class SplashView(GenericView):
 		else:
 			return render(request, self.template_name)
 
-class ReferralCreateView(CreateView):
-	template_name = 'thankyou.html'
-	model = Referral
-	success_url = "///"
-	fields = ['link_title']
-
-	@method_decorator(login_required)
-	def get(self, request, *args, **kwargs):
-		all_referrals = Referral.objects.all()
-		return render(request, self.template_name, {'refs':all_referrals})
 
 class HomeView(CreateView):
 	template_name = 'home.html'
 	model = Referral
 	success_url = 'home/'
 	fields = ['link_title', 'link_url']
-	"""
-	def get_form(self, data=None, files=None, **kwargs):
+
+	def get_form(self, *args, **kwargs):
 		user = self.request.user
 		if user.is_staff:
-			return AdminLinkForm(data, files, **kwargs)
-		else:
-			return LinkForm(data, files, **kwargs)
-	"""
-	"""
+			return AdminLinkForm()
+		return LinkForm()
+
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
-		return render(request, self.template_name)
-	"""
+		all_referrals = Referral.objects.all()
+		return render(request, self.template_name, { 'refs':all_referrals, 'form':self.get_form() })
+
 
 class LogoutView(GenericView):
 	template_name = 'logged_out.html'
