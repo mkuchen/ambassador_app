@@ -8,5 +8,20 @@
 	<input type="submit" class="btn btn-primary" value="Add" />
 </form>
 
+<h2>Submitted Links</h2>
+<div style="margin: 30px">
+	<table class="table table-striped">
+		<tr><th>Link Title</th><th>url</th><th>date submitted</th><th>owner</th></tr>
+		{% for ref in all_referrals %}
+			<tr>
+				<td>{{ ref.message }}</td>
+				<td>{{ ref.checkbox_character }}</td>
+				<td>{{ ref.date_submitted }}</td>
+				<td>{{ ref.owner }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+</div>
+
 <a href="/logout/">LOGOUT</a>
 {% endblock %}
