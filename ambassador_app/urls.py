@@ -8,7 +8,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r'^$', HomeView.as_view()),
     # url(r'^ambassador_app/', include('ambassador_app.foo.urls')),
-    url(r'^home/$', HomeView.as_view(template_name='home.html'), name='home'),
+    url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^welcome/$', WelcomeView.as_view()),
     url(r'^incorrect-login/$', IncorrectLoginView.as_view(template_name="incorrect_login.html")),
     url(r'^accounts/login/$', LoginUserView.as_view(), name='login'),
