@@ -28,8 +28,10 @@ class ReferralCreateView(CreateView):
 		all_referrals = Referral.objects.all()
 		return render(request, self.template_name, {'refs':all_referrals})
 
-class HomeView(TemplateView):
+class HomeView(CreateView):
 	template_name = 'home.html'
+	model = Referral
+	success_url = 'home/'
 	#fields=['username', 'password']
 	"""
 	def get_context_data(self, **kwargs):
