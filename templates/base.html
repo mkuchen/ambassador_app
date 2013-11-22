@@ -6,13 +6,18 @@
 	    {% load staticfiles %}
 	    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
 	    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/base.css' %}">
 	    <!--[if IE]>
 	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	    <![endif]-->
 	</head>
 
 	<body id="home">
-		{% block content %} {% endblock %}
+		<div id="wrapper-outer">
+			<div id="content-main">
+				{% block content %} {% endblock %}
+			</div>
+		</div>
 		{% block javascript %} {% endblock %}
 	</body>
 </html>
