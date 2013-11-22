@@ -4,20 +4,33 @@
 <h1> Grow the web with referrals!</h1>
 <form action="." method="POST">
 	{% csrf_token %}
-	{{ form }}
+	{{ form.as_p }}
 	<input type="submit" class="btn btn-primary" value="Add" />
+	{% if form.subject.errors %}
+		<ol>
+		{% for error in form.link_title.errors %}
+			<li><strong>{{ error|escape }}</strong></li>
+		{% endfor %}
+		</ol>
+
+		<ol>
+		{% for error in form.link_url.errors %}
+			<li><strong>{{ error|escape }}</strong></li>
+		{% endfor %}
+		</ol>
+	{% endif %}
 </form>
 
 <h2>Submitted Links</h2>
 <div style="margin: 30px">
 	<table class="table table-striped">
-		<tr><th>Link Title</th><th>url</th><th>date submitted</th><th>owner</th></tr>
-		{% for ref in all_referrals %}
+		<tr style="font-weight:bold;"><th>Link Title</th><th>url</th><th>date submitted</th><th>owner</th></tr>
+		{% for ref in refs %}
 			<tr>
-				<td>{{ ref.message }}</td>
-				<td>{{ ref.checkbox_character }}</td>
+				<td>{{ ref.link_title }}</td>
+				<td>{{ ref.link_url }}</td>
 				<td>{{ ref.date_submitted }}</td>
-				<td>{{ ref.owner }}</td>
+				<td>{{ ref.owner.username }}</td>
 			</tr>
 		{% endfor %}
 	</table>

@@ -6,8 +6,10 @@ from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from referral_center.forms import AdminLinkForm, LinkForm
 from referral_center.models import Referral
-from vanilla import CreateView, FormView, TemplateView, GenericView
+from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView
 from ambassador_app.mixins import *
+
+import datetime
 
 class SplashView(GenericView):
 	template_name = 'login.html'
@@ -36,6 +38,34 @@ class HomeView(CreateView):
 		all_referrals = Referral.objects.all()
 		return render(request, self.template_name, { 'refs':all_referrals, 'form':self.get_form() })
 
+	@method_decorator(login_required)
+	def post(self, request):
+		user = request.user
+		if user.is_staff:
+			form = AdminLinkForm(request.POST)
+		else:
+			form = LinkForm(request.POST)
+
+		if form.is_valid():
+			title = form.cleaned_data['link_title']
+			url = form.cleaned_data['link_url']
+			user = request.user
+			date_submitted = datetime.datetime.now()
+			ref = Referral.objects.create(link_title=title, link_url=url, owner=user, date_submitted=date_submitted)
+			return HttpResponseRedirect('/home/')
+		else:
+			return HttpResponseRedirect('/home/')
+
+class LandingView(DetailView):
+	model = Referral
+	template_name = 'landing_base.html'
+	
+	#queryset = Referral.objects.
+	def get(self, request, *args, **kwargs):
+		title = kwargs['title']
+		context = self.get_context_data()
+		context['title'] = title
+		return self.render_to_response(context)
 
 class LogoutView(GenericView):
 	template_name = 'logged_out.html'

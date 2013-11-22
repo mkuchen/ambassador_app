@@ -4,10 +4,14 @@
 	<h1> Incorrect Login Info! </h1>
 {% endblock %}
 {% block javascript %}
+	{% load staticfiles %}
 	<script src="{% static 'js/libs/jquery-1.10.2.min.js' %}"></script>
 	<script type="text/javascript">
-		setTimeout(function() {
-		    $.get("{% url 'login' %}") // Do something after 5 seconds
-		}, 5000);
+		$( document ).ready(function() {
+			setTimeout(function() {
+				window.location = "{{ next }}"
+			}, 5000);
+			return false;
+		});
 	</script>
 {% endblock %}
