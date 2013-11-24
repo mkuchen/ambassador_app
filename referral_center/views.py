@@ -1,7 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import redirect, render
 from django.utils.decorators import method_decorator
 from referral_center.forms import AdminLinkForm, LinkForm
@@ -10,6 +10,7 @@ from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView
 from ambassador_app.mixins import *
 
 import datetime
+import urllib
 
 class SplashView(GenericView):
 	template_name = 'login.html'
@@ -56,13 +57,26 @@ class HomeView(CreateView):
 		else:
 			return HttpResponseRedirect('/home/')
 
+class TitleView(DetailView):
+	model = Referral
+	#template_name = 'landing_base.html'
+	#queryset = Referral.objects.
+	def get(self, request, *args, **kwargs):
+		try:
+			link_dict = { 'link' : kwargs['title'] }
+			title = urllib.urlencode( link_dict )
+		except KeyError:
+			raise Http404
+		#context = self.get_context_data()
+		#return self.render_to_response(context)
+		return redirect('/landing/?', title)
+
 class LandingView(DetailView):
 	model = Referral
 	template_name = 'landing_base.html'
-	
-	#queryset = Referral.objects.
+
 	def get(self, request, *args, **kwargs):
-		title = kwargs['title']
+		title = kwargs['link']
 		context = self.get_context_data()
 		context['title'] = title
 		return self.render_to_response(context)
