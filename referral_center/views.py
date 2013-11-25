@@ -1,12 +1,13 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
-from django.shortcuts import redirect, render
+from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from referral_center.forms import AdminLinkForm, LinkForm
 from referral_center.models import Referral
-from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView
+from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView
 from ambassador_app.mixins import *
 
 import datetime
@@ -26,7 +27,7 @@ class HomeView(CreateView):
 	template_name = 'home.html'
 	model = Referral
 	success_url = 'home/'
-	fields = ['link_title', 'link_url']
+	fields = ['link_title']
 
 	def get_form(self, *args, **kwargs):
 		user = self.request.user
@@ -49,37 +50,37 @@ class HomeView(CreateView):
 
 		if form.is_valid():
 			title = form.cleaned_data['link_title']
-			url = form.cleaned_data['link_url']
 			user = request.user
 			date_submitted = datetime.datetime.now()
-			ref = Referral.objects.create(link_title=title, link_url=url, owner=user, date_submitted=date_submitted)
+			ref = Referral.objects.create(link_title=title, owner=user, date_submitted=date_submitted)
 			return HttpResponseRedirect('/home/')
 		else:
-			return HttpResponseRedirect('/home/')
+			all_referrals = Referral.objects.all()
+			return render(request, self.template_name, {'refs':all_referrals, 'form':form})
+			#return HttpResponseRedirect('/home/', form=form)
 
-class TitleView(DetailView):
-	model = Referral
-	#template_name = 'landing_base.html'
-	#queryset = Referral.objects.
-	def get(self, request, *args, **kwargs):
-		try:
-			link_dict = { 'link' : kwargs['title'] }
-			title = urllib.urlencode( link_dict )
-		except KeyError:
-			raise Http404
-		#context = self.get_context_data()
-		#return self.render_to_response(context)
-		return redirect('/landing/?', title)
+class LandingRedirectView(RedirectView):
+	permanent = False
+
+	def get_redirect_url(self, title):
+		referral = get_object_or_404(Referral, link_title=title)
+		referral.update_counter()
+		query_params = urllib.urlencode( {'link': title} )
+		return '/landing/?'+query_params
 
 class LandingView(DetailView):
 	model = Referral
 	template_name = 'landing_base.html'
-
+	#queryset = Referral.objects.
 	def get(self, request, *args, **kwargs):
-		title = kwargs['link']
+		title = request.GET.get('title', '')
+		if not title:
+			raise Http404
 		context = self.get_context_data()
 		context['title'] = title
 		return self.render_to_response(context)
+
+
 
 class LogoutView(GenericView):
 	template_name = 'logged_out.html'

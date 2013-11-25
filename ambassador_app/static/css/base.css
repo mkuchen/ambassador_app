@@ -13,3 +13,7 @@ div#wrapper-outer div#content-main {
 	background-color: #e8e8e8;
 	padding: 50px 40px;
 }
+
+ul.errorlist {
+	color: red;
+}

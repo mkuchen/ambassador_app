@@ -6,29 +6,16 @@
 	{% csrf_token %}
 	{{ form.as_p }}
 	<input type="submit" class="btn btn-primary" value="Add" />
-	{% if form.subject.errors %}
-		<ol>
-		{% for error in form.link_title.errors %}
-			<li><strong>{{ error|escape }}</strong></li>
-		{% endfor %}
-		</ol>
-
-		<ol>
-		{% for error in form.link_url.errors %}
-			<li><strong>{{ error|escape }}</strong></li>
-		{% endfor %}
-		</ol>
-	{% endif %}
+	
 </form>
 
 <h2>Submitted Links</h2>
 <div style="margin: 30px">
 	<table class="table table-striped">
-		<tr style="font-weight:bold;"><th>Link Title</th><th>url</th><th>date submitted</th><th>owner</th></tr>
+		<tr style="font-weight:bold;"><th>Link Title</th><th>date submitted</th><th>owner</th></tr>
 		{% for ref in refs %}
 			<tr>
 				<td>{{ ref.link_title }}</td>
-				<td>{{ ref.link_url }}</td>
 				<td>{{ ref.date_submitted }}</td>
 				<td>{{ ref.owner.username }}</td>
 			</tr>
