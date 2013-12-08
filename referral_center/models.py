@@ -8,18 +8,15 @@ class Referral(models.Model):
 	clicks = models.IntegerField(default=0)
 	owner = models.ForeignKey(User, blank=True, null=True, default=None)
 	date_submitted = models.DateTimeField(auto_now_add=True)
+	## add header title
+
+	## add catchphrase
+
+	## add banner url
 
 	def update_counter(self):
 		self.clicks += 1
 		return True
-
-	@property
-	def url_encoded_title(self):
-		return urllib.urlencode( {'link': self.link_title} )
-
-	@property
-	def url_quoted_title(self):
-		return urllib.urlencode(self.link_title)
 
 
 """
