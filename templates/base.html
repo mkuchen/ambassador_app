@@ -27,7 +27,7 @@
 				{% if authenticated %}
 				<a href="/logout" id="logout"> Logout </a>
 				{% else %}
-				<a data-toggle="modal" href="#loginModal" id="logout"> Login </a>
+				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal" id="logout"> Login </button>
 				{% endif %}
 			</div>
 			<div id="content-main">
@@ -35,7 +35,8 @@
 			</div>
 		</div>
 		{% include "login_modal.html" %}
-		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.css' %}" charset="utf-8"></script>
+		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
+		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
 		{% block javascript %} {% endblock %}
 	</body>
 </html>
