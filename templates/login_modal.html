@@ -1,0 +1,22 @@
+<div class="modal hide" id="loginModal">
+<form class="well" method="post" action="/contact/edit/{{ item.id }}">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">×</button>
+    <h3> User Login </h3>
+    {% if form.errors %}
+    <p>Your username and password didn't match. Please try again.</p>
+    {% endif %}
+  </div>
+  <div class="modal-body">
+    {% csrf_token %}
+    username: <input type="text" name="username" />
+    password: <input type="password" name="password" />
+
+  </div>
+  <div class="modal-footer">
+    <input class="btn btn-primary" type="submit" value="login" />
+    <input name="cancel" class="btn" type="submit" value="Cancel"/>
+    <input type="hidden" name="next" value="{{ next }}" />
+  </div>
+</form>
+</div>

@@ -6,7 +6,7 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', HomeView.as_view()),
+    url(r'^$', SplashView.as_view()),
     # url(r'^ambassador_app/', include('ambassador_app.foo.urls')),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^welcome/$', WelcomeView.as_view()),

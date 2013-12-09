@@ -14,13 +14,14 @@ import datetime
 import urllib
 
 class SplashView(GenericView):
-	template_name = 'login.html'
+	template_name = 'splash.html'
 	def get(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
-			return redirect('/home/')
+			#return redirect('/home/')
+			return render(request, self.template_name, {'authenticated':'True'})
 		else:
-			return render(request, self.template_name)
+			return render(request, self.template_name, {})
 
 
 class HomeView(CreateView):

@@ -18,6 +18,15 @@ div#wrapper-outer div#header {
 	left: 60px;
 	top: 60px;
 	background: transparent;
+	max-width: 225px;
+}
+
+div#wrapper-outer div#header h1 {
+	color: black;
+	font-style: italic;
+	font-size: 32px;
+	line-height: 25px;
+	margin-bottom: 20px;
 }
 
 div#wrapper-outer div#header ul#header-list {
@@ -27,7 +36,14 @@ div#wrapper-outer div#header ul#header-list {
 	margin-top: 0px;
 	overflow: hidden;
 	padding-bottom: 4px;
-	
+	padding-top: 4px;
+	border-right: 1px solid black;
+}
+
+div#wrapper-outer div#header a#logout {
+	display: block;
+	font-size: 16px;
+	margin-top: 18px;
 }
 
 div#wrapper-outer div#header ul#header-list li a{

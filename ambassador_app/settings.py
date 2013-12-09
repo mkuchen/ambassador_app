@@ -5,7 +5,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-LOGIN_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/splash/'
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
