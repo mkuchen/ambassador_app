@@ -1,21 +1,59 @@
+div#loginModal {
+
+}
+
 div#wrapper-outer {
 	width: 100%;
 	background-color: rgb(208, 199, 194);
-	height: 398px;
+	min-height: 1200px;
 }
 
 div#wrapper-outer div#content-main {
 	position: absolute;
 	left: 50%;
-	top: 50%;
-	width: 66.6667%;
+	top: 11%;
+	width:  52.6667%;
 	margin-left: -33.3334%;
+	padding-left: 40px;
+}
+
+div#wrapper-outer div#content-main table#all-links {
+	width: 65%;
+}
+
+div#wrapper-outer div#content-main table#all-links th {
+	line-height: 36px;
+	padding-left: 8px;
+	color: #fff;
+}
+
+div#wrapper-outer div#content-main table#all-links tr {
+	font-size: 17px;
+	border: 2px solid #fff;
+}
+
+div#wrapper-outer div#content-main table#all-links thead tr {
+	background-color: #428bca !important;
+	height: 46px;
+	font-size: 18px;
+}
+
+div#wrapper-outer div#content-main table#all-links tr td {
+	background-color: transparent !important;
+}
+
+div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
+	background-color: #CAE1FF;
+}
+
+div#wrapper-outer div#content-main table#all-links tr:nth-child(even) {
+	background-color: #E6E8FA;
 }
 
 div#wrapper-outer div#header {
 	position: fixed;
 	z-index: 9999;
-	left: 60px;
+	left: 100px;
 	top: 60px;
 	background: transparent;
 	max-width: 225px;

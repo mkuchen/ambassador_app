@@ -1,27 +1,57 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1> Grow the web with referrals!</h1>
-<form action="." method="POST">
-	{% csrf_token %}
-	{{ form.as_p }}
-	<input type="submit" class="btn btn-primary" value="Add" />
-	
-</form>
 
-<h2>Submitted Links</h2>
-<div style="margin: 30px">
-	<table class="table table-striped">
-		<tr style="font-weight:bold;"><th>Link Title</th><th>date submitted</th><th>owner</th></tr>
-		{% for ref in refs %}
-			<tr>
-				<td>{{ ref.link_title }}</td>
-				<td>{{ ref.date_submitted }}</td>
-				<td>{{ ref.owner.username }}</td>
-			</tr>
-		{% endfor %}
-	</table>
-</div>
+	{% if authenticated %}
+	<form action="." method="POST">
+		{% csrf_token %}
+		{{ form }}
+		<input type="submit" class="btn btn-primary" value="Add" />
+	</form>
+	{% endif %}
+	<h2>Submitted Links</h2>
+	<div style="margin: 30px">
+		<table class="table datatable" id="all-links" style="width:900px">
+			<thead>
+				<tr>
+					<th>Link Title</th>
+					<th>Total Clicks</th>
+					<th>Date Submitted</th>
+					<th>Owner</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	{% if authenticated %}
+	<a href="/logout/">LOGOUT</a>
+	{% endif %}
+{% endblock %}
 
-<a href="/logout/">LOGOUT</a>
+{% block javascript %}
+	<script type="text/javascript"?>
+		$(document).ready(function() {
+			var oTable = $('.datatable').dataTable({
+				// ...
+                "iDisplayLength": 25,
+                "aaSorting": [[ 0, "desc" ]],
+	 			"bProcessing": false,
+				"bServerSide": false,
+				"bSortable": true,
+				"bFilter": false,
+				"bPaginate": true,
+				"aoColumnDefs": [
+                    { "sWidth": "200px", "aTargets": [0], },
+                    { "sWidth": "40px", "aTargets": [1], },
+                    { "sWidth": "48px", "aTargets": [2], },
+                    { "sWidth": "60px", "aTargets": [3], "bSortable": false, },
+                ],
+                "sAjaxSource": "/datatables/all-refs/",
+
+			});
+			// ...
+            
+		});
+	</script>
 {% endblock %}
