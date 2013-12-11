@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
+from django_datatables_view.base_datatable_view import BaseDatatableView
 from referral_center.forms import AdminLinkForm, LinkForm
 from referral_center.models import Referral
 from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView
@@ -13,8 +14,54 @@ from ambassador_app.mixins import *
 import datetime
 import urllib
 
+class OrderListJson(BaseDatatableView):
+	# The model we're going to show
+	model = Referral
+
+	# define the columns that will be returned
+	columns = ['link_title', 'clicks', 'date_submitted', 'owner.username']
+
+	# define column names that will be used in sorting
+	# order is important and should be same as order of columns
+	# displayed by datatables. For non sortable columns use empty
+	# value like ''
+	order_columns = ['link_title', 'clicks', 'date_submitted', '']
+
+	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
+	# and make it return huge amount of data
+	max_display_length = 500
+
+
+	def render_column(self, row, column):
+		# We want to render user as a custom column
+		if column == 'date_submitted':
+			return row.date_submitted.strftime("%B %d, %Y")
+		else:
+			return super(OrderListJson, self).render_column(row, column)
+
+	"""
+	def filter_queryset(self, qs):
+		# use request parameters to filter queryset
+
+		# simple example:
+		sSearch = self.request.POST.get('sSearch', None)
+		if sSearch:
+			qs = qs.filter(name__istartswith=sSearch)
+
+		# more advanced example
+		filter_customer = self.request.POST.get('customer', None)
+
+		if filter_customer:
+			customer_parts = filter_customer.split(' ')
+			qs_params = None
+			for part in customer_parts:
+				q = Q(customer_firstname__istartswith=part)|Q(customer_lastname__istartswith=part)
+				qs_params = qs_params | q if qs_params else q
+			qs = qs.filter(qs_params)
+	"""
+
 class SplashView(GenericView):
-	template_name = 'splash.html'
+	template_name = 'home.html'
 	def get(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
@@ -74,11 +121,16 @@ class LandingView(DetailView):
 	template_name = 'landing_base.html'
 	#queryset = Referral.objects.
 	def get(self, request, *args, **kwargs):
-		title = request.GET.get('title', '')
+		title = request.GET.get('link', '')
 		if not title:
 			raise Http404
 		context = self.get_context_data()
 		context['title'] = title
+		try:
+			ref = Referral.objects.get(link_title=title)
+		except:
+			raise Http404
+		context['referral'] = ref
 		return self.render_to_response(context)
 
 

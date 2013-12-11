@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
-	{% block custom %}DEFAULT MESSAGE{% endblock %}
-	<h1> Come join Tim's World Wide Web! {{title}} </h1>
+	<h2>{% block custom %}DEFAULT MESSAGE{% endblock %}<h2>
+	<h4> {{referral.link_title}} </h4>
 {% endblock %}

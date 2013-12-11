@@ -6,12 +6,13 @@ from django.contrib import admin
 admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', SplashView.as_view()),
+    url(r'^$', HomeView.as_view()),
     # url(r'^ambassador_app/', include('ambassador_app.foo.urls')),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^welcome/$', WelcomeView.as_view()),
     url(r'^landing/(?P<title>[\w|\W]+)/$', LandingRedirectView.as_view()),
     url(r'^landing/$', LandingView.as_view(), name='main_landing'),
+    url(r'^datatables/all-refs/$', login_required(OrderListJson.as_view()), name='order_list_json'),
     url(r'^incorrect-login/$', IncorrectLoginView.as_view()),
     url(r'^splash/$', SplashView.as_view()),
     url(r'^accounts/login/$', LoginUserView.as_view(), name='login'),
