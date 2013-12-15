@@ -61,14 +61,14 @@ class OrderListJson(BaseDatatableView):
 	"""
 
 class SplashView(GenericView):
-	template_name = 'home.html'
+	template_name = 'splash.html'
 	def get(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
-			#return redirect('/home/')
-			return render(request, self.template_name, {'authenticated':'True'})
-		else:
-			return render(request, self.template_name, {})
+			return redirect('/home/')
+		else:	
+			return render(request, self.template_name)
+
 
 
 class HomeView(CreateView):
