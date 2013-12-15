@@ -9,7 +9,7 @@
 		<input type="submit" class="btn btn-primary" value="Add" />
 	</form>
 	{% endif %}
-	<h2>Submitted Links</h2>
+	<h2 id="home">Top Links</h2>
 	<div style="margin: 30px">
 		<table class="table datatable" id="all-links" style="width:900px">
 			<thead>
@@ -24,14 +24,12 @@
 			</tbody>
 		</table>
 	</div>
-	{% if authenticated %}
-	<a href="/logout/">LOGOUT</a>
-	{% endif %}
 {% endblock %}
 
 {% block javascript %}
 	<script type="text/javascript"?>
 		$(document).ready(function() {
+			// datatables init
 			var oTable = $('.datatable').dataTable({
 				// ...
                 "iDisplayLength": 25,
@@ -50,7 +48,8 @@
                 "sAjaxSource": "/datatables/all-refs/",
 
 			});
-			// ...
+			// nav slide in
+			$("div#header").animate({top:'60px'}, 1600);
             
 		});
 	</script>
