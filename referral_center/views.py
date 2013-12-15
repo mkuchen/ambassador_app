@@ -136,12 +136,10 @@ class LandingView(DetailView):
 
 
 class LogoutView(GenericView):
-	template_name = 'logged_out.html'
-
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		logout(request)
-		return render(request, self.template_name)
+		return redirect('/')
 
 class LoginUserView(FormView):
 	template_name = 'login.html'
