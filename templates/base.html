@@ -20,11 +20,8 @@
 				<h1> Grow the web with referrals! </h1>
 				<ul id="header-list">
 					<li><a> Featured </a></li>
-					<li><a> All Links </a></li>
-					{% if user.is_authenticated %}<li><a> My Links </a></li>{% endif %}
-					<li><a> Top Brands </a></li>
-					{% if user.is_authenticated %}<li><a> Brand Profile </a></li>{% endif %}
-					<li><a> Search </a></li>
+					<li><a> Popular </a></li>
+					{% if user.is_authenticated %}<li><a> My Profile </a></li>{% endif %}
 				</ul>
 				{% if user.is_authenticated %}
 				<a href="/logout" id="logout"> Logout </a>
