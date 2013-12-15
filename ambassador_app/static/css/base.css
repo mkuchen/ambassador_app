@@ -10,11 +10,10 @@ div#wrapper-outer {
 
 div#wrapper-outer div#content-main {
 	position: absolute;
-	left: 50%;
+	left: 23%;
 	top: 11%;
 	width:  52.6667%;
-	margin-left: -33.3334%;
-	padding-left: 40px;
+	margin-left: 40px;
 }
 
 div#wrapper-outer div#content-main table#all-links {
@@ -25,6 +24,10 @@ div#wrapper-outer div#content-main table#all-links th {
 	line-height: 36px;
 	padding-left: 8px;
 	color: #fff;
+}
+h2#home {
+	color: black;
+	font-size: 32;
 }
 
 div#wrapper-outer div#content-main table#all-links tr {
@@ -54,7 +57,7 @@ div#wrapper-outer div#header {
 	position: fixed;
 	z-index: 9999;
 	left: 100px;
-	top: 60px;
+	top: 2500px;
 	background: transparent;
 	max-width: 225px;
 }
@@ -84,7 +87,7 @@ div#wrapper-outer div#header a#logout {
 	margin-top: 18px;
 }
 
-div#wrapper-outer div#header ul#header-list li a{
+div#wrapper-outer div#header ul#header-list li a {
 	font-size: 24px;
 	line-height: 26px;
 	font-weight: 400;
