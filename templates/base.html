@@ -16,6 +16,8 @@
 
 	<body id="home">
 		<div id="wrapper-outer">
+
+			{% if user.is_authenticated %}
 			<div id="header">
 				<h1> Grow the web with referrals! </h1>
 				<ul id="header-list">
@@ -29,12 +31,14 @@
 				<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#loginModal" id="logout"> Login </button>
 				{% endif %}
 			</div>
+			{% endif %}
+
 			<div id="content-main">
 				{% block content %} {% endblock %}
 			</div>
-			{% include "login_modal.html" %}
-
 		</div>
+		{% include "login_modal.html" %}
+
 		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>

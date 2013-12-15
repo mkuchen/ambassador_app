@@ -159,12 +159,12 @@ class LoginAuthView(GenericView):
 		else:
 			username = request.POST['username']
 			password = request.POST['password']
+			
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				return redirect( '/welcome/', next=request.GET.get('next', '/home') )
-			else:
-				return redirect( '/incorrect-login/' )
+				
+			return redirect( '/incorrect-login/' )
 
 
 class IncorrectLoginView(GenericView):
