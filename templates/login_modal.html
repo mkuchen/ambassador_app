@@ -1,9 +1,9 @@
 <div id="loginModal" class="modal fade">
-  <div class="modal-dialog">
+  <div id="modal-main" class="modal-dialog">
     <div class="modal-content">
       <form class="well" method="post" action="{% url 'auth' %}">
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">×</button>
+          <a type="button" class="close" data-dismiss="modal">×</a>
           <h3> User Login </h3>
           {% if form.errors %}
           <p>Your username and password didn't match. Please try again.</p>
@@ -11,8 +11,8 @@
         </div>
         <div class="modal-body">
           {% csrf_token %}
-          username: <input type="text" name="username" /><br><br>
-          password: <input type="password" name="password" />
+          Username: <br><input type="text" name="username" style="width:256px"/><br><br>
+          Password: <br><input type="password" name="password" style="width:256px"/>
 
         </div>
         <div class="modal-footer">
