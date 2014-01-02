@@ -296,21 +296,22 @@ div#second-info div#info-left div#info-left-top {
 	opacity: .9;
 	height: 33.3%;
 	border-radius: 4px;
-	margin-bottom: 17px;
+	margin-bottom: 8px;
 }
 
 div#second-info div#info-left div#info-left-bottom {
 	background: white!important;
 	float: left;
 	width: 100%;
-	height: 64%;
+	height: 65.3%;
 	border-radius: 4px;
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 	box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
 
 div#second-info div#info-right div#info-right-top {
-	background: white!important;
+	background: #E32636!important;
+	opacity: .9;
 	float: left;
 	width: 100%;
 	height: 64%;
@@ -326,11 +327,10 @@ div#second-info div#info-right div#info-right-bottom {
 	position: relative;
 	right: 0px;
 	top: 0px;
-	background: #19A3FF;
-	opacity: .9;
-	height: 33.3%;
+	background: white;
+	height: 34.9%;
 	border-radius: 4px;
-	margin-top: 17px;
+	margin-top: 8px;
 }
 
 div#footer-splash-outer {
