@@ -293,10 +293,19 @@ div#second-info div#info-left div#info-left-top {
 	right: 0px;
 	top: 0px;
 	background: #19A3FF;
-	opacity: .9;
 	height: 33.3%;
 	border-radius: 4px;
 	margin-bottom: 8px;
+}
+
+div#second-info div#info-left div#info-left-top div#info-left-top-inner {
+	height: 90%;
+	width: 90%;
+	float: center;
+	margin-right: auto;
+	margin-left: auto;
+	padding-top: 10px;
+	padding-left: 2px;
 }
 
 div#second-info div#info-left div#info-left-bottom {
