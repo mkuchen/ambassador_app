@@ -17,33 +17,50 @@ div.box-shadow {
 }
 
 div#main-wrapper {
-	background: url('/static/img/banner1.jpg') #82d5db no-repeat;
+	/*background: url('/static/img/banner1.jpg') #82d5db no-repeat;*/
+	background: url('/static/img/background.png') #82d5db repeat;
+	height: 1200px;
 }
 
 div.wrapper-outer {
-	width: 100%!important;
 	display: inline-block!important;
 }
 
 div.wrapper-inner {
-	width: 1100px!important;
 	float: center!important;
 	margin-left: auto!important;
 	margin-right: auto!important;
-	padding-left: 14px!important;
-	padding-right: 14px!important;
+	width: 96%;
+}
+
+div.header-slide-1 {
+	position: relative;
+	top: -200px;
+}
+
+div.content-slide-from-left {
+	position: relative;
+	left: -1500px;
+}
+
+div#header-splash-outer {
+	width: 68%;
+	height: 88px;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 div#header-splash {
 	height: 87px;
-	background: #0d0d0d;
-	text-shadow: 0 1px 3px rgba(0,0,0, 0.4);
-	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	border-bottom: 5px solid #E32636;
-	position: relative;
+	background: #2BBBD8;
+	border-bottom: 2px solid #FFFFFF;
+	border-right: 2px solid #FFFFFF;
 	z-index: 3;
+	float: left;
+	width: 96%;
+	position: relative;
+	left: 2px;
 }
 
 div#header-splash-inner {
@@ -58,12 +75,10 @@ div#header-splash-inner div#auth-block {
 	float: right;
 	position: relative;
 	top: 24px;
-	margin-right: 12px;
 }
 
 div#header-splash-inner div#auth-block div.tools-box {
 	float: left;
-	text-shadow: 0 1px 3px rgba(0,0,0, 0.5);
 	margin: 0 0 0 18px;
 }
 
@@ -85,13 +100,13 @@ div#header-splash-inner div#auth-block li {
 }
 
 div#header-splash-inner div#auth-block li:first-child {
-	border-right: 1px solid #E32636;
+	border-right: 1px solid #102E37;
 }
 
 div#header-splash-inner div#auth-block li a {
 	padding: 0 11px 2px;
 	float: left;
-	color: white;
+	color: #FFFFFF;
 	font-size: 18px;
 }
 
@@ -105,17 +120,30 @@ div#banner-splash-2 {
 }
 
 div#banner-splash {
-	width: 100%;
-	background-position: center center;
 	text-shadow: 0 1px 3px rgba(0,0,0, 0.4);
-	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
 	z-index: 1;
 	position: relative;
+	background: #102E37;
+	margin-top: 24px;
+	padding-left: 280px;
+	opacity: .9;
 }
 
-div#banner-splash div.info-box-container {
+div#banner-splash div#banner-splash-inner {
+	background: #102E37;
+	width: 1084px;
+	margin-top: 2px;
+	margin-left: 14px;
+	margin-bottom: 2px;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
+}
+
+div#banner-splash div#banner-splash-inner div.info-box-container {
 	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
 	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
@@ -123,18 +151,16 @@ div#banner-splash div.info-box-container {
 	z-index: 2;
 }
 
-div#banner-splash div.info-box-container div.info-box {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box {
 	position: relative;
 	margin: 0 auto;
 	text-align: center;
 	padding: 15px;
-	background: #0d0d0d;
-	opacity: .9;
 	width: 100%;
-	height: 380px;
+	height: 530px;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-boxes {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-boxes {
 	width: 100%;
 	height: 100%;
 	float:center;
@@ -143,32 +169,30 @@ div#banner-splash div.info-box-container div.info-box div.text-boxes {
 }
 
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom {
 	display: inline-block;
 	vertical-align: middle;
 	text-align: right;
 	margin: 0 -3px 8px 0;
 	position: relative;
-	top: 88px;
 	float: left;
-	width: 50%;
 	padding-bottom: 26px;
 	padding-top: 5px;
 	margin-left: 24px;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left h1 {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom h1 {
 	color: #E32636;
 	margin: 0 0 2px;
 	letter-spacing: -1px;
 	font-family: AllerBold, sans-serif;
-	font-size: 35px;
+	font-size: 29px;
 	line-height: 44px;
 	text-shadow: 1px 1px 4px rgba(0,0,0, 0.8);
 	float: left;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left p {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom p {
 	margin: 0;
 	color: #19A3FF;
 	font: 20px/24px 'proxima-nova', Arial, Helvetica, sans-serif;
@@ -178,47 +202,45 @@ div#banner-splash div.info-box-container div.info-box div.text-box-left p {
 }
 
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left dl {
-	margin: 15px 0 15px 0;
-	width: 100%;
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl {
+	margin: 15px 0 15px 10px;
 	overflow: hidden;
-	font: 24.5px/29px 'proxima-nova', Arial, Helvetica, sans-serif;
+	font: 20.5px/29px 'proxima-nova', Arial, Helvetica, sans-serif;
 	text-align: left;
 	margin-bottom: 15px;
 	height: 105px;
 	color: #eeeeee;
+	float: left;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left dl dt {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl dt {
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	margin-top: 10px;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left dl img {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl img {
 	margin-right:12px;
 	vertical-align: baseline;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-left dl span {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl span {
 	line-height: 20px;
 	width: auto;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-right {
-	background: #e3e3e3;
-	width: 44%;
-	float: right;
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top {
+	float: left;
 	vertical-align: middle;
 	position: relative;
 	top: 12px;
-	height: 318px;
-	margin-right: 30px;
 }
 
-div#banner-splash div.info-box-container div.info-box div.text-box-right img {
+div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top img#place-holder {
 	position: relative;
-	top: 16px;
+	padding: 6px;
+	border-right: 1px solid #eee;
+	float: left;
 }
 
 div.image-ontop {
@@ -320,7 +342,6 @@ div#second-info div#info-left div#info-left-bottom {
 
 div#second-info div#info-right div#info-right-top {
 	background: #E32636!important;
-	opacity: .9;
 	float: left;
 	width: 100%;
 	height: 64%;
@@ -328,6 +349,18 @@ div#second-info div#info-right div#info-right-top {
 	-webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 	box-shadow: 0 1px 1px rgba(0,0,0,0.05);
 }
+
+div#second-info div#info-right div#info-right-top div#info-right-top-inner img {
+	float: right;
+	display: block;
+	margin-right: 16px;
+	padding:  8px;
+	border-left: 1px solid black;
+	margin-top: 16px;
+	margin-left: 8px;
+	margin-bottom: 8px;
+}
+
 
 div#second-info div#info-right div#info-right-bottom {
 	display: inline-block;
@@ -349,6 +382,7 @@ div#footer-splash-outer {
 	height: 73px;
 	position: relative;
 	border-top: 5px solid #E32636;
+	display: inline-block;
 }
 
 div#footer-splash-inner {
@@ -356,4 +390,30 @@ div#footer-splash-inner {
 	float: center;
 	margin-left: auto;
 	margin-right: auto;
+}
+
+.triangle-left-top {
+	border-color: transparent #102E37 transparent transparent;
+	border-style: solid;
+	border-width: 18px;
+	border-top: 0;
+	z-index: 200;
+	float: left;
+	display: inline-block;
+	height: 84px;
+	position: relative;
+}
+
+.example-box {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	width: 3em;
+	background: #99ccff;
+	text-align: center;
+	font-family: "Helvetica neue",helvetica,tahoma,verdana,arial,sans-serif;
+	font-size: 1.5em;
+	line-height: 100%;
+	color: #fff;
+	cursor: pointer;
 }
