@@ -18,7 +18,8 @@ div.box-shadow {
 
 div#main-wrapper {
 	/*background: url('/static/img/banner1.jpg') #82d5db no-repeat;*/
-	background: url('/static/img/background.png') #82d5db repeat;
+	/*background: url('/static/img/background.png') #82d5db repeat;*/
+	background: #E8EDE0;
 	height: 1200px;
 }
 
@@ -40,7 +41,12 @@ div.header-slide-1 {
 
 div.content-slide-from-left {
 	position: relative;
-	left: -1500px;
+	left: -2000px;
+}
+
+div.content-slide-from-right {
+	position: relative;
+	left: 3000px;
 }
 
 div#header-splash-outer {
@@ -121,9 +127,6 @@ div#banner-splash-2 {
 
 div#banner-splash {
 	text-shadow: 0 1px 3px rgba(0,0,0, 0.4);
-	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
-	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
-	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
 	z-index: 1;
 	position: relative;
 	background: #102E37;
@@ -132,26 +135,19 @@ div#banner-splash {
 	opacity: .9;
 }
 
-div#banner-splash div#banner-splash-inner {
-	background: #102E37;
-	width: 1084px;
+div#banner-splash div#banner-splash-inner-left {
+	width: 600px;
 	margin-top: 2px;
 	margin-left: 14px;
 	margin-bottom: 2px;
-	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
-	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
-	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.95);
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container {
-	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
-	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+div#banner-splash div#banner-splash-inner-left div.info-box-container {
 	position: relative;
 	z-index: 2;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box {
 	position: relative;
 	margin: 0 auto;
 	text-align: center;
@@ -160,7 +156,7 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box {
 	height: 530px;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-boxes {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-boxes {
 	width: 100%;
 	height: 100%;
 	float:center;
@@ -169,7 +165,7 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box di
 }
 
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-bottom {
 	display: inline-block;
 	vertical-align: middle;
 	text-align: right;
@@ -181,7 +177,7 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box di
 	margin-left: 24px;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom h1 {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-bottom h1 {
 	color: #E32636;
 	margin: 0 0 2px;
 	letter-spacing: -1px;
@@ -192,7 +188,7 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box di
 	float: left;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-bottom p {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-bottom p {
 	margin: 0;
 	color: #19A3FF;
 	font: 20px/24px 'proxima-nova', Arial, Helvetica, sans-serif;
@@ -202,7 +198,7 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box di
 }
 
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top dl {
 	margin: 15px 0 15px 10px;
 	overflow: hidden;
 	font: 20.5px/29px 'proxima-nova', Arial, Helvetica, sans-serif;
@@ -213,35 +209,45 @@ div#banner-splash div#banner-splash-inner div.info-box-container div.info-box di
 	float: left;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl dt {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top dl dt {
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
 	margin-top: 10px;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl img {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top dl img {
 	margin-right:12px;
 	vertical-align: baseline;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top dl span {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top dl span {
 	line-height: 20px;
 	width: auto;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top {
 	float: left;
 	vertical-align: middle;
 	position: relative;
 	top: 12px;
 }
 
-div#banner-splash div#banner-splash-inner div.info-box-container div.info-box div.text-box-top img#place-holder {
+div#banner-splash div#banner-splash-inner-left div.info-box-container div.info-box div.text-box-top img#place-holder {
 	position: relative;
 	padding: 6px;
 	border-right: 1px solid #eee;
 	float: left;
 }
+
+div#banner-splash div#banner-splash-inner-right {
+	background: red;
+	width: 400px;
+	margin-top: 2px;
+	margin-left: 14px;
+	margin-bottom: 2px;
+	height: 100%;
+}
+
 
 div.image-ontop {
 	position: relative;
