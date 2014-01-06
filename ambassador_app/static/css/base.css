@@ -1,6 +1,10 @@
+body {
+	color: #102E37;
+}
+
 div#wrapper-outer {
 	width: 100%;
-	background-color: rgb(208, 199, 194);
+	background-color: #E8EDE0;
 	min-height: 1200px;
 }
 
@@ -12,32 +16,82 @@ div#wrapper-outer div#content-main {
 	margin-left: 40px;
 }
 
-div#wrapper-outer div#header {
-	position: fixed;
+div#wrapper-outer div#header-outer {
+	width: 340px;
+	height: 1000px;
+	position: relative;
 	z-index: 9999;
-	left: 100px;
-	top: 2500px;
-	background: transparent;
-	max-width: 225px;
+	left: -600px;
+	top: 0;
+	background: #102E37;
+	float: left;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
 }
 
-div#wrapper-outer div#header h1 {
-	color: black;
+div#wrapper-outer div#header-outer div#header-inner h1 {
 	font-style: italic;
-	font-size: 32px;
+	font-size: 12px;
 	line-height: 25px;
-	margin-bottom: 20px;
+	margin: 0;
+	color: #FCD271;
+	float: center;
+	text-align: center;
 }
 
-div#wrapper-outer div#header ul#header-list {
+div#wrapper-outer div#header-outer div#header-inner ul#header-list {
 	display: block;
-	-webkit-transition: opacity 0s ease-out;
 	opacity: 1;
 	margin-top: 0px;
 	overflow: hidden;
-	padding-bottom: 4px;
-	padding-top: 4px;
-	border-right: 1px solid black;
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+
+div#wrapper-outer div#header-outer div#header-inner ul#header-list li a {
+	color: #FCD271;
+	font-size: 16px;
+	line-height: 22px;
+}
+
+div#wrapper-outer div#header-outer div#header-inner ul#header-list li a:hover {
+	text-decoration: none;
+}
+
+div#wrapper-outer div#header-outer div#header-inner {
+	width: 240px;
+	float: right;
+	height: 100%;
+	padding: 12px;
+}
+
+div#wrapper-outer div#header-outer div#header-inner div#logo-block {
+	background: #102E37;
+	height: 82px;
+	border-bottom: 1px solid #fff;
+}
+
+div#wrapper-outer div#header-outer div#header-inner div#logo-block div#logo-container {
+	margin: 10px auto;
+}
+
+strong.logo {
+	width: 192px;
+	height: 42px;
+	background-image: url('https://s3.amazonaws.com/ambassador/static/images/v2/sprite_vertical.png');
+	background-position: -10px -10px;
+	text-indent: -9999px;
+	overflow: hidden;
+	float: center;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+strong.logo a {
+	display: block;
+	height: 100%;
 }
 
 div#wrapper-outer div#header a#logout {
@@ -50,7 +104,6 @@ div#wrapper-outer div#header ul#header-list li a {
 	font-size: 24px;
 	line-height: 26px;
 	font-weight: 400;
-	color: black;
 }
 
 ul.errorlist {
@@ -61,48 +114,4 @@ div#wrapper-outer div#content-main div#header {
 	width: 100%;
 	height: 130px;
 	background:red;
-}
-
-div#wrapper-outer div#content-main div#header div#logo {
-	width: 66%;
-	float: left;
-	height: 100%;
-	background: blue;
-}
-
-div#wrapper-outer div#content-main div#header div#logo div#logo-left {
-	width: 50%;
-	height: 100%;
-	float: left;
-	background: white;
-	color: #0d0d0d;
-	padding: 20px;
-	padding-right: 0;
-	padding-left: 0;
-}
-
-div#wrapper-outer div#content-main div#header div#logo div#logo-left p {
-	font-size: 101px;
-	font-family: Arial;
-	font-weight: bold;
-	line-height: 70px;
-}
-
-div#wrapper-outer div#content-main div#header div#logo div#logo-right {
-	width: 50%;
-	height: 100%;
-	float: right;
-	background: #0d0d0d;
-	color: white;
-	padding: 20px;
-	padding-left: 0;
-	padding-right: 0;
-}
-
-div#wrapper-outer div#content-main div#header div#logo div#logo-right p {
-	margin-top: 30px;
-	font-size: 101px;
-	font-family: Arial;
-	font-weight: bold;
-	line-height: 48px;
 }
