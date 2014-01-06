@@ -1,5 +1,5 @@
 h2#home {
-	color: black;
+	color: #102E37;
 	font-size: 32;
 }
 
@@ -34,4 +34,15 @@ div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
 
 div#wrapper-outer div#content-main table#all-links tr:nth-child(even) {
 	background-color: #E6E8FA;
+}
+
+div#form-block {
+	width: 300px;
+	height: 130px;
+	float: center;
+	background: #CAE1FF;
+	padding: 14px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #fff;
 }
