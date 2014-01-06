@@ -13,10 +13,9 @@
 		<link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}">
 		<link rel="stylesheet" type="text/css" href="{% static 'css/modals.css' %}">
 		<script type="text/javascript" src="{% static 'js/libs/animator.js' %}"></script>
-		<script type="text/javascript">
+		<!--<script type="text/javascript">
 
 			// some demo tings
-
 			function animationDemo() {
 
 				// sequence collection
@@ -97,22 +96,18 @@
 			window.onload = function() {
 				animationDemo();
 			}
-
-	</script>
+		</script>-->
 	    <!--[if IE]>
 	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	    <![endif]-->
 	</head>
 
 	<body id="home">
+		<!--
 		<div>
-
-		 	<h1>Javascript animation demo</h1>
-		 	<h2>View source for details</h2>
-
 		 	<div id="box" class="example-box" onclick="redoAnimationDemo()"><b>#box</b></div>
-
 		</div>
+	-->
 		<div id="main-wrapper">
 			<div id="header-splash-outer">
 				
@@ -136,9 +131,10 @@
 
 			</div>
 			<div id="banner-splash" class="content-slide-from-left">
-				<div id="banner-splash-inner">
+				<div id="banner-splash-inner-left">
 					<div class="info-box-container">
 						<div class="info-box">
+							<!--
 							<div class="text-boxes wrapper-inner">
 
 								<div class="text-box-top">
@@ -157,11 +153,17 @@
 									<h1>Referral Automation, Made Easy</h1><br><br>
 									<p>The End-to-End Referral Solution</p>
 								</div>
+							-->
 								
 							</div>
 						</div>
 					</div>
 				</div>
+				<!--
+				<div id="banner-splash-inner-right" class="content-slide-from-right">
+
+				</div>
+				-->
 			</div>
 		
 			<!--
@@ -219,7 +221,8 @@
 
 			$(document).ready(function() {
 				$("div.header-slide-1").animate({top:'0'}, 1200);
- 				$("div.content-slide-from-left").animate({left:'0'}, 1800);
+ 				$("div.content-slide-from-left").animate({left:'0'}, 1200);
+ 				$("div.content-slide-from-right").animate({left:'0'}, 1200);
 			});
 		</script>
 	</body>
