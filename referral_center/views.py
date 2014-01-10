@@ -113,6 +113,7 @@ class LandingRedirectView(RedirectView):
 	def get_redirect_url(self, title):
 		referral = get_object_or_404(Referral, link_title=title)
 		referral.update_counter()
+		referral.save()
 		query_params = urllib.urlencode( {'link': title} )
 		return '/landing/?'+query_params
 
