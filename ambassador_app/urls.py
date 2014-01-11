@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.contrib.auth.decorators import login_required, permission_required
 from referral_center.views import *
@@ -21,10 +22,9 @@ urlpatterns = patterns('',
     #url(r'^admin/doc/$', include('django.contrib.admindocs.urls')),
     #url(r'^admin/$', include(admin.site.urls)),
 )
-"""
+
 if settings.DEBUG:
     import debug_toolbar
     urlpatterns += patterns('',
         url(r'^__debug__/', include(debug_toolbar.urls)),
     )
-"""
