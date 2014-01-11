@@ -1,12 +1,16 @@
 # Django settings for ambassador_app project.
-#DATABASE_URL = 'postgres://gczzmgiolslens:LqRf2RBtRAxOVL6zoG_ShRLJUq@ec2-23-23-211-161.compute-1.amazonaws.com:5432/dcmbh1rinao0aq'
 import os
 
 DEBUG = True
+#DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 TEMPLATE_DEBUG = DEBUG
 
 LOGIN_REDIRECT_URL = '/home/'
+
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -14,6 +18,7 @@ ADMINS = (
 )
 
 MANAGERS = ADMINS
+
 """
 DATABASES = {
     'default': {
@@ -129,9 +134,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-    'django.contrib.admin',
+    #'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
-    'django.contrib.admindocs',
+    #'django.contrib.admindocs',
     'debug_toolbar',
     'referral_center',
     'south'
@@ -186,7 +191,6 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 
 # Static asset configuration
-import os
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'

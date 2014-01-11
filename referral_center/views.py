@@ -87,8 +87,9 @@ class HomeView(CreateView):
 
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
+		ip = request.META['REMOTE_ADDR']
 		all_referrals = Referral.objects.all()
-		return render(request, self.template_name, { 'refs':all_referrals, 'form':self.get_form() })
+		return render(request, self.template_name, { 'refs':all_referrals, 'form':self.get_form(), 'ip':ip })
 
 	@method_decorator(login_required)
 	def post(self, request):
