@@ -3,7 +3,6 @@
 import os
 
 DEBUG = True
-DEBUG_TOOLBAR_PATCH_SETTINGS = False
 
 TEMPLATE_DEBUG = DEBUG
 
@@ -106,7 +105,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    #'debug_toolbar.middleware.DebugToolbarMiddleware', #had a problem with this...
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -117,7 +116,10 @@ ROOT_URLCONF = 'ambassador_app.urls'
 WSGI_APPLICATION = 'ambassador_app.wsgi.application'
 
 SETTINGS_PATH = ""#os.path.dirname(os.path.realpath(__file__))
-TEMPLATE_DIRS = ( os.path.join(SETTINGS_PATH, 'templates'), )
+TEMPLATE_DIRS = (
+    "/usr/local/lib/python2.7/dist-packages/django_debug_toolbar-1.0.1-py2.7.egg/debug_toolbar/templates",
+    os.path.join(SETTINGS_PATH, 'templates'),
+)
 
 INSTALLED_APPS = (
     'django.contrib.auth',
