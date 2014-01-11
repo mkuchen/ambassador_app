@@ -36,6 +36,8 @@ class OrderListJson(BaseDatatableView):
 		# We want to render user as a custom column
 		if column == 'date_submitted':
 			return row.date_submitted.strftime("%B %d, %Y")
+		elif column == 'link_title':
+			return '<a href="/landing/%s/">%s</a>' % (row.link_title, row.link_title)
 		else:
 			return super(OrderListJson, self).render_column(row, column)
 
@@ -66,7 +68,7 @@ class SplashView(GenericView):
 		user = self.request.user
 		if user.is_authenticated():
 			return redirect('/home/')
-		else:	
+		else:
 			return render(request, self.template_name)
 
 
