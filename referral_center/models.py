@@ -8,6 +8,7 @@ class Referral(models.Model):
 	clicks = models.IntegerField(default=0)
 	owner = models.ForeignKey(User, blank=True, null=True, default=None)
 	date_submitted = models.DateTimeField(auto_now_add=True)
+	
 	## add header title
 
 	## add catchphrase
