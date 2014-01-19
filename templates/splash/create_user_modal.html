@@ -1,0 +1,23 @@
+<div id="createUserModal" class="modal fade">
+  <div id="modal-main-1" class="modal-dialog">
+    <div class="modal-content">
+      <form id="create-user-form" class="well" method="post" action="{% url 'create_user' %}">
+        {% csrf_token %}
+
+        <div class="modal-header">
+          <a type="button" class="close" data-dismiss="modal">×</a>
+          <h3> Create Account </h3>
+          <div id="message-div"></div>
+        </div>
+        <div class="modal-body">
+          {{ form.as_p }}
+
+        </div>
+        <div class="modal-footer">
+          <input class="btn btn-primary" name="submit1" type="submit" value="submit" />
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
