@@ -3,12 +3,10 @@ from django.db import models
 
 import urllib
 
-"""
 class Member(models.Model):
 	user = models.OneToOneField(User)
 	quote = models.CharField(max_length=300, default="Let's get things rolling!")
 	bio = models.TextField(default="")
-"""
 
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
@@ -18,7 +16,7 @@ class Referral(models.Model):
 	banner_text = models.CharField(max_length=1000)
 	font_family = models.CharField(max_length=500)
 
-	owner = models.ForeignKey(Member, blank=False, null=False)
+	owner = models.ForeignKey(Member, blank=True, null=True)
 
 
 class ReferralStat(models.Model):
@@ -31,6 +29,7 @@ class ReferralStat(models.Model):
 		return True
 
 	def update_purchase(self):
+		## do purchase stuff
 		self.num_purchases += 1
 		return True
 
