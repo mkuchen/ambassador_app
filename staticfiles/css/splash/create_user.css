@@ -1,0 +1,18 @@
+div#user-form-block {
+	width: 300px;
+	height: 170px;
+	float: center;
+	background: #CAE1FF;
+	padding: 14px;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #fff;
+}
+
+label {
+	float: left;
+	margin-right: 8px;
+	width: 70px;
+	line-height: 27px;
+	text-align: right;
+}

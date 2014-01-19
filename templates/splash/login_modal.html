@@ -1,7 +1,9 @@
 <div id="loginModal" class="modal fade">
   <div id="modal-main" class="modal-dialog">
     <div class="modal-content">
-      <form class="well" method="post" action="{% url 'auth' %}">
+      <form id="login-form" class="well" method="post" action="{% url 'auth' %}">
+        {% csrf_token %}
+
         <div class="modal-header">
           <a type="button" class="close" data-dismiss="modal">×</a>
           <h3> User Login </h3>
@@ -10,13 +12,12 @@
           {% endif %}
         </div>
         <div class="modal-body">
-          {% csrf_token %}
           Username: <br><input type="text" name="username" style="width:256px"/><br><br>
           Password: <br><input type="password" name="password" style="width:256px"/>
 
         </div>
         <div class="modal-footer">
-          <input class="btn btn-primary" type="submit" value="login" />
+          <input class="btn btn-primary" name="submit2" type="submit" value="login" />
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
           <input type="hidden" name="next" value="{{ next }}" />
         </div>

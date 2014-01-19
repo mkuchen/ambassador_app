@@ -1,17 +1,15 @@
-
-
 <html lang="en">
 	<head>
 	    <meta charset="utf-8">
 	    <title>Ambassador App</title>
 	    {% load staticfiles %}
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/reset.css' %}">
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/reset.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap.min.css' %}">
 	    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
 	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 		<link href='http://fonts.googleapis.com/css?family=Lato|Mate+SC|Varela+Round' rel='stylesheet' type='text/css'>
 		<link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/modals.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product/modals.css' %}">
 		<script type="text/javascript" src="{% static 'js/libs/animator.js' %}"></script>
 		<!--<script type="text/javascript">
 
@@ -109,89 +107,64 @@
 		</div>
 	-->
 		<div id="main-wrapper">
-			<div id="header-splash-outer">
-				
-				<div class="triangle-left-top header-slide-1"></div>
+			<div id="header-behind">
+				<div id="header-splash-outer">
+					
+					<div class="triangle-left-top header-slide-1"></div>
 
-				<div id="header-splash" class="wrapper-outer header-slide-1">
-					<div id="header-splash-inner" class="wrapper-inner">
-						<a href="#">
-							<strong class="logo">
-								
-							</strong>
-							<span id="logo-text">engineering challenge</span>
-						</a>
-						<div id="auth-block">
-							<div class="tools-box">
-								<ul>
-									<li><a data-toggle="modal" href="#loginModal" id="login-link"> Login </a></li>
-									<li><a> Sign Up </a></li>
-								</ul>
+					<div id="header-splash" class="wrapper-outer header-slide-1">
+						<div id="header-splash-inner" class="wrapper-inner">
+							<a href="#">
+								<strong class="logo">
+									
+								</strong>
+								<span id="logo-text">Ambassador engineering challenge</span>
+							</a>
+							<div id="auth-block">
+								<div class="tools-box">
+									<ul>
+										<li><a data-toggle="modal" href="#loginModal" id="login-link"> Login </a></li>
+										<li><a data-toggle="modal" href="#createUserModal" id="create-link"> Sign Up </a></li>
+									</ul>
+								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 
+				</div>
 			</div>
 			<div id="banner-splash">
 				<div id="banner-splash-inner">
-					<div id="banner-splash-inner-left" class="content-slide-from-left">
-						<div class="info-box-container">
-							<div class="info-box">
-								<!--
-								<div class="text-boxes wrapper-inner">
-
-									<div class="text-box-top">
-										<img id="place-holder" src="{% static 'img/image-placeholder.png' %}" alt="Easily Track &amp; Manage Customer Referrals" width="300" height="187">
-										<dl>
-
-		                                    <dt><img src="https://s3.amazonaws.com/ambassador/static/images/v2/ico5-white.png"><span>Measure Social ROI</span></dt>
-
-		                                    <dt><img src="https://s3.amazonaws.com/ambassador/static/images/v2/ico5-white.png"><span>Actionable Metrics per social channel</span></dt>
-
-		                                    <dt><img src="https://s3.amazonaws.com/ambassador/static/images/v2/ico5-white.png"><span>Encourage users to promote your brand</span></dt>
-		                                </dl>
-									</div>
-
-									<div class="text-box-bottom">
-										<h1>Referral Automation, Made Easy</h1><br><br>
-										<p>The End-to-End Referral Solution</p>
-									</div>
-								-->
-									
-								</div>
-							</div>
+					<div id="banner-splash-left" class="content-slide-from-left">
+						<div class="info-box">
+							<h5> Design Specs </h5>
+							<p> The specs for the engineering challenge are posted <a href="https://docs.google.com/document/d/1RbM86xFSPeO8p53HPedPHzFF3jDg_c8PvQl36tcDkIA/pub" target="blank">here</a>.  Our take on the app contains all requirements for the challenge, plus a few extra ones we thought might add a nice touch:</p>
+							<ul>
+								<li> A user profile service for users to generate and sign in to their accounts </li>
+								<li> Historical tracking for click generation </li>
+								<li> Custom input fields on drip pages for background colors, banner images, informational column layout, and special text/image fields </li>
+								<li> Pages for users to track their most successful campaigns based on number of clicks </li>
+								<li> Statistics for several fields that track, for instance, which banner images or backgrounds generate the most clicks </li>
+								<li> A functioning Django backend? </li>
+							</ul>
 						</div>
-
-						<div id="banner-splash-inner-right" class="content-slide-from-right">
-							<div id="banner-right-inside">
-								<div id="profile-inner">
-									<div id="profile-pic-container">
-										<img src="{% static 'img/mitch.png' %}" height="150" width="144">
-									</div>
-									<h3> About the Developer:<br> <strong>Mitch Kuchenberg</strong> </h3>
-									<p> <span>Bachelor of Science in Social Computing Informatics<br> December 2013, University of Michigan, Ann Arbor</span> </p>
-									<ul>
-										<li>Web developer</li>
-										<li>Programmer</li>
-										<li>Business professional</li>
-									</ul>
-								</div>
-								<div id="project-specs">
-									<h4> Design Specifications </h4>
-									<p> The specs for the engineering challenge are posted <a href="https://docs.google.com/document/d/1RbM86xFSPeO8p53HPedPHzFF3jDg_c8PvQl36tcDkIA/pub" target="blank">here</a>.  The app contains all requirements for the challenge, plus a few extra ones we thought might add a nice touch:</p>
-									<ul>
-										<li> A user profile service for users to generate and sign in to their accounts </li>
-										<li> Historical tracking for click generation </li>
-										<li> Custom input fields on drip pages for background colors, banner images, informational column layout, and special text/image fields </li>
-										<li> Pages for users to track their most successful campaigns based on number of clicks </li>
-										<li> Statistics for several fields that track, for instance, which banner images or backgrounds generate the most clicks </li>
-										<li> A functioning Django backend? </li>
-									</ul>
-								</div>
+					</div>
+					<div id="banner-splash-right" class="content-slide-from-right">
+						<div id="right-top">
+							<div id="profile-pic-container">
+								<img src="{% static 'img/mitch.png' %}" height="150" width="144">
 							</div>
+							<h4><strong>Mitch Kuchenberg</strong></h4>
+							<p> <span>Bachelor of Science in Social Computing Informatics <br> December 2013, University of Michigan, Ann Arbor</span> </p>
+							<ul>
+								<li>Web developer</li>
+								<li>Programmer</li>
+								<li>Business professional</li>
+							</ul>
 						</div>
-
+						<div id="right-bottom">
+							
+						</div>
 					</div>
 				</div>
 				
@@ -237,15 +210,38 @@
 			</div>
 			-->
 
-		{% include "login_modal.html" %}
+		{% include "splash/login_modal.html" %}
+		{% include "splash/create_user_modal.html" %}
 
 		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript">
+		    var frm = $('#create-user-form');
+		    frm.submit(function () {
+		        $.ajax({
+		            type: 'post',
+		            url: '{% url "create_user" %}',
+		            data: frm.serialize(),
+		            success: function (data) {
+		                $("#message-div").html(data);
+		            },
+		            error: function(data) {
+		                $("#message-div").html("Something went wrong!");
+		            }
+		        });
+		        return false;
+		    });
+		</script>
+
+		<script type="text/javascript">
 			
 			$("#login-link").click(function() {
 				$('#loginModal').modal('show')
+			});
+
+			$("#create-link").click(function() {
+				$('#createUserModal').modal('show')
 			});
 
 			$(document).ready(function() {

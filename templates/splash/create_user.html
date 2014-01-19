@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% load staticfiles %}
+
+{% block stylesheets %}
+	<link rel="stylesheet" href="{% static 'css/splash/create_user.css' %}">
+	<link rel="stylesheet" href="{% static 'css/splash/base.css' %}">
+{% endblock %}
+
+{% block content %}
+	<div id="user-form-block">
+		<form action="." method="POST">
+			{% csrf_token %}
+			<input id="id_username" maxlength="500" name="link_title" type="text" class="form-control" placeholder="username" style="width:200px;float:left">
+			<br><br>
+			
+			<input id="id_first_name" maxlength="500" name="link_title" type="text" class="form-control" placeholder="first name" style="width:200px;float:left">
+			<br><br>
+			
+			<input id="id_last_name" maxlength="500" name="link_title" type="text" class="form-control" placeholder="last name" style="width:200px;float:left">
+			<br><br>
+			
+			<input id="id_email" maxlength="500" name="link_title" type="text" class="form-control" placeholder="email" style="width:200px;float:left">
+			<br><br>
+			
+			<input type="submit" class="btn btn-primary" value="Add" style="float:left"/>
+			{% if form.link_title.errors %}
+			    <ol style="display:inline-block;margin-top:8px">
+				    {% for error in form.link_title.errors %}
+				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
+				    {% endfor %}
+			    </ol>
+			{% endif %}
+		</form>
+	</div>
+{% endblock %}

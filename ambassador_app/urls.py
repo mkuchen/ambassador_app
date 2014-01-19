@@ -7,15 +7,14 @@ from referral_center.views import *
 #admin.autodiscover()
 
 urlpatterns = patterns('',
-    url(r'^$', SplashView.as_view()),
+    url(r'^$', SplashView.as_view(), name='base'),
+    url(r'^new-account/$', CreateUserAJAX.as_view(), name='create_user'),
     # url(r'^ambassador_app/', include('ambassador_app.foo.urls')),
     url(r'^home/$', HomeView.as_view(), name='home'),
     url(r'^landing/(?P<title>[\w|\W]+)/$', LandingRedirectView.as_view()),
     url(r'^landing/$', LandingView.as_view(), name='main_landing'),
     url(r'^datatables/all-refs/$', login_required(OrderListJson.as_view()), name='order_list_json'),
-    url(r'^incorrect-login/$', IncorrectLoginView.as_view()),
     url(r'^splash/$', SplashView.as_view()),
-    url(r'^accounts/login/$', LoginUserView.as_view(), name='login'),
     url(r'^login-auth/$', LoginAuthView.as_view(), name='auth'),
     url(r'^logout/$', LogoutView.as_view(), name='logout'),
     ###########################

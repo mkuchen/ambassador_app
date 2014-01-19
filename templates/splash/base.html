@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <title>Ambassador App</title>
+	    {% load staticfiles %}
+	    <link rel="stylesheet" href="{% static 'css/libs/reset.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}">
+	    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+	    {% block stylesheets %}{% endblock %}
+	    <!--[if IE]>
+	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	    <![endif]-->
+	</head>
+
+	<body id="home">
+		<div id="wrapper-outer">
+
+
+			<div id="content-main">
+				{% block content %} {% endblock %}
+			</div>
+		</div>
+		{% if not user.is_authenticated %}
+		{% include "login_modal.html" %}
+		{% endif %}
+
+		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
+		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
+		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
+		{% block javascript %} {% endblock %}
+	</body>
+</html>
