@@ -3,12 +3,12 @@ from django.db import models
 
 import urllib
 
-
+"""
 class Member(models.Model):
 	user = models.OneToOneField(User)
 	quote = models.CharField(max_length=300, default="Let's get things rolling!")
 	bio = models.TextField(default="")
-	
+"""
 
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
