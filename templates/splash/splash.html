@@ -220,9 +220,10 @@
 		    var frm = $('#create-user-form');
 		    frm.submit(function () {
 		        $.ajax({
-		            type: 'post',
+		            type: 'POST',
 		            url: '{% url "create_user" %}',
 		            data: frm.serialize(),
+		            crossDomain: false,
 		            success: function (data) {
 		                $("#message-div").html(data);
 		            },

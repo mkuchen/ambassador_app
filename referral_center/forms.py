@@ -31,12 +31,13 @@ class CreateUserForm(forms.Form):
 		return self.cleaned_data
 	
 	def save(self):
-		new_user = True
-		"""new_user = User.objects.create_user(username=self.clean_username,
+		new_user = User.objects.create_user(username=self.clean_username(),
 											email=self.cleaned_data['email'],
 											password=self.cleaned_data['password1'])
 		new_user.first_name = self.cleaned_data['first_name']
-		new_user.last_name = self.cleaned_data['last_name']"""
+		new_user.last_name = self.cleaned_data['last_name']
+		new_user.save()
+		new_member = Member.objects.create(user=new_user, quote="", bio="")
 		return new_user
 
 """

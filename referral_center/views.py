@@ -6,6 +6,7 @@ from django import http
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
+from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from referral_center.forms import AdminLinkForm, LinkForm, CreateUserForm
 from referral_center.models import Referral, ReferralStat, ReferralHist, Member
@@ -22,13 +23,13 @@ class OrderListJson(BaseDatatableView):
 	model = ReferralHist
 
 	# define the columns that will be returned
-	columns = ['referral__link_title', 'stat__num_clicks', 'referral__date_submitted', 'referral__owner__username']
+	columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', 'referral.owner.user.username']
 
 	# define column names that will be used in sorting
 	# order is important and should be same as order of columns
 	# displayed by datatables. For non sortable columns use empty
 	# value like ''
-	order_columns = ['referral__link_title', 'stat__num_clicks', 'referral__date_submitted', '']
+	order_columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', '']
 
 	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
 	# and make it return huge amount of data
@@ -37,10 +38,10 @@ class OrderListJson(BaseDatatableView):
 
 	def render_column(self, row, column):
 		# We want to render user as a custom column
-		if column == 'date_submitted':
-			return row.date_submitted.strftime("%B %d, %Y")
-		elif column == 'link_title':
-			return '<a href="/landing/%s/">%s</a>' % (row.link_title, row.link_title)
+		if column == 'referral.date_submitted':
+			return row.referral.date_submitted.strftime("%B %d, %Y")
+		elif column == 'referral.link_title':
+			return '<a href="/landing/%s/">%s</a>' % (row.referral.link_title, row.referral.link_title)
 		else:
 			return super(OrderListJson, self).render_column(row, column)
 
@@ -89,8 +90,12 @@ class ProfileView(DetailView):
 		return render(request, self.template_name, { 'form':self.get_form() })
 """
 
-class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, CreateView):
-	model = User
+class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
+	#model = User
+	content_type = None
+
+	def get_content_type(self):
+		return u'application/json'
 
 	def post_ajax(self, request, *args, **kwargs):
 		form = CreateUserForm(request.POST)
@@ -100,7 +105,8 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, CreateView):
 			'name':"benny's burritos",
 			'location': "New York, NY",
 		}
-		return self.render_json_response(json_dict)
+		return HttpResponse('yeahuuuuuhhh')
+		#return self.render_json_response(json_dict)
 
 #############################################
 
