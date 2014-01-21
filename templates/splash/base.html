@@ -16,15 +16,10 @@
 
 	<body id="home">
 		<div id="wrapper-outer">
-
-
 			<div id="content-main">
 				{% block content %} {% endblock %}
 			</div>
 		</div>
-		{% if not user.is_authenticated %}
-		{% include "login_modal.html" %}
-		{% endif %}
 
 		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>

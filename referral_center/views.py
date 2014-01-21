@@ -1,6 +1,7 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.core.exceptions import PermissionDenied
 from django.core.urlresolvers import reverse
 from django import http
 from django.http import HttpResponse, HttpResponseRedirect, Http404
@@ -64,34 +65,29 @@ class OrderListJson(BaseDatatableView):
 				q = Q(customer_firstname__istartswith=part)|Q(customer_lastname__istartswith=part)
 				qs_params = qs_params | q if qs_params else q
 			qs = qs.filter(qs_params)
+"""
 
-class SplashView(GenericView):
-	template_name = 'splash.html'
-	def get(self, request, *args, **kwargs):
-		user = self.request.user
-		if user.is_authenticated():
-			return redirect('/home/')
-		else:
-			return render(request, self.template_name)
 
-class ProfileView(DetailView):
-	template_name = 'user_profile.html'
+class UserProfileView(DetailView):
+	template_name = 'product/user_profile.html'
 	model = Member
+	
+	def get_object(self, queryset=None):
+		return Member.objects.get(user=self.request.user)
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileView, self).get_context_data(**kwargs)
 		return context
 
-	def get_success_url(self):
-		return '/profile'+self.object.username
-
 	@method_decorator(login_required)
-	def get(self, request, *args, **kwargs):
-		return render(request, self.template_name, { 'form':self.get_form() })
-"""
+	def get(self, request, username, *args, **kwargs):
+		user = request.user
+		if user.username != username:
+			raise PermissionDenied()
+
+		return render(request, self.template_name, {'object':self.get_object()})
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
-	#model = User
 	content_type = None
 
 	def get_content_type(self):
