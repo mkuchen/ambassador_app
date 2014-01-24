@@ -20,7 +20,9 @@ div#main-wrapper {
 	/*background: url('/static/img/banner1.jpg') #82d5db no-repeat;*/
 	/*background: url('/static/img/background.png') #82d5db repeat;*/
 	background: #102E37;
-	height: 1200px;
+	height: 100%;
+	width: 100%;
+	min-width: 1100px;
 }
 
 div.wrapper-outer {

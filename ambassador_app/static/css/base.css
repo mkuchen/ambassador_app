@@ -1,11 +1,13 @@
 html {
 	height: 100%;
+	width: 100%;
 }
 
 body {
 	color: #102E37;
 	margin: 0;
 	height: 100%;
+	width: 100%;
 }
 
 div#wrapper-outer {
