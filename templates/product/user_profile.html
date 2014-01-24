@@ -18,7 +18,7 @@
 		<div id="profile-right">
 
 		</div>
-		{% if object.image is "" %}
+		{% if object.image == "" %}
 			<img src="http://www.anglo.ca/images/blank-user-medium.png" width="200" height="200" alt="profile-pic">
 		{% else %}
 			<img src="{{ object.image }}" width="170" height="170" alt="profile-pic">
