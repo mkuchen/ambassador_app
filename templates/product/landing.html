@@ -1,0 +1,47 @@
+<html lang="en">
+	<head>
+	    <meta charset="utf-8">
+	    <title>Ambassador App</title>
+	    {% load staticfiles %}
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/reset.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap.min.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product/modals.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product/referrals.css' %}">
+
+		{% block stylesheets %}{% endblock %}
+		<script type="text/javascript" src="{% static 'js/libs/animator.js' %}"></script>
+	</head>
+
+	<body id="home">
+		{% if preview %}
+		<div id="nav-bar">
+			<div id="nav-bar-inner">
+				<div id="amb-logo-block">
+					<a href="#">
+						<strong class="preview-logo">
+							
+						</strong>
+						<span id="logo-text">Ambassador engineering challenge</span>
+					</a>
+				</div>
+				<a href=""> Home </a>
+				<a href=""> Edit </a>
+				<a href=""> Logout </a>
+				<div id="nav-bar-profile">
+					<img id="nav-bar-img" src="" width="60" height="60">
+					<p> username </p>
+					<a href=""> edit profile </a>
+				</div>
+			</div>
+		</div>
+		{% endif %}
+		{% block content %}
+			<h2>{% block custom %}DEFAULT MESSAGE{% endblock %}<h2>
+			<h4> {{referral.link_title}} </h4>
+		{% endblock %}
+	</body>
+
+</html>
+

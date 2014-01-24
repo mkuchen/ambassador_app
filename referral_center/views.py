@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied
-from django.core.urlresolvers import reverse
+from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
+from django.core.urlresolvers import reverse, resolve
 from django import http
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import get_object_or_404, redirect, render
@@ -15,37 +15,57 @@ from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView,
 from ambassador_app.mixins import *
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 
+import sys
 import datetime
 import urllib
 import json
+
 
 class OrderListJson(BaseDatatableView):
 	# The model we're going to show
 	model = ReferralHist
 
 	# define the columns that will be returned
-	columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', 'referral.owner.user.username']
+	columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
 
 	# define column names that will be used in sorting
 	# order is important and should be same as order of columns
 	# displayed by datatables. For non sortable columns use empty
 	# value like ''
-	order_columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', '']
+	order_columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', '', '']
 
 	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
 	# and make it return huge amount of data
 	max_display_length = 500
 
+	def get_initial_queryset(self):
+		return ReferralHist.objects.filter(referral__owner__user=self.request.user)
 
+	def prepare_results(self, qs):
+		json_data = []
+		for item in qs:
+			json_data.append([
+				'<a href="/landing/%s/">%s</a>' % (item.referral.link_title, item.referral.link_title),
+				item.stat.num_clicks,
+				item.referral.date_submitted.strftime("%B %d, %Y"),
+				item.referral.owner.user.username,
+				'<a style="margin-right:6px" href="/edit/%s/">edit</a> <a href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
+				"%s %s %s %s %s %s" % (item.referral.date_submitted.year, item.referral.date_submitted.month, item.referral.date_submitted.day, item.referral.date_submitted.hour, item.referral.date_submitted.minute, item.referral.date_submitted.second),
+			])
+		return json_data
+
+	"""
 	def render_column(self, row, column):
-		# We want to render user as a custom column
+		# We want to render custom columns
 		if column == 'referral.date_submitted':
 			return row.referral.date_submitted.strftime("%B %d, %Y")
 		elif column == 'referral.link_title':
 			return '<a href="/landing/%s/">%s</a>' % (row.referral.link_title, row.referral.link_title)
+		elif column == 'referral.id':
+			return '<a style="margin-right:6px" href="/edit/%s/">edit</a> <a href="/delete/%s/">delete</a>' % (row.referral.id, row.referral.id)
 		else:
 			return super(OrderListJson, self).render_column(row, column)
-
+	"""
 	"""
 	def filter_queryset(self, qs):
 		# use request parameters to filter queryset
@@ -67,7 +87,6 @@ class OrderListJson(BaseDatatableView):
 			qs = qs.filter(qs_params)
 """
 
-
 class UserProfileView(DetailView):
 	template_name = 'product/user_profile.html'
 	model = Member
@@ -86,6 +105,7 @@ class UserProfileView(DetailView):
 			raise PermissionDenied()
 
 		return render(request, self.template_name, {'object':self.get_object()})
+
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
@@ -113,14 +133,38 @@ class SplashView(TemplateView):
 		form = CreateUserForm()
 		return render(request, self.template_name, {'form':form})
 
-###################################################
-
-
-class HomeView(CreateView):
-	template_name = 'product/home.html'
+#############################################
+"""
+class ReferralEditView(UpdateView):
 	model = Referral
+	template_name = 'product/referral_create.html'
+	fields = ['link_title', 'logo_url', 'banner_background_url', 'banner_text', 'font_family']
 	success_url = 'home/'
-	fields = ['link_title']
+"""
+
+class ReferralDeleteView(View):
+
+	@method_decorator(login_required)
+	def get(self, request, referral_id, *args, **kwargs):
+		member = Member.objects.get(user=request.user)
+		try:
+			ref = Referral.objects.get(pk=referral_id)
+		except ObjectDoesNotExist:
+			raise Http404
+
+		if ref.owner != member:
+			raise PermissionDenied
+		ref.delete()
+		return HttpResponseRedirect('/home/')
+
+
+
+
+class ReferralCreateView(View):
+	model = Referral
+	template_name = 'product/referral_create.html'
+	fields = ['link_title', 'logo_url', 'banner_background_url', 'banner_text', 'font_family']
+	success_url = 'home/'
 
 	def get_form(self, *args, **kwargs):
 		user = self.request.user
@@ -129,11 +173,25 @@ class HomeView(CreateView):
 		return LinkForm()
 
 	@method_decorator(login_required)
-	def get(self, request, *args, **kwargs):
-		return render(request, self.template_name, { 'form':self.get_form() })
+	def get(self, request, referral_id=None, *args, **kwargs):
+		try:
+			member = Member.objects.get(user=request.user)
+		except ObjectDoesNotExist:
+			raise PermissionDenied
+		referral = None
+		if referral_id:
+			try:
+				referral = Referral.objects.get(pk=referral_id)
+			except ObjectDoesNotExist:
+				raise Http404
+
+			if referral.owner != member:
+				raise PermissionDenied
+
+		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral, 'three':'true' })
 
 	@method_decorator(login_required)
-	def post(self, request):
+	def post(self, request, referral_id=None):
 		user = request.user
 		if user.is_staff:
 			form = AdminLinkForm(request.POST)
@@ -141,42 +199,84 @@ class HomeView(CreateView):
 			form = LinkForm(request.POST)
 
 		if form.is_valid():
-			title = form.cleaned_data['link_title']
 			user = request.user
 			member = Member.objects.get(user=user)
+			ref = None
 			date_submitted = datetime.datetime.now()
-			ref = Referral.objects.create(link_title=title, owner=member, date_submitted=date_submitted)
-			ref_stat = ReferralStat.objects.create()
-			ref_hist = ReferralHist.objects.create(date=date_submitted, referral=ref, stat=ref_stat)
+			if referral_id:
+				try:
+					ref = Referral.objects.get(pk=referral_id)
+				except ObjectDoesNotExist:
+					raise Http404
+
+				if ref.owner != member:
+					raise PermissionDenied
+
+				ref.link_title = form.cleaned_data['link_title']
+				ref.date_submitted = datetime.datetime.now()
+				ref.logo_url = form.cleaned_data['logo_url']
+				ref.banner_background_url = form.cleaned_data['banner_background_url']
+				ref.banner_text = form.cleaned_data['banner_text']
+				ref.font_family = form.cleaned_data['font_family']
+				ref.save()
+
+			else:
+				ref = Referral.objects.create(
+												link_title=form.cleaned_data['link_title'],
+												date_submitted=datetime.datetime.now(),
+												logo_url=form.cleaned_data['logo_url'],
+												banner_background_url=form.cleaned_data['banner_background_url'],
+												banner_text=form.cleaned_data['banner_text'],
+												font_family=form.cleaned_data['font_family'],
+												owner=member,
+											)
+				ref_stat = ReferralStat.objects.create()
+				ref_hist = ReferralHist.objects.create(date=date_submitted, referral=ref, stat=ref_stat)
 			return HttpResponseRedirect('/home/')
 		else:
 			return render(request, self.template_name, { 'form':form })
+
+
+class HomeView(View):
+	template_name = 'product/home.html'
+
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		member = Member.objects.get(user=request.user)
+		return render(request, self.template_name, { 'member':member, 'one':'true' })
+
 
 class LandingRedirectView(RedirectView):
 	permanent = False
 
 	def get_redirect_url(self, title):
 		referral = get_object_or_404(Referral, link_title=title)
-		referral.update_counter()
-		referral.save()
+		ref_hists = ReferralHist.objects.filter(referral=referral)
+		hist = ref_hists.order_by('date')[0]
+		hist.stat.update_counter()
+		hist.stat.save()
 		query_params = urllib.urlencode( {'link': title} )
 		return '/landing/?'+query_params
 
 class LandingView(DetailView):
 	model = Referral
-	template_name = 'product/landing_base.html'
+	template_name = 'product/landing.html'
 	#queryset = Referral.objects.
 	def get(self, request, *args, **kwargs):
 		title = request.GET.get('link', '')
+		member = Member.objects.get(user=request.user)
+
 		if not title:
 			raise Http404
 		context = self.get_context_data()
 		context['title'] = title
 		try:
-			ref = Referral.objects.get(link_title=title)
+			ref = Referral.objects.get(link_title=title, owner=member)
 		except:
 			raise Http404
 		context['referral'] = ref
+		context['member'] = member
+		context['preview'] = 'true'
 		return self.render_to_response(context)
 
 
