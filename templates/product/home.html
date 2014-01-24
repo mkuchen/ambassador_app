@@ -7,33 +7,15 @@
 {% endblock %}
 
 {% block content %}
-
-	<div id="form-block">
-		<form action="." method="POST">
-			{% csrf_token %}
-			<label for="id_link_title">Link Title</label><br>
-			<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:200px;float:left">
-			<input type="submit" class="btn btn-primary" value="Add" style="float:left"/>
-			{% if form.link_title.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.link_title.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}
-		</form>
-	</div>
-
 	<div style="margin: 30px">
-		<h2 id="home">Top Links:</h2>
-
 		<table class="table datatable" id="all-links" style="width:900px">
 			<thead>
 				<tr>
 					<th>Link Title</th>
-					<th>Total Clicks</th>
+					<th>Clicks</th>
 					<th>Date Submitted</th>
 					<th>Owner</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -58,10 +40,12 @@
 				"aoColumnDefs": [
                     { "sWidth": "200px", "aTargets": [0], },
                     { "sWidth": "40px", "aTargets": [1], },
-                    { "sWidth": "48px", "aTargets": [2], },
+                    { "sWidth": "48px", "aTargets": [2], "iDataSort": 5},
                     { "sWidth": "60px", "aTargets": [3], "bSortable": false, },
+                    { "sWidth": "90px", "aTargets": [4], "bSortable": false, },
+                    { "bVisible": false, "aTargets": [5]}
                 ],
-                "sAjaxSource": "/datatables/all-refs/",
+                "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
 		});

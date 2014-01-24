@@ -27,11 +27,22 @@
 						</div>
 					</div>
 					<ul id="header-list">
-						<li><a href="#"> My Referrals </a></li>
-						<li><a href="/profile/{{user.username}}/"> My Profile </a></li>
-						<li><a href="#"> New Referral </a></li>
+						<li {% if one %}class="current"{% endif %}><a href="/home/"> My Referrals </a></li>
+						<li {% if two %}class="current"{% endif %}><a href="/profile/{{user.username}}/"> My Profile </a></li>
+						<li {% if three %}class="current"{% endif %}><a href="/create/"> New Referral </a></li>
 					</ul>
-					<a href="/logout" id="logout"> Logout </a>
+					<div id="profile-block">
+						<div id="picture-block">
+							<p style="margin-bottom:4px;"><span id="name"> {{member.user.username}} </span></p>
+							<img id="profile-image" src="{{ member.image }}" alt="profile-pic" width="120" height="120">
+						</div>
+						<p id="profile-text">
+							<span id="quote"> "{{member.quote}}" </span>
+							<a href="#" style="padding-left:2px"> edit </a><br>
+							<a href="/logout" id="logout" style="margin-top:12px;display:block;"> Logout </a>
+						</p>
+					</div>
+					
 				</div>
 			</div>
 			<div id="content-main">

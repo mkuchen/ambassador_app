@@ -1,11 +1,20 @@
 from django import forms
 from django.contrib.auth.models import User
+from referral_center.models import Member
 
 class AdminLinkForm(forms.Form):
 	link_title = forms.SlugField(max_length=500)
+	logo_url = forms.URLField(max_length=1000)
+	banner_background_url = forms.URLField(max_length=1000)
+	banner_text = forms.CharField(max_length=1000)
+	font_family = forms.CharField(max_length=500)
 
 class LinkForm(forms.Form):
 	link_title = forms.SlugField(max_length=500)
+	logo_url = forms.URLField(max_length=1000)
+	banner_background_url = forms.URLField(max_length=1000)
+	banner_text = forms.CharField(max_length=1000)
+	font_family = forms.CharField(max_length=500)
 
 class CreateUserForm(forms.Form):
 	username = forms.CharField(required=True)

@@ -8,15 +8,65 @@
 
 {% block content %}
 	<div id="profile-block">
-	<h2> Profile for {{ object.user.username }} </h2>
-	<p>
+		<h2> Profile for {{ object.user.username }} </h2>
+		<div id="profile-left">
+			<p> Profile picture </p>
+			<p> Display name </p>
+			<p> Quote </p>
+			<p> Bio </p>
+		</div>
+		<div id="profile-right">
+
+		</div>
+		{% if object.image is "" %}
+			<img src="http://www.anglo.ca/images/blank-user-medium.png" width="200" height="200" alt="profile-pic">
+		{% else %}
+			<img src="{{ object.image }}" width="170" height="170" alt="profile-pic">
+		{% endif %}
+		<p> Quote: <br>  {{ object.quote }} </p>
+		<p> Bio: <br> {{ object.bio }} </p>
 	</div>
-	
-	
+
+	<div id="user-referrals">
+		<table class="table datatable" id="all-links" style="width:900px">
+			<thead>
+				<tr>
+					<th>Link Title</th>
+					<th>Total Clicks</th>
+					<th>Date Submitted</th>
+					<th>Owner</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
 {% endblock %}
 
 {% block javascript %}
+	<script type="text/javascript"?>
+		$(document).ready(function() {
+			// datatables init
+			var oTable = $('.datatable').dataTable({
+				// ...
+                "iDisplayLength": 25,
+                "aaSorting": [[ 0, "desc" ]],
+	 			"bProcessing": false,
+				"bServerSide": false,
+				"bSortable": true,
+				"bFilter": false,
+				"bPaginate": true,
+				"aoColumnDefs": [
+                    { "sWidth": "200px", "aTargets": [0], },
+                    { "sWidth": "40px", "aTargets": [1], },
+                    { "sWidth": "48px", "aTargets": [2], },
+                    { "sWidth": "60px", "aTargets": [3], "bSortable": false, },
+                ],
+                "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
+			});
+		});
+	</script>
 
 
 

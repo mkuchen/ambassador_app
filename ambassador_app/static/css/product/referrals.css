@@ -1,0 +1,35 @@
+div#nav-bar {
+	height: 54px;
+	width: 100%;
+	display: inline-block;
+	background: #102E37;
+}
+
+div#nav-bar div#nav-bar-inner {
+	width: 1000px;
+	height: 100%;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#nav-bar div#nav-bar-inner div#amb-logo-block {
+	display: inline-block;
+	float: left;
+	width: 200px;
+	height: 100%;
+}
+
+strong.preview-logo {
+	margin-top: 5px;
+	width: 30px;
+	height: 42px;
+	background-image: url('https://s3.amazonaws.com/ambassador/static/images/v2/sprite_vertical.png');
+	background-position: -10px -10px;
+	text-indent: -9999px;
+	overflow: hidden;
+	float: left;
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+}
