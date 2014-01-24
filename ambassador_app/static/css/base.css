@@ -1,6 +1,7 @@
 html {
 	height: 100%;
 	width: 100%;
+	min-height: 600px;
 }
 
 body {
@@ -26,7 +27,7 @@ div#wrapper-outer div#content-main {
 
 
 div#wrapper-outer div#header-outer {
-	width: 340px;
+	min-width: 290px;
 	height: 100%;
 	display: inline-block;
 	position: relative;
@@ -217,4 +218,37 @@ div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
 
 div#wrapper-outer div#content-main table#all-links tr:nth-child(even) {
 	background-color: #E6E8FA;
+}
+
+div#profile-block {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+div#profile-block h2 {
+	margin-bottom: 20px;
+	margin-top: 23px;
+}
+
+div#profile-block div#profile-left {
+	width: 175px;
+	height: 363px;
+	float: left;
+	border-right: 1px solid black;
+	margin-right: 20px;
+}
+
+div#profile-block div#profile-left strong {
+	display: block;
+	margin-bottom: 10px;
+}
+
+div#profile-block div#profile-right {
+	float: left;
+	width: 520px;
+}
+
+div#profile-block div#profile-right img {
+	margin-bottom: 10px;
+	border: 8px solid white;
 }

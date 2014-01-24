@@ -16,6 +16,13 @@ class LinkForm(forms.Form):
 	banner_text = forms.CharField(max_length=1000)
 	font_family = forms.CharField(max_length=500)
 
+class UpdateMemberForm(forms.Form):
+	quote = forms.CharField(max_length=300)
+	bio = forms.CharField(max_length=2000)
+	image = forms.CharField(max_length=1000)
+	first_name = forms.CharField(max_length=100)
+	last_name = forms.CharField(max_length=100)
+
 class CreateUserForm(forms.Form):
 	username = forms.CharField(required=True)
 	first_name = forms.CharField(required=True)
