@@ -131,6 +131,10 @@ class SplashView(TemplateView):
 
 	def get(self, request, *args, **kwargs):
 		form = CreateUserForm()
+		user = request.user
+		if user.is_authenticated():
+			return HttpResponseRedirect('/home/')
+
 		return render(request, self.template_name, {'form':form})
 
 #############################################
