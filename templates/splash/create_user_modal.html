@@ -10,12 +10,16 @@
           <div id="message-div"></div>
         </div>
         <div class="modal-body">
-          {{ form.as_p }}
-
+          <input id="id_username" type="text" class="form-control full" name="username" placeholder="username"/><br>
+          <input id="id_email" type="text" class="form-control full" name="email" placeholder="email"/><br>
+          <input id="id_first_name" type="text" class="form-control half" name="first_name" placeholder="first name"/>
+          <input id="id_last_name" type="text" class="form-control half" name="last_name" placeholder="last name"/><br><br><br>
+          <input id="id_password1" type="password" class="form-control half" name="password1" placeholder="password"/>
+          <input id="id_password2" type="password" class="form-control half" name="password2" placeholder="password, again"/><br>
         </div>
         <div class="modal-footer">
-          <input class="btn btn-primary" name="submit1" type="submit" value="submit" />
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <input class="btn btn-primary" name="submit1" type="submit" value="Create" />
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
         </div>
       </form>
     </div>

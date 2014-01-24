@@ -3,6 +3,10 @@ div#nav-bar {
 	width: 100%;
 	display: inline-block;
 	background: #102E37;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	border-bottom: 3px solid #FCD271;
 }
 
 div#nav-bar div#nav-bar-inner {
@@ -13,11 +17,51 @@ div#nav-bar div#nav-bar-inner {
 	margin-right: auto;
 }
 
+div#nav-bar div#nav-bar-inner a.top-option {
+	color: #FCD271;
+	font-size: 16px;
+	line-height: 56px;
+	margin-left: 12px;
+	margin-right: 2px;
+}
+
 div#nav-bar div#nav-bar-inner div#amb-logo-block {
 	display: inline-block;
 	float: left;
-	width: 200px;
+	width: 350px;
 	height: 100%;
+	margin-right: 40px;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-options {
+	display: inline-block;
+	margin-right: 12px;
+	float: left;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-profile {
+	width: 300px;
+	height: 54px;
+	display: inline-block;
+	float: right;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-profile p {
+	display: inline-block;
+	color: #eee;
+}
+
+div#nav-bar div#nav-bar-inner div#amb-logo-block a:hover {
+	text-decoration: none;
+}
+
+div#nav-bar div#nav-bar-inner div#amb-logo-block span#logo-text {
+	line-height: 55px;
+	font-size: 17px;
+	font-family: arial, helvetica, sans-serif;
+	text-shadow: 0px 1px 1px rgba(0,0,0, 0.8);
+	letter-spacing: -1px;
+	color: #E8EDE0;
 }
 
 strong.preview-logo {

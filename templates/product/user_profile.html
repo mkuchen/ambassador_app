@@ -8,23 +8,24 @@
 
 {% block content %}
 	<div id="profile-block">
-		<h2> Profile for {{ object.user.username }} </h2>
+		<h2> Profile for user "{{ member.user.username }}" </h2>
 		<div id="profile-left">
-			<p> Profile picture </p>
-			<p> Display name </p>
-			<p> Quote </p>
-			<p> Bio </p>
+			<strong style="margin-bottom:160px"> Profile picture </strong>
+			<strong> Display name </strong>
+			<strong> Quote </strong>
+			<strong> Bio </strong>
 		</div>
 		<div id="profile-right">
-
-		</div>
-		{% if object.image == "" %}
+			{% if member.image == "" %}
 			<img src="http://www.anglo.ca/images/blank-user-medium.png" width="200" height="200" alt="profile-pic">
-		{% else %}
-			<img src="{{ object.image }}" width="170" height="170" alt="profile-pic">
-		{% endif %}
-		<p> Quote: <br>  {{ object.quote }} </p>
-		<p> Bio: <br> {{ object.bio }} </p>
+			{% else %}
+			<img src="{{ member.image }}" width="170" height="170" alt="profile-pic">
+			{% endif %}
+			<p> {{ member.user.first_name }} {{ member.user.last_name }} </p>
+			<p> "{{ member.quote }}" </p>
+			<p> {{ member.bio }} </p>
+		</div>
+		{{ form }}
 	</div>
 
 	<div id="user-referrals">

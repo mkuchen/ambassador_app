@@ -9,7 +9,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from referral_center.forms import AdminLinkForm, LinkForm, CreateUserForm
+from referral_center.forms import AdminLinkForm, LinkForm, CreateUserForm, UpdateMemberForm
 from referral_center.models import Referral, ReferralStat, ReferralHist, Member
 from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView, UpdateView
 from ambassador_app.mixins import *
@@ -87,15 +87,25 @@ class OrderListJson(BaseDatatableView):
 			qs = qs.filter(qs_params)
 """
 
-class UserProfileView(DetailView):
+class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
 	template_name = 'product/user_profile.html'
 	model = Member
+	fields = ['quote','bio','image','first_name','last_name']
+
+	def get_success_url(self):
+		return '/profile/%s/' % self.request.user.username
+
+	def get_content_type(self):
+		return u'application/json'
+
+	def get_form(self, *args, **kwargs):
+		return UpdateMemberForm()
 	
 	def get_object(self, queryset=None):
 		return Member.objects.get(user=self.request.user)
 
 	def get_context_data(self, **kwargs):
-		context = super(ProfileView, self).get_context_data(**kwargs)
+		context = super(UserProfileView, self).get_context_data(**kwargs)
 		return context
 
 	@method_decorator(login_required)
@@ -104,7 +114,25 @@ class UserProfileView(DetailView):
 		if user.username != username:
 			raise PermissionDenied()
 
-		return render(request, self.template_name, {'object':self.get_object()})
+		return render(request, self.template_name, {'member':self.get_object(), 'form':self.get_form()})
+
+	@method_decorator(login_required)
+	def post_ajax(self, request, *args, **kwargs):
+		user = request.user
+		if user.username != username:
+			raise PermissionDenied()
+
+		form = UpdateMemberForm(request.POST)
+
+		if form.is_valid():
+			member = Member.objects.get(user=user)
+			member.quote = form.cleaned_data['quote']
+			member.bio = form.cleaned_data['bio']
+			member.image = form.cleaned_data['image']
+			member.user.first_name = form.cleaned_data['first_name']
+			member.user.last_name = form.cleaned_data['last_name']
+			member.user.save()
+			member.save()
 
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
@@ -203,7 +231,6 @@ class ReferralCreateView(View):
 			form = LinkForm(request.POST)
 
 		if form.is_valid():
-			user = request.user
 			member = Member.objects.get(user=user)
 			ref = None
 			date_submitted = datetime.datetime.now()

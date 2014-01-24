@@ -12,13 +12,12 @@
           {% endif %}
         </div>
         <div class="modal-body">
-          Username: <br><input type="text" name="username" style="width:256px"/><br><br>
-          Password: <br><input type="password" name="password" style="width:256px"/>
-
+          <input type="text" class="form-control" name="username" style="width:256px" placeholder="username"/><br>
+          <input type="password" class="form-control" name="password" style="width:256px" placeholder="password"/>
         </div>
         <div class="modal-footer">
-          <input class="btn btn-primary" name="submit2" type="submit" value="login" />
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <input class="btn btn-primary" name="submit2" type="submit" value="Login" />
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
           <input type="hidden" name="next" value="{{ next }}" />
         </div>
       </form>

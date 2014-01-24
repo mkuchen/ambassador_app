@@ -37,7 +37,6 @@
 			<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Add{% endif %}" style="float:left;margin-right:6px"/>
 			<input type="button" class="btn btn-danger" value="Cancel" onclick=location.href='/home/';>
 			{% if form.link_title.errors %}
-				<p> link_title </p>
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.link_title.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
@@ -45,7 +44,6 @@
 			    </ol>
 			{% endif %}<br>
 			{% if form.logo_url.errors %}
-				<p> logo_url </p>
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.logo_url.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
@@ -53,7 +51,6 @@
 			    </ol>
 			{% endif %}<br>
 			{% if form.banner_background_url.errors %}
-				<p> banner_background_url </p>
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.banner_background_url.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
@@ -61,7 +58,6 @@
 			    </ol>
 			{% endif %}<br>
 			{% if form.banner_text.errors %}
-				<p> banner_text </p>
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.banner_text.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
@@ -69,7 +65,6 @@
 			    </ol>
 			{% endif %}<br>
 			{% if form.font_family.errors %}
-				<p> font_family </p>
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.font_family.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
