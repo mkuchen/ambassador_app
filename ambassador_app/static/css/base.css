@@ -1,12 +1,17 @@
+html {
+	height: 100%;
+}
+
 body {
 	color: #102E37;
 	margin: 0;
+	height: 100%;
 }
 
 div#wrapper-outer {
 	width: 100%;
 	background-color: #E8EDE0;
-	min-height: 1200px;
+	height: 100%;
 	min-width: 1320px;
 }
 
@@ -20,7 +25,7 @@ div#wrapper-outer div#content-main {
 
 div#wrapper-outer div#header-outer {
 	width: 340px;
-	height: 1000px;
+	height: 100%;
 	display: inline-block;
 	position: relative;
 	z-index: 9999;
