@@ -49,7 +49,7 @@ class OrderListJson(BaseDatatableView):
 				item.stat.num_clicks,
 				item.referral.date_submitted.strftime("%B %d, %Y"),
 				item.referral.owner.user.username,
-				'<a style="margin-right:6px" href="/edit/%s/">edit</a> <a href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
+				'<a style="margin-right:6px;text-decoration:underline;" href="/edit/%s/">edit</a> <a style="text-decoration:underline;" href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
 				"%s %s %s %s %s %s" % (item.referral.date_submitted.year, item.referral.date_submitted.month, item.referral.date_submitted.day, item.referral.date_submitted.hour, item.referral.date_submitted.minute, item.referral.date_submitted.second),
 			])
 		return json_data
@@ -114,7 +114,7 @@ class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
 		if user.username != username:
 			raise PermissionDenied()
 
-		return render(request, self.template_name, {'member':self.get_object(), 'form':self.get_form()})
+		return render(request, self.template_name, {'member':self.get_object(), 'form':self.get_form(), 'two':'true'})
 
 	@method_decorator(login_required)
 	def post_ajax(self, request, *args, **kwargs):

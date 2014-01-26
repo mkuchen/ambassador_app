@@ -9,6 +9,7 @@ body {
 	margin: 0;
 	height: 100%;
 	width: 100%;
+	min-height: 960px;
 }
 
 div#wrapper-outer {
@@ -251,4 +252,56 @@ div#profile-block div#profile-right {
 div#profile-block div#profile-right img {
 	margin-bottom: 10px;
 	border: 8px solid white;
+	display: inline-block;
+	float: left;
+}
+
+div#profile-block div#profile-right p {
+	display: inline-block;
+	float:left;
+}
+
+div#profile-block div#profile-right div.profile-info-block {
+	display: inline-block;
+	width: 100%;
+	padding: 8px;
+	margin: 4px;
+	border: 1px solid gray;
+	border-radius: 4px;
+}
+
+div#profile-block div#profile-edit-icons {
+	height: 363px;
+	width: 16px;
+	float: left;
+	display: inline-block;
+}
+
+div#profile-block div#profile-edit-icons a {
+	background: url('/static/img/edit-24.png') #E8EDE0;
+	display: inline-block;
+	width: 12px;
+	height: 12.5px;
+	background-size: 100%;
+	float: left;
+	margin-left: 6px;
+	margin-top: 2px;
+	position: relative;
+	left: -12px;
+}
+
+div#profile-block div#profile-edit-icons a#one {
+
+}
+
+div#profile-block div#profile-edit-icons a#two {
+	top: 196px;
+}
+
+div#profile-block div#profile-edit-icons a#three {
+	top: 235px;
+}
+
+div#profile-block div#profile-edit-icons a#four {
+	top: 275px;
 }

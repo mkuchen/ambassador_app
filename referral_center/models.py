@@ -5,6 +5,7 @@ import urllib
 
 class Member(models.Model):
 	user = models.OneToOneField(User)
+	display_name = models.CharField(max_length=60, default="Referral Marketing Solutions")
 	quote = models.CharField(max_length=300, default="Let's get things rolling!")
 	bio = models.TextField(default="")
 	image = models.TextField(blank=True, null=True)

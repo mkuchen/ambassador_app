@@ -16,16 +16,42 @@
 			<strong> Bio </strong>
 		</div>
 		<div id="profile-right">
-			{% if member.image == "" %}
-			<img src="http://www.anglo.ca/images/blank-user-medium.png" width="200" height="200" alt="profile-pic">
-			{% else %}
-			<img src="{{ member.image }}" width="170" height="170" alt="profile-pic">
-			{% endif %}
-			<p> {{ member.user.first_name }} {{ member.user.last_name }} </p>
-			<p> "{{ member.quote }}" </p>
-			<p> {{ member.bio }} </p>
+			<form class="well" method="post" action="{% url 'create_user' %}">
+				{% csrf_token %}
+				<div class="profile-info-block">
+					<div id="inner-one">
+						{% if member.image == "" %}
+						<img src="http://www.anglo.ca/images/blank-user-medium.png" width="170" height="170" alt="profile-pic"><a href="#"></a>
+						{% else %}
+						<img src="{{ member.image }}" width="170" height="170" alt="profile-pic"><a href="#"></a>
+						{% endif %}
+					</div>
+				</div>
+				<div class="profile-info-block">
+					<div id="inner-two">
+						<input id="id_first_name" maxlength="500" name="first_name" type="text" class="form-control" placeholder="Enter first name" style="width:700px;float:left" value="{{ member.user.first_name }}"><br><br>
+						<input id="id_last_name" maxlength="500" name="last_name" type="text" class="form-control" placeholder="Enter last name" style="width:700px;float:left" value="{{ member.user.last_name }}"><br><br>
+					</div>
+				</div>
+				<div class="profile-info-block">
+					<div id="inner-three">
+						<p> "{{ member.quote }}" </p><br>
+					</div>
+				</div>
+				<div class="profile-info-block">
+					<div id="inner-four">
+						<p> {{ member.bio }} </p><br>
+					</div>
+				</div>
+			</form>
 		</div>
-		{{ form }}
+		<div id="profile-edit-icons">
+			<a href="#" id="one"></a>
+			<a href="#" id="two"></a>
+			<a href="#" id="three"></a>
+			<a href="#" id="four"></a>
+		</div>
+		
 	</div>
 
 	<div id="user-referrals">
