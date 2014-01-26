@@ -11,17 +11,25 @@
 		<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
 		<form action="." method="POST">
 			{% csrf_token %}
-			<label for="id_link_title">Link Title</label><br>
-			<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:200px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br><br>
+			<div class="form-group">
+				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
+				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br>
+			</div>
 
-			<label for="id_logo_url">Logo URL</label><br>
-			<input id="id_logo_url" maxlength="1000" name="logo_url" type="text" class="form-control" placeholder="Enter logo URL" style="width:700px;float:left" {% if object %}value="{{ object.logo_url }}"{% endif %}><br><br><br>
+			<div class="form-group">
+				<label for="id_logo_url" class="col-lg-2 control-label">Logo URL</label>
+				<input id="id_logo_url" maxlength="1000" name="logo_url" type="text" class="form-control" placeholder="Enter logo URL" style="width:700px;float:left" {% if object %}value="{{ object.logo_url }}"{% endif %}><br><br>
+			</div>
 
-			<label for="id_banner_background_url">Banner Background URL</label><br>
-			<input id="id_banner_background_url" maxlength="1000" name="banner_background_url" type="text" class="form-control" placeholder="Enter banner image URL" style="width:700px;float:left" {% if object %}value="{{ object.banner_background_url }}"{% endif %}><br><br><br>
+			<div class="form-group">
+				<label for="id_banner_background_url" class="col-lg-2 control-label">Banner Background</label>
+				<input id="id_banner_background_url" maxlength="1000" name="banner_background_url" type="text" class="form-control" placeholder="Enter banner image URL" style="width:700px;float:left" {% if object %}value="{{ object.banner_background_url }}"{% endif %}><br><br><br>
+			</div>
 
-			<label for="id_banner_text">Banner Text</label><br>
-			<textarea id="id_banner_text" maxlength="1000" name="banner_text" class="form-control" style="height:200px;float:left;margin-bottom:23px">{% if object %}{{ object.banner_text }}{% endif %}</textarea><br><br><br>
+			<div class="form-group">
+				<label for="id_banner_text" class="col-lg-2 control-label">Banner Text</label>
+				<textarea id="id_banner_text" maxlength="1000" name="banner_text" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:700px">{% if object %}{{ object.banner_text }}{% endif %}</textarea><br><br><br>
+			</div>
 
 			<label for="id_font_family">Font Family</label><br>
 			<select id="id_font_family" maxlength="500" name="font_family" type="select" class="form-control" placeholder="Enter link title" style="width:200px;float:left">
