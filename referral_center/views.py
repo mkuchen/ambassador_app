@@ -90,7 +90,7 @@ class OrderListJson(BaseDatatableView):
 class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
 	template_name = 'product/user_profile.html'
 	model = Member
-	fields = ['quote','bio','image','first_name','last_name']
+	fields = ['quote','bio','image','display_name']
 
 	def get_success_url(self):
 		return '/profile/%s/' % self.request.user.username
