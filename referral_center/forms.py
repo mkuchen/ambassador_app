@@ -19,7 +19,11 @@ class LinkForm(forms.Form):
 class UpdateMemberForm(forms.Form):
 	quote = forms.CharField(max_length=300)
 	bio = forms.CharField(max_length=2000)
-	image = forms.CharField(max_length=1000)
+	#image = forms.CharField(max_length=1000)
+	image = forms.FileField(
+		label='Select a file',
+		help_text='max. 42 megabytes'
+	)
 	first_name = forms.CharField(max_length=100)
 	last_name = forms.CharField(max_length=100)
 
