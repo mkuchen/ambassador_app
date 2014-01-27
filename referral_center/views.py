@@ -122,17 +122,16 @@ class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
 		if user.username != username:
 			raise PermissionDenied()
 
-		form = UpdateMemberForm(request.POST)
+		form = UpdateMemberForm(request.POST, request.FILES)
 
 		if form.is_valid():
 			member = Member.objects.get(user=user)
 			member.quote = form.cleaned_data['quote']
 			member.bio = form.cleaned_data['bio']
-			member.image = form.cleaned_data['image']
-			member.user.first_name = form.cleaned_data['first_name']
-			member.user.last_name = form.cleaned_data['last_name']
-			member.user.save()
+			member.image = request.FILES['image']
+			member.display_name = form.cleaned_data['display_name']
 			member.save()
+			return HttpResponse('ok')
 
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
