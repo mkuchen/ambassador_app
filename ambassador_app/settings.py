@@ -144,7 +144,8 @@ INSTALLED_APPS = (
     #'django.contrib.admindocs',
     'debug_toolbar',
     'referral_center',
-    'south'
+    'south',
+    'storages',
 )
 
 # A sample logging configuration. The only tangible logging
