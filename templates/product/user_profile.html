@@ -16,35 +16,34 @@
 			<strong> Bio </strong>
 		</div>
 		<div id="profile-right">
-			<form class="well" method="post" action="{% url 'update_user' %}" enctype="multipart/form-data">
+			<form method="post" action="{% url 'update_user' username=user.username %}" enctype="multipart/form-data">
 				{% csrf_token %}
 				<div class="profile-info-block">
 					<div id="inner-one">
-						<!--
 						{% if member.image == "" %}
-						<img src="http://www.anglo.ca/images/blank-user-medium.png" width="170" height="170" alt="profile-pic"><a href="#"></a>
+							<img src="http://livestockportal.co.ke/img/blank_profile.png" width="170" height="170" alt="profile-pic">
 						{% else %}
-						<img src="{{ member.image }}" width="170" height="170" alt="profile-pic"><a href="#"></a>
-						{% endif %}-->
+							<img src="{{ member.image.url }}" width="170" height="170" alt="profile-pic">
+							<p> {{ member.image.name }} </p>
+						{% endif %}
 						<p>
-			                {{ form.image.errors }}
-			                {{ form.image }}
+			                <input id="id_image" name="image" type="file">
 			            </p>
 					</div>
 				</div>
 				<div class="profile-info-block">
 					<div id="inner-two">
-						<input id="id_display_name" maxlength="500" name="display_name" type="text" class="form-control" placeholder="Enter display name" style="width:700px;float:left" value="{{ member.display_name }}"><br><br>
+						<input id="id_display_name" maxlength="500" name="display_name" type="text" class="form-control" placeholder="Enter display name" style="width:463px;float:left" value="{{ member.display_name }}"><br><br>
 					</div>
 				</div>
 				<div class="profile-info-block">
 					<div id="inner-three">
-						<p> "{{ member.quote }}" </p><br>
+						<input id="id_quote" maxlength="500" name="quote" type="text" class="form-control" placeholder="Enter quote" style="width:463px;float:left" value="{{ member.quote }}"><br><br>
 					</div>
 				</div>
 				<div class="profile-info-block">
 					<div id="inner-four">
-						<p> {{ member.bio }} </p><br>
+						<textarea id="id_bio" maxlength="1000" name="bio" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:463px">{{ member.bio }}</textarea><br><br><br>
 					</div>
 				</div>
 				<p><input type="submit" value="Save!" /></p>
