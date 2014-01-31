@@ -1,3 +1,5 @@
+{% load cloudinary %}
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -34,10 +36,10 @@
 					<div id="profile-block">
 						<div id="picture-block">
 							<p style="margin-bottom:4px;"><span id="name"> {{member.user.first_name}} {{member.user.last_name}} </span></p>
-							{% if member.image == "" %}
+							{% if member.profile_image == "" %}
 							<img id="profile-image" src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="120" height="120">
 							{% else %}
-							<img id="profile-image" src="{{ member.image.url }}" alt="profile-pic" width="120" height="120">
+							<img id="profile-image" src="{{ member.profile_image.url }}" alt="profile-pic" width="120" height="120">
 							{% endif %}
 						</div>
 						<p id="profile-text">

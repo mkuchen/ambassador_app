@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 
+{% load cloudinary %}
+
 {% block stylesheets %}
 	<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
@@ -10,7 +12,7 @@
 	<div id="profile-block">
 		<h2> Profile for user "{{ member.user.username }}" </h2>
 		<div id="profile-left">
-			<strong style="margin-bottom:160px"> Profile picture </strong>
+			<strong style="margin-bottom:130px"> Profile picture </strong>
 			<strong> Display name </strong>
 			<strong> Quote </strong>
 			<strong> Bio </strong>
@@ -18,17 +20,25 @@
 		<div id="profile-right">
 			<form method="post" action="{% url 'update_user' username=user.username %}" enctype="multipart/form-data">
 				{% csrf_token %}
+				
+				{% cloudinary member.profile_image THUMBNAIL %}
+				<div id="cloudinary-input-block">
+					Currently: 
+					<a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a>
+					<input id="id_profile_image" class="cloudinary-fileupload"  name="profile_image" type="file">
+					<div class="preview"></div>
+				</div>
+				<input id="id_display_name" class="form-control full" maxlength="60" name="display_name" type="text" value="{{ member.display_name }}"><br>
+
+				<input id="id_quote" class="form-control full" maxlength="300" name="quote" type="text" value="{{ member.quote }}"><br>
+				
+				<textarea cols="40" class="form-control full" id="id_bio" name="bio" rows="10">{{ member.bio }}</textarea><br>
+				
+				<input type="submit" value="Save" class="btn btn-primary">
+				<!--
 				<div class="profile-info-block">
 					<div id="inner-one">
-						{% if member.image == "" %}
-							<img src="http://livestockportal.co.ke/img/blank_profile.png" width="170" height="170" alt="profile-pic">
-						{% else %}
-							<img src="{{ member.image.url }}" width="170" height="170" alt="profile-pic">
-							<p> {{ member.image.name }} </p>
-						{% endif %}
-						<p>
-			                <input id="id_image" name="image" type="file">
-			            </p>
+						<input id="id_profile_image" name="profile_image" type="file">
 					</div>
 				</div>
 				<div class="profile-info-block">
@@ -47,15 +57,29 @@
 					</div>
 				</div>
 				<p><input type="submit" value="Save!" /></p>
+				-->
 			</form>
+			{% if posted %}
+		      <div class="results">
+		        {% if posted.errors %}
+		          Errors: {{ posted.errors }}
+		        {% else %}
+		          <div class="uploaded_info">
+		            <div class="data">
+		              <table>
+		                {% for key, value in posted.image.metadata.items %}
+		                  <tr><td>{{ key }}</td><td>{{ value }}</td></tr>
+		                {% endfor %}
+		              </table>
+		            </div>
+		            <div class="image">
+		              {% cloudinary posted.image THUMBNAIL %}
+		            </div>
+		          </div>
+		        {% endif %}
+		      </div>
+		    {% endif %}
 		</div>
-		<div id="profile-edit-icons">
-			<a href="#" id="one"></a>
-			<a href="#" id="two"></a>
-			<a href="#" id="three"></a>
-			<a href="#" id="four"></a>
-		</div>
-		
 	</div>
 
 	<div id="user-referrals">
@@ -96,6 +120,16 @@
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
+
+			$('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {  
+  $('.preview').html(
+    $.cloudinary.image(data.result.public_id, 
+      { format: data.result.format, version: data.result.version, 
+        crop: 'fill', width: 150, height: 100 })
+  );    
+  $('.image_public_id').val(data.result.public_id);    
+  return true;
+});
 		});
 	</script>
 
