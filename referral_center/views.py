@@ -87,19 +87,20 @@ class OrderListJson(BaseDatatableView):
 			qs = qs.filter(qs_params)
 """
 
-class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
+class UserProfileView(View):
 	template_name = 'product/user_profile.html'
 	model = Member
-	fields = ['quote','bio','image','display_name']
+	fields = ['quote','bio','profile_image','display_name']
 
 	def get_success_url(self):
 		return '/profile/%s/' % self.request.user.username
 
+	"""
 	def get_content_type(self):
 		return u'application/json'
-
+	"""
 	def get_form(self, *args, **kwargs):
-		return UpdateMemberForm()
+		return UpdateMemberForm(instance=self.get_object(), data=self.request.POST)
 	
 	def get_object(self, queryset=None):
 		return Member.objects.get(user=self.request.user)
@@ -114,24 +115,26 @@ class UserProfileView(JSONResponseMixin, AjaxResponseMixin, UpdateView):
 		if user.username != username:
 			raise PermissionDenied()
 
-		return render(request, self.template_name, {'member':self.get_object(), 'form':self.get_form(), 'two':'true'})
+		return render(request, self.template_name, {'member':self.get_object(), 'form':UpdateMemberForm(instance=self.get_object()), 'two':'true'})
 
 	@method_decorator(login_required)
-	def post_ajax(self, request, *args, **kwargs):
+	def post(self, request, username, *args, **kwargs):
 		user = request.user
 		if user.username != username:
 			raise PermissionDenied()
 
 		form = UpdateMemberForm(request.POST, request.FILES)
-
+		context = {'member':self.get_object(), 'form':form, 'two':'true'}
+		context['posted'] = form.instance
+		
 		if form.is_valid():
-			member = Member.objects.get(user=user)
-			member.quote = form.cleaned_data['quote']
-			member.bio = form.cleaned_data['bio']
-			member.image = request.FILES['image']
-			member.display_name = form.cleaned_data['display_name']
-			member.save()
-			return HttpResponse('ok')
+			print >>sys.stderr, form.__dict__
+			form.save(commit=False)
+			mem = self.get_object()
+			mem.profile_image = form.cleaned_data['profile_image']
+			mem.save()
+		
+		return render(request, 'product/user_profile.html', context)
 
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):

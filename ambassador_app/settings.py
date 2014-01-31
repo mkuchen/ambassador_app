@@ -146,6 +146,7 @@ INSTALLED_APPS = (
     'referral_center',
     'south',
     'storages',
+    'cloudinary',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -203,4 +204,16 @@ STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
+)
+
+# Cloudinary config variables
+
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+
+cloudinary.config(
+    cloud_name= "ambassador-app",
+    api_key="924578874678548",
+    api_secret="9xMkFj5wVfaitP9WRHTFjcNzqME"
 )

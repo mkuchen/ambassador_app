@@ -232,7 +232,7 @@ div#profile-block h2 {
 }
 
 div#profile-block div#profile-left {
-	width: 175px;
+	width: 130px;
 	height: 363px;
 	float: left;
 	border-right: 1px solid black;
@@ -241,7 +241,7 @@ div#profile-block div#profile-left {
 
 div#profile-block div#profile-left strong {
 	display: block;
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 }
 
 div#profile-block div#profile-right {
@@ -250,9 +250,11 @@ div#profile-block div#profile-right {
 }
 
 div#profile-block div#profile-right img {
-	margin-bottom: 10px;
+	margin-bottom: 30px;
 	border: 8px solid white;
 	display: inline-block;
+	height: 120px;
+	width: 120px;
 	float: left;
 }
 
@@ -270,38 +272,10 @@ div#profile-block div#profile-right div.profile-info-block {
 	border-radius: 4px;
 }
 
-div#profile-block div#profile-edit-icons {
-	height: 363px;
-	width: 16px;
-	float: left;
+div#cloudinary-input-block {
 	display: inline-block;
-}
-
-div#profile-block div#profile-edit-icons a {
-	background: url('/static/img/edit-24.png') #E8EDE0;
-	display: inline-block;
-	width: 12px;
-	height: 12.5px;
-	background-size: 100%;
 	float: left;
-	margin-left: 6px;
-	margin-top: 2px;
+	margin-left: 12px;
 	position: relative;
-	left: -12px;
-}
-
-div#profile-block div#profile-edit-icons a#one {
-
-}
-
-div#profile-block div#profile-edit-icons a#two {
-	top: 196px;
-}
-
-div#profile-block div#profile-edit-icons a#three {
-	top: 235px;
-}
-
-div#profile-block div#profile-edit-icons a#four {
-	top: 275px;
+	top: 70px;
 }

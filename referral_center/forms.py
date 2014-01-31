@@ -1,6 +1,9 @@
 from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 from referral_center.models import Member
+
+from cloudinary.forms import CloudinaryFileField
 
 class AdminLinkForm(forms.Form):
 	link_title = forms.SlugField(max_length=500)
@@ -16,16 +19,13 @@ class LinkForm(forms.Form):
 	banner_text = forms.CharField(max_length=1000)
 	font_family = forms.CharField(max_length=500)
 
-class UpdateMemberForm(forms.Form):
-	quote = forms.CharField(max_length=300)
-	bio = forms.CharField(max_length=2000)
-	#image = forms.CharField(max_length=1000)
-	image = forms.FileField(
-		label='Select a file',
-		help_text='max. 42 megabytes'
-	)
-	first_name = forms.CharField(max_length=100)
-	last_name = forms.CharField(max_length=100)
+
+class UpdateMemberForm(ModelForm):
+	class Meta:
+		model = Member
+		exclude = ['user']
+	profile_image = CloudinaryFileField()
+
 
 class CreateUserForm(forms.Form):
 	username = forms.CharField(required=True)
