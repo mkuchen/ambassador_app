@@ -12,6 +12,22 @@ body {
 	min-height: 960px;
 }
 
+div.form-group {
+	margin-bottom: 15px;
+	float: left;
+	width: 100%;
+}
+
+input.referral-files {
+	float: left;
+	margin-top: 20px;
+	margin-left: 10px;
+}
+
+div.form-group img {
+	max-width: 150px;
+}
+
 div#wrapper-outer {
 	width: 100%;
 	background-color: #E8EDE0;
@@ -86,7 +102,7 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block div#pictur
 div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-text span#quote {
 	font-style: italic;
 	color: #eee;
-	font-size: 14px;
+	font-size: 16px;
 	text-align: right;
 }
 

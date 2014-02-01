@@ -2,6 +2,8 @@
 
 {% load staticfiles %}
 
+{% load cloudinary %}
+
 {% block stylesheets %}
 	<link rel="stylesheet" href="{% static 'css/home.css' %}">
 {% endblock %}
@@ -9,11 +11,30 @@
 {% block content %}
 	<div id="form-block">
 		<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
-		<form action="." method="POST">
+		
+		{% if object %}
+		<form method="post" action="{% url 'edit_referral' referral_id=object.pk %}" enctype="multipart/form-data">
+		{% else %}
+		<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
+		{% endif %}
 			{% csrf_token %}
 			<div class="form-group">
 				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
 				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br>
+			</div>
+			<div class="form-group">
+				<label for="id_logo_image" class="col-lg-2 control-label">Logo Image</label>
+				{% if object.logo_image %}
+					{% cloudinary object.logo_image THUMBNAIL %}
+				{% endif %}
+				<input class="referral-files" id="id_logo_image" name="logo_image" type="file">
+			</div>
+			<div class="form-group">
+				<label for="id_banner_image" class="col-lg-2 control-label">Banner Image</label>
+				{% if object.banner_image %}
+					{% cloudinary object.banner_image THUMBNAIL %}
+				{% endif %}
+				<input class="referral-files" id="id_banner_image" name="banner_image" type="file">
 			</div>
 			<!--
 			<div class="form-group">
@@ -42,7 +63,7 @@
 			</select>
 			<br><br><br>
 
-			<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Add{% endif %}" style="float:left;margin-right:6px"/>
+			<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Create{% endif %}" style="float:left;margin-right:6px"/>
 			<input type="button" class="btn btn-danger" value="Cancel" onclick=location.href='/home/';>
 			{% if form.link_title.errors %}
 			    <ol style="display:inline-block;margin-top:8px">

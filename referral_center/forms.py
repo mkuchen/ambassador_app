@@ -15,7 +15,7 @@ class AdminLinkForm(forms.Form):
 class LinkForm(forms.Form):
 	link_title = forms.SlugField(max_length=500)
 	logo_image = CloudinaryFileField()
-	bannerimage = CloudinaryFileField()
+	banner_image = CloudinaryFileField()
 	banner_text = forms.CharField(max_length=1000)
 	font_family = forms.CharField(max_length=500)
 
