@@ -15,16 +15,16 @@
 				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
 				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br>
 			</div>
-
+			<!--
 			<div class="form-group">
 				<label for="id_logo_url" class="col-lg-2 control-label">Logo URL</label>
 				<input id="id_logo_url" maxlength="1000" name="logo_url" type="text" class="form-control" placeholder="Enter logo URL" style="width:700px;float:left" {% if object %}value="{{ object.logo_url }}"{% endif %}><br><br>
-			</div>
-
+			</div>-->
+			<!--
 			<div class="form-group">
 				<label for="id_banner_background_url" class="col-lg-2 control-label">Banner Background</label>
 				<input id="id_banner_background_url" maxlength="1000" name="banner_background_url" type="text" class="form-control" placeholder="Enter banner image URL" style="width:700px;float:left" {% if object %}value="{{ object.banner_background_url }}"{% endif %}><br><br><br>
-			</div>
+			</div>-->
 
 			<div class="form-group">
 				<label for="id_banner_text" class="col-lg-2 control-label">Banner Text</label>
@@ -51,20 +51,22 @@
 				    {% endfor %}
 			    </ol>
 			{% endif %}<br>
+			<!--
 			{% if form.logo_url.errors %}
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.logo_url.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
 				    {% endfor %}
 			    </ol>
-			{% endif %}<br>
+			{% endif %}<br>-->
+			<!--
 			{% if form.banner_background_url.errors %}
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.banner_background_url.errors %}
 				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
 				    {% endfor %}
 			    </ol>
-			{% endif %}<br>
+			{% endif %}<br>-->
 			{% if form.banner_text.errors %}
 			    <ol style="display:inline-block;margin-top:8px">
 				    {% for error in form.banner_text.errors %}

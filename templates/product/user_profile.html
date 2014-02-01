@@ -3,6 +3,8 @@
 {% load staticfiles %}
 
 {% load cloudinary %}
+{% cloudinary_includes %}
+{% cloudinary_js_config %}
 
 {% block stylesheets %}
 	<link rel="stylesheet" href="{% static 'css/home.css' %}">
@@ -18,15 +20,17 @@
 			<strong> Bio </strong>
 		</div>
 		<div id="profile-right">
-			<form method="post" action="{% url 'update_user' username=user.username %}" enctype="multipart/form-data">
+			<form method="post" action="{% url 'update_user' username=user.username %}">
 				{% csrf_token %}
 				
 				{% cloudinary member.profile_image THUMBNAIL %}
 				<div id="cloudinary-input-block">
+					<!--
 					Currently: 
 					<a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a>
 					<input id="id_profile_image" class="cloudinary-fileupload"  name="profile_image" type="file">
-					<div class="preview"></div>
+					<div class="preview"></div> -->
+					{% cloudinary_direct_upload_field "member.profile_image" request=request %}
 				</div>
 				<input id="id_display_name" class="form-control full" maxlength="60" name="display_name" type="text" value="{{ member.display_name }}"><br>
 
@@ -90,6 +94,7 @@
 					<th>Total Clicks</th>
 					<th>Date Submitted</th>
 					<th>Owner</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -114,24 +119,15 @@
 				"aoColumnDefs": [
                     { "sWidth": "200px", "aTargets": [0], },
                     { "sWidth": "40px", "aTargets": [1], },
-                    { "sWidth": "48px", "aTargets": [2], },
+                    { "sWidth": "48px", "aTargets": [2], "iDataSort": 5},
                     { "sWidth": "60px", "aTargets": [3], "bSortable": false, },
+                    { "sWidth": "90px", "aTargets": [4], "bSortable": false, },
+                    { "bVisible": false, "aTargets": [5]}
                 ],
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
-
-			$('.cloudinary-fileupload').bind('cloudinarydone', function(e, data) {  
-  $('.preview').html(
-    $.cloudinary.image(data.result.public_id, 
-      { format: data.result.format, version: data.result.version, 
-        crop: 'fill', width: 150, height: 100 })
-  );    
-  $('.image_public_id').val(data.result.public_id);    
-  return true;
-});
-		});
-	</script>
+		});	</script>
 
 
 

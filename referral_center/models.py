@@ -16,15 +16,13 @@ class Member(models.Model):
 	display_name = models.CharField(max_length=60, default="Referral Marketing Solutions")
 	quote = models.CharField(max_length=300, default="Let's get things rolling!")
 	bio = models.TextField(default="")
-	profile_image = CloudinaryField("image", default=None)
+	profile_image = CloudinaryField("image", default=None, blank=True, null=True)
 
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
 	date_submitted = models.DateTimeField(auto_now_add=True)
-	#logo_url = models.CharField(max_length=1000)
-	#banner_background_url = models.CharField(max_length=1000)
-	logo_image = CloudinaryField("image", default=None)
-	banner_image = CloudinaryField("image", default=None)
+	logo_image = CloudinaryField("image", default=None, blank=True, null=True)
+	banner_image = CloudinaryField("image", default=None, blank=True, null=True)
 	banner_text = models.CharField(max_length=1000)
 	font_family = models.CharField(max_length=500)
 

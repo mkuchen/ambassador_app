@@ -14,6 +14,7 @@ from referral_center.models import Referral, ReferralStat, ReferralHist, Member
 from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView, UpdateView
 from ambassador_app.mixins import *
 from braces.views import AjaxResponseMixin, JSONResponseMixin
+from cloudinary.forms import cl_init_js_callbacks
 
 import sys
 import datetime
@@ -87,7 +88,7 @@ class OrderListJson(BaseDatatableView):
 			qs = qs.filter(qs_params)
 """
 
-class UserProfileView(View):
+class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 	template_name = 'product/user_profile.html'
 	model = Member
 	fields = ['quote','bio','profile_image','display_name']
@@ -95,10 +96,6 @@ class UserProfileView(View):
 	def get_success_url(self):
 		return '/profile/%s/' % self.request.user.username
 
-	"""
-	def get_content_type(self):
-		return u'application/json'
-	"""
 	def get_form(self, *args, **kwargs):
 		return UpdateMemberForm(instance=self.get_object(), data=self.request.POST)
 	
@@ -115,7 +112,12 @@ class UserProfileView(View):
 		if user.username != username:
 			raise PermissionDenied()
 
-		return render(request, self.template_name, {'member':self.get_object(), 'form':UpdateMemberForm(instance=self.get_object()), 'two':'true'})
+		context = dict(form = UpdateMemberForm(instance=self.get_object()))
+		cl_init_js_callbacks(context['form'], request)
+		context['two'] = 'True'
+		context['member'] = self.get_object()
+
+		return render(request, self.template_name, context)
 
 	@method_decorator(login_required)
 	def post(self, request, username, *args, **kwargs):
@@ -124,17 +126,21 @@ class UserProfileView(View):
 			raise PermissionDenied()
 
 		form = UpdateMemberForm(request.POST, request.FILES)
-		context = {'member':self.get_object(), 'form':form, 'two':'true'}
-		context['posted'] = form.instance
-		
+		#context = {'member':self.get_object(), 'form':form, 'two':'true'}
+		#context['posted'] = form.instance
+		context = {}
 		if form.is_valid():
 			print >>sys.stderr, form.__dict__
 			form.save(commit=False)
 			mem = self.get_object()
 			mem.profile_image = form.cleaned_data['profile_image']
 			mem.save()
+			context['photo_id'] = form.instance.id
+		else:
+			context['errors'] = form.errors
 		
 		return render(request, 'product/user_profile.html', context)
+		#return HttpResponse(json.dumps(context))
 
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
@@ -197,7 +203,7 @@ class ReferralDeleteView(View):
 class ReferralCreateView(View):
 	model = Referral
 	template_name = 'product/referral_create.html'
-	fields = ['link_title', 'logo_url', 'banner_background_url', 'banner_text', 'font_family']
+	fields = ['link_title', 'logo_image', 'banner_image', 'banner_text', 'font_family']
 	success_url = 'home/'
 
 	def get_form(self, *args, **kwargs):
@@ -247,8 +253,8 @@ class ReferralCreateView(View):
 
 				ref.link_title = form.cleaned_data['link_title']
 				ref.date_submitted = datetime.datetime.now()
-				ref.logo_url = form.cleaned_data['logo_url']
-				ref.banner_background_url = form.cleaned_data['banner_background_url']
+				#ref.logo_url = form.cleaned_data['logo_url']
+				#ref.banner_background_url = form.cleaned_data['banner_background_url']
 				ref.banner_text = form.cleaned_data['banner_text']
 				ref.font_family = form.cleaned_data['font_family']
 				ref.save()
@@ -257,8 +263,8 @@ class ReferralCreateView(View):
 				ref = Referral.objects.create(
 												link_title=form.cleaned_data['link_title'],
 												date_submitted=datetime.datetime.now(),
-												logo_url=form.cleaned_data['logo_url'],
-												banner_background_url=form.cleaned_data['banner_background_url'],
+												#logo_url=form.cleaned_data['logo_url'],
+												#banner_background_url=form.cleaned_data['banner_background_url'],
 												banner_text=form.cleaned_data['banner_text'],
 												font_family=form.cleaned_data['font_family'],
 												owner=member,
