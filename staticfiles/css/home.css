@@ -3,46 +3,18 @@ h2#home {
 	font-size: 32;
 }
 
-div#wrapper-outer div#content-main table#all-links {
-	width: 65%;
-}
-
-div#wrapper-outer div#content-main table#all-links th {
-	line-height: 36px;
-	padding-left: 8px;
-	color: #fff;
-}
-
-div#wrapper-outer div#content-main table#all-links tr {
-	font-size: 17px;
-	border: 2px solid #fff;
-}
-
-div#wrapper-outer div#content-main table#all-links thead tr {
-	background-color: #428bca !important;
-	height: 46px;
-	font-size: 18px;
-}
-
-div#wrapper-outer div#content-main table#all-links tr td {
-	background-color: transparent !important;
-}
-
-div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
-	background-color: #CAE1FF;
-}
-
-div#wrapper-outer div#content-main table#all-links tr:nth-child(even) {
-	background-color: #E6E8FA;
-}
 
 div#form-block {
-	width: 300px;
-	height: 130px;
+	width: 900px;
+	height: 910px;
 	float: center;
 	background: #CAE1FF;
 	padding: 14px;
 	margin-left: auto;
 	margin-right: auto;
 	border: 3px solid #fff;
+}
+
+form img {
+
 }

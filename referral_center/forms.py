@@ -1,30 +1,33 @@
 from django import forms
 from django.forms import ModelForm
 from django.contrib.auth.models import User
-from referral_center.models import Member
+from referral_center.models import Member, Referral
 
 from cloudinary.forms import CloudinaryFileField, CloudinaryJsFileField
 
-class AdminLinkForm(forms.Form):
-	link_title = forms.SlugField(max_length=500)
-	logo_image = CloudinaryFileField()
-	banner_image = CloudinaryFileField()
-	banner_text = forms.CharField(max_length=1000)
-	font_family = forms.CharField(max_length=500)
+class AdminLinkForm(ModelForm):
+	class Meta:
+		model = Referral
+		exclude = ['date_submitted', 'owner']
 
-class LinkForm(forms.Form):
-	link_title = forms.SlugField(max_length=500)
-	logo_image = CloudinaryFileField()
-	banner_image = CloudinaryFileField()
-	banner_text = forms.CharField(max_length=1000)
-	font_family = forms.CharField(max_length=500)
+	logo_image = CloudinaryFileField(required=False)
+	banner_image = CloudinaryFileField(required=False)
+
+
+class LinkForm(ModelForm):
+	class Meta:
+		model = Referral
+		exclude = ['date_submitted', 'owner']
+
+	logo_image = CloudinaryFileField(required=False)
+	banner_image = CloudinaryFileField(required=False)
 
 
 class UpdateMemberForm(ModelForm):
 	class Meta:
 		model = Member
 		exclude = ['user']
-	profile_image = CloudinaryFileField()
+	profile_image = CloudinaryFileField(required=False)
 
 
 class CreateUserForm(forms.Form):

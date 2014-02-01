@@ -9,7 +9,7 @@
 	    <link rel="stylesheet" href="{% static 'css/libs/reset.css' %}">
 	    <link rel="stylesheet" href="{% static 'css/libs/bootstrap.min.css' %}">
 	    <link rel="stylesheet" href="{% static 'css/base.css' %}">
-	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
+	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">	    
 	    {% block stylesheets %}{% endblock %}
 	    <!--[if IE]>
 	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -29,9 +29,9 @@
 						</div>
 					</div>
 					<ul id="header-list">
-						<li {% if one %}class="current"{% endif %}><a href="/home/"> My Referrals </a></li>
-						<li {% if two %}class="current"{% endif %}><a href="/profile/{{user.username}}/"> My Profile </a></li>
-						<li {% if three %}class="current"{% endif %}><a href="/create/"> New Referral </a></li>
+						<li id="one" {% if one %} style="border-left: 16px solid #3276b1;border-bottom: 2px solid #3276b1;" {% endif %}><a href="/home/"> My Referrals </a></li>
+						<li id="two" {% if two %} style="border-left: 16px solid #3276b1;border-bottom: 2px solid #3276b1;" {% endif %}><a href="/profile/{{user.username}}/"> My Profile </a></li>
+						<li id="three" {% if three %} style="border-left: 16px solid #3276b1;border-bottom: 2px solid #3276b1;" {% endif %}><a href="/create/" id="three"> New Referral </a></li>
 					</ul>
 					<div id="profile-block">
 						<div id="picture-block">
@@ -44,11 +44,10 @@
 						</div>
 						<p id="profile-text">
 							<span id="quote"> "{{member.quote}}" </span><br><br>
-							<a href="#" style="padding-left:2px"> edit profile </a><br>
+							<a href="/profile/{{member.user.username}}/" style="padding-left:2px"> edit profile </a><br>
 							<a href="/logout" id="logout" style="margin-top:12px;display:block;"> Logout </a>
 						</p>
 					</div>
-					
 				</div>
 			</div>
 			<div id="content-main" class="col-md-8">
@@ -59,10 +58,13 @@
 		<script type="text/javascript" src="{% static 'js/libs/jquery-1.10.2.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
+		<script type="text/javascript" src="{% static 'js/libs/jquery.hoverIntent.js' %}"></script>
 		<script type="text/javascript">
 			$(document).ready(function() {
 				// nav slide in
-				$("div#header-outer").animate({left:'0'}, 1600);
+
+				$("div#header-outer").animate( {left:'0'}, 1600 );
+
 			});
 		</script>
 		{% block javascript %}

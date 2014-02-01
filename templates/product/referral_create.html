@@ -13,11 +13,29 @@
 		<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
 		
 		{% if object %}
+		<a href=""> Preview </a>
 		<form method="post" action="{% url 'edit_referral' referral_id=object.pk %}" enctype="multipart/form-data">
 		{% else %}
 		<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
 		{% endif %}
 			{% csrf_token %}
+
+			{% if posted %}
+		      	<div class="results">
+		      		{% if posted.logo_image %}
+		      			{% cloudinary posted.logo_image THUMBNAIL %}
+		      		{% endif %}
+
+		      		{% if posted.banner_image %}
+						{% cloudinary posted.banner_image THUMBNAIL %}
+					{% endif %}
+
+		        {% if errors %}
+		          	Errors: {{ errors }}
+		        {% endif %}
+		      	</div>
+			{% endif %}
+
 			<div class="form-group">
 				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
 				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br>
