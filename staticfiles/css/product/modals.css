@@ -3,6 +3,24 @@ div#modal-main {
 	height: 393px !important;
 }
 
+div#modal-main-1 {
+	width: 500px !important;
+	height: 393px !important;
+}
+
+div#modal-main-1 input.full {
+	width:256px;
+	float:center;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+div#modal-main-1 input.half {
+	width:189px;
+	float:left;
+	margin-right: 10px;
+}
+
 form.well {
 	margin-bottom: 0;
 }

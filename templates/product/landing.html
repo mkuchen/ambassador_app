@@ -27,22 +27,46 @@
 					</a>
 				</div>
 				<div id="nav-bar-options">
-					<a class="top-option" href=""> Home </a> |
-					<a class="top-option" href=""> Edit </a> |
+					<a class="top-option" href="/home/"> Home </a> |
+					<a class="top-option" href="/edit/{{ referral.pk }}/"> Edit </a> |
 					<a class="top-option" href=""> Logout </a>
 				</div>
+				<div id="preview-warning-block">
+					<p> You are viewing this referral page in <strong>Preview Mode</strong>.  When your leads see this page, this top bar will not be visible. </p>
+				</div>
 				<div id="nav-bar-profile">
-					<img id="nav-bar-img" src="" width="50" height="50">
-					<p> username </p>
-					<a href=""> edit profile </a>
+					<a href="/profile/{{member.user.username}}/">
+						{% if member.profile_image == "" %}
+						<img id="nav-bar-img" src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="50" height="50">
+						{% else %}
+						<img id="nav-bar-img" src="{{ member.profile_image.url }}" alt="profile-pic" width="50" height="50">
+						{% endif %}
+					</a>
+					<div id="cred-block">
+						<p> {{ member.user.username }} </p>
+						<a href="/profile/{{member.user.username}}/" id="edit-profile"> edit profile </a>
+					</div>
 				</div>
 			</div>
 		</div>
 		{% endif %}
-		{% block content %}
-			<h2>{% block custom %}DEFAULT MESSAGE{% endblock %}<h2>
-			<h4> {{referral.link_title}} </h4>
-		{% endblock %}
+		<div id="main-content">
+			<div id="header-container">
+				<div id="header-inner">
+					<h1 style="font-family:{{referral.font_family}}"> {{ referral.link_title }} </h1>
+				</div>
+			</div>
+			<div id="banner-container" style="background:url('{{ referral.banner_image.url }}');background-size:100%;">
+				<div class="body-content" id="banner-content">
+					<div id="left-half">
+						<h4 style="font-family:{{referral.font_family}}"> {{ referral.banner_text }} </h4>
+					</div>
+					<div id="right-half">
+
+					</div>
+				</div>
+			</div>
+		</div>
 	</body>
 
 </html>

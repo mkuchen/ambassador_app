@@ -46,7 +46,7 @@ class OrderListJson(BaseDatatableView):
 		json_data = []
 		for item in qs:
 			json_data.append([
-				'<a href="/landing/%s/">%s</a>' % (item.referral.link_title, item.referral.link_title),
+				'<a href="/landing/?link=%s">%s</a>' % (item.referral.link_title, item.referral.link_title),
 				item.stat.num_clicks,
 				item.referral.date_submitted.strftime("%B %d, %Y"),
 				item.referral.owner.user.username,
@@ -155,7 +155,7 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 			'name':"benny's burritos",
 			'location': "New York, NY",
 		}
-		return HttpResponse('yeahuuuuuhhh')
+		return HttpResponseRedirect('/home')
 		#return self.render_json_response(json_dict)
 
 #############################################
@@ -233,47 +233,64 @@ class ReferralCreateView(View):
 	@method_decorator(login_required)
 	def post(self, request, referral_id=None):
 		user = request.user
+		ref = None
+		member = None
+		if referral_id:
+			try:
+				member = Member.objects.get(user=user)
+				ref = Referral.objects.get(pk=referral_id)
+			except ObjectDoesNotExist:
+				raise Http404
+
+			if ref.owner != member:
+				raise PermissionDenied
+
 		if user.is_staff:
 			form = AdminLinkForm(request.POST, request.FILES)
 		else:
 			form = LinkForm(request.POST, request.FILES)
 
+		context = {
+			'posted': form.instance,
+			'form': form,
+		}
+
 		if form.is_valid():
-			member = Member.objects.get(user=user)
-			ref = None
 			date_submitted = datetime.datetime.now()
 			if referral_id:
-				try:
-					ref = Referral.objects.get(pk=referral_id)
-				except ObjectDoesNotExist:
-					raise Http404
-
-				if ref.owner != member:
-					raise PermissionDenied
-
 				ref.link_title = form.cleaned_data['link_title']
 				ref.date_submitted = datetime.datetime.now()
-				ref.logo_image = form.cleaned_data['logo_image']
-				ref.banner_image = form.cleaned_data['banner_image']
 				ref.banner_text = form.cleaned_data['banner_text']
 				ref.font_family = form.cleaned_data['font_family']
+				if form.cleaned_data['logo_image']:
+					ref.logo_image = form.cleaned_data['logo_image']
+				if form.cleaned_data['banner_image']:
+					ref.banner_image = form.cleaned_data['banner_image']
 				ref.save()
-
 			else:
 				ref = Referral.objects.create(
 												link_title=form.cleaned_data['link_title'],
 												date_submitted=datetime.datetime.now(),
-												logo_image=form.cleaned_data['logo_image'],
-												banner_image=form.cleaned_data['banner_image'],
 												banner_text=form.cleaned_data['banner_text'],
 												font_family=form.cleaned_data['font_family'],
 												owner=member,
 											)
+				if form.cleaned_data['banner_image']:
+					ref.banner_image=form.cleaned_data['banner_image']
+				if form.cleaned_data['logo_image']:
+					ref.logo_image=form.cleaned_data['logo_image']
+				ref.save()
+
 				ref_stat = ReferralStat.objects.create()
 				ref_hist = ReferralHist.objects.create(date=date_submitted, referral=ref, stat=ref_stat)
 			return HttpResponseRedirect('/home/')
 		else:
-			return render(request, self.template_name, { 'form':form, 'errors':form.errors })
+			context['errors'] = form.errors
+			if ref:
+				context['object'] = ref
+			if member:
+				context['member'] = member
+			return render(request, self.template_name, context)
 
 
 class HomeView(View):
@@ -307,12 +324,14 @@ class LandingView(DetailView):
 
 		if not title:
 			raise Http404
-		context = self.get_context_data()
-		context['title'] = title
+		
 		try:
 			ref = Referral.objects.get(link_title=title, owner=member)
 		except:
 			raise Http404
+
+		context = self.get_context_data()
+		context['title'] = title
 		context['referral'] = ref
 		context['member'] = member
 		context['preview'] = 'true'
