@@ -112,10 +112,11 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 		if user.username != username:
 			raise PermissionDenied()
 
-		context = dict(form = UpdateMemberForm(instance=self.get_object()))
-		cl_init_js_callbacks(context['form'], request)
-		context['two'] = 'True'
-		context['member'] = self.get_object()
+		context = {
+			'form': UpdateMemberForm(instance=self.get_object()),
+			'two': True,
+			'member': self.get_object()
+		}
 
 		return render(request, self.template_name, context)
 
@@ -126,21 +127,18 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 			raise PermissionDenied()
 
 		form = UpdateMemberForm(request.POST, request.FILES)
-		#context = {'member':self.get_object(), 'form':form, 'two':'true'}
-		#context['posted'] = form.instance
-		context = {}
+		context = {'member':self.get_object(), 'form':form, 'two':'true'}
+		context['posted'] = form.instance
+
 		if form.is_valid():
-			print >>sys.stderr, form.__dict__
 			form.save(commit=False)
 			mem = self.get_object()
 			mem.profile_image = form.cleaned_data['profile_image']
 			mem.save()
-			context['photo_id'] = form.instance.id
 		else:
 			context['errors'] = form.errors
 		
 		return render(request, 'product/user_profile.html', context)
-		#return HttpResponse(json.dumps(context))
 
 
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
@@ -228,15 +226,17 @@ class ReferralCreateView(View):
 			if referral.owner != member:
 				raise PermissionDenied
 
-		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral, 'three':'true' })
+			return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral, 'three':'true' })
+
+		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'three':'true' })
 
 	@method_decorator(login_required)
 	def post(self, request, referral_id=None):
 		user = request.user
 		if user.is_staff:
-			form = AdminLinkForm(request.POST)
+			form = AdminLinkForm(request.POST, request.FILES)
 		else:
-			form = LinkForm(request.POST)
+			form = LinkForm(request.POST, request.FILES)
 
 		if form.is_valid():
 			member = Member.objects.get(user=user)
@@ -253,8 +253,8 @@ class ReferralCreateView(View):
 
 				ref.link_title = form.cleaned_data['link_title']
 				ref.date_submitted = datetime.datetime.now()
-				#ref.logo_url = form.cleaned_data['logo_url']
-				#ref.banner_background_url = form.cleaned_data['banner_background_url']
+				ref.logo_image = form.cleaned_data['logo_image']
+				ref.banner_image = form.cleaned_data['banner_image']
 				ref.banner_text = form.cleaned_data['banner_text']
 				ref.font_family = form.cleaned_data['font_family']
 				ref.save()
@@ -263,8 +263,8 @@ class ReferralCreateView(View):
 				ref = Referral.objects.create(
 												link_title=form.cleaned_data['link_title'],
 												date_submitted=datetime.datetime.now(),
-												#logo_url=form.cleaned_data['logo_url'],
-												#banner_background_url=form.cleaned_data['banner_background_url'],
+												logo_image=form.cleaned_data['logo_image'],
+												banner_image=form.cleaned_data['banner_image'],
 												banner_text=form.cleaned_data['banner_text'],
 												font_family=form.cleaned_data['font_family'],
 												owner=member,
@@ -273,7 +273,7 @@ class ReferralCreateView(View):
 				ref_hist = ReferralHist.objects.create(date=date_submitted, referral=ref, stat=ref_stat)
 			return HttpResponseRedirect('/home/')
 		else:
-			return render(request, self.template_name, { 'form':form })
+			return render(request, self.template_name, { 'form':form, 'errors':form.errors })
 
 
 class HomeView(View):
