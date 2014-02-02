@@ -92,7 +92,7 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block div#pictur
 
 div#wrapper-outer div#header-outer div#header-inner div#profile-block div#picture-block img {
 	border-radius: 60px;
-	background-color: #eee;
+	background-color: #FCD271;
 	padding: 6px;
 	float: center;
 	margin-left: auto;
@@ -100,7 +100,7 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block div#pictur
 	display: block;
 }
 
-div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-text {
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text {
 	color: #eee;
 	line-height: 15px;
 	margin-top: 6px;
@@ -110,11 +110,11 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-
 div#wrapper-outer div#header-outer div#header-inner div#profile-block div#picture-block span#name {
 	font-size: 16px;
 	font-weight: bold;
-	color: #eee;
+	color: white;
 	text-align: left;
 }
 
-div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-text span#quote {
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text span#quote {
 	font-style: italic;
 	color: #eee;
 	font-size: 16px;
@@ -203,7 +203,27 @@ strong.logo {
 	margin-left: auto;
 }
 
+strong.logo-1 {
+	width: 192px;
+	height: 42px;
+	background-image: url('https://s3.amazonaws.com/ambassador/static/images/v2/sprite_vertical.png');
+	background-position: -10px -10px;
+	text-indent: -9999px;
+	overflow: hidden;
+	float: center;
+	display: block;
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+
+
 strong.logo a {
+	display: block;
+	height: 100%;
+}
+
+strong.logo-1 a{
 	display: block;
 	height: 100%;
 }

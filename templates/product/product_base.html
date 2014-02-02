@@ -22,7 +22,7 @@
 				<div id="header-inner">
 					<div id="logo-block">
 						<div id="logo-container">
-							<strong class="logo">
+							<strong class="logo-1">
 								<a href="/"></a>
 							</strong>
 							<h1> Grow the web with referrals! </h1>
@@ -42,13 +42,13 @@
 							<img id="profile-image" src="{{ member.profile_image.url }}" alt="profile-pic" width="120" height="120">
 							{% endif %}
 						</div>
-						<p id="profile-text">
+						<div id="profile-text">
 							{% if member.quote %}
 							<span id="quote"> "{{member.quote}}" </span><br><br>
 							{% endif %}
-							<a href="/profile/{{member.user.username}}/" style="padding-left:2px"> edit profile </a><br>
-							<a href="/logout" id="logout" style="margin-top:12px;display:block;"> Logout </a>
-						</p>
+							<a href="/profile/{{member.user.username}}/" style="padding-left:2px;float:left"> edit profile </a>
+							<a href="/logout" id="logout" style="display:block;float:right"> Logout </a>
+						</div>
 					</div>
 				</div>
 			</div>
