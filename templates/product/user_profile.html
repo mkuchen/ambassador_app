@@ -28,17 +28,21 @@
 			          	Errors: {{ errors }}
 			        {% endif %}
 			      	</div>
-			    {% else %}
-					{% if member.profile_image %}
-						{% cloudinary member.profile_image THUMBNAIL %}
-					{% endif %}
 				{% endif %}
 				<div id="cloudinary-input-block">
 					{% if member.profile_image %}
-					Currently:
-					<a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a>
+						{% cloudinary member.profile_image THUMBNAIL %}
+						<div id="profile-pic-info">
+							<p>Currently: <a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a></p>
+							<input id="id_profile_image" name="profile_image" type="file">
+						</div>
+					{% else %}
+						<img src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="120" height="120">
+						<div id="profile-pic-info">
+							<p>Currently: None</p>
+							<input id="id_profile_image" name="profile_image" type="file">
+						</div>
 					{% endif %}
-					<input id="id_profile_image" name="profile_image" type="file">
 				</div>
 
 				<input id="id_display_name" class="form-control full" maxlength="60" name="display_name" type="text" value="{{ member.display_name }}"><br>

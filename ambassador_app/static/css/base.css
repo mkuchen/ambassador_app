@@ -1,7 +1,7 @@
 html {
 	height: 100%;
 	width: 100%;
-	min-height: 600px;
+	min-height: 900px;
 }
 
 body {
@@ -9,7 +9,7 @@ body {
 	margin: 0;
 	height: 100%;
 	width: 100%;
-	min-height: 600px;
+	min-height: 900px;
 }
 
 div.form-group {
@@ -285,7 +285,7 @@ div#profile-block div#profile-left {
 
 div#profile-block div#profile-left strong {
 	display: block;
-	margin-bottom: 30px;
+	margin-bottom: 33px;
 }
 
 div#profile-block div#profile-right {
@@ -321,5 +321,17 @@ div#cloudinary-input-block {
 	float: left;
 	margin-left: 12px;
 	position: relative;
-	top: 70px;
+}
+
+div#cloudinary-input-block div#profile-pic-info {
+	width: 317px;
+	float: left;
+	display: inline-block;
+	height: 70px;
+	margin-left: 12px;
+	margin-top: 52px;
+}
+
+input#id_profile_image {
+	float: left;
 }

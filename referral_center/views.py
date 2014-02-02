@@ -140,7 +140,7 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 		
 		return render(request, 'product/user_profile.html', context)
 
-
+"""
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
 
@@ -151,12 +151,33 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
 			new_user = form.save()
-		json_dict = {
-			'name':"benny's burritos",
-			'location': "New York, NY",
-		}
-		return HttpResponseRedirect('/home')
+
+		user = authenticate(username=new_user.username, password=new_user.password)
+		if user is not None:
+			login(request, user)
+			return HttpResponseRedirect('/home/')
+		else:
+			return HttpResponseRedirect('/splash/')
 		#return self.render_json_response(json_dict)
+
+"""
+
+class CreateUser(View):
+	def post(self, request, *args, **kwargs):
+		form = CreateUserForm(request.POST)
+		new_user = None
+		if form.is_valid():
+			new_user = form.save()
+		else:
+			return HttpResponseRedirect('/durr/')
+
+		user = authenticate(username=request.POST['username'], password=request.POST['password1'])
+		
+		if user is not None and user.is_active:
+			login(request, user)
+			return HttpResponseRedirect('/home/')
+		else:
+			return HttpResponseRedirect('/hurr/')
 
 #############################################
 
