@@ -13,7 +13,7 @@
 		<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
 		
 		{% if object %}
-		<a href=""> Preview </a>
+		<a href="/landing/?link={{object.link_title}}"> Preview </a>
 		<form method="post" action="{% url 'edit_referral' referral_id=object.pk %}" enctype="multipart/form-data">
 		{% else %}
 		<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
@@ -44,6 +44,8 @@
 				<label for="id_logo_image" class="col-lg-2 control-label">Logo Image</label>
 				{% if object.logo_image %}
 					{% cloudinary object.logo_image THUMBNAIL %}
+				{% else %}
+					<img src="http://www.underconsideration.com/brandnew/archives/blank_digital_logo_detail.png" width="200">
 				{% endif %}
 				<input class="referral-files" id="id_logo_image" name="logo_image" type="file">
 			</div>
@@ -51,6 +53,8 @@
 				<label for="id_banner_image" class="col-lg-2 control-label">Banner Image</label>
 				{% if object.banner_image %}
 					{% cloudinary object.banner_image THUMBNAIL %}
+				{% else %}
+					<img src="http://static7.depositphotos.com/1178962/693/v/950/depositphotos_6931634-Plane-with-blank-banner.jpg" width="200">
 				{% endif %}
 				<input class="referral-files" id="id_banner_image" name="banner_image" type="file">
 			</div>
