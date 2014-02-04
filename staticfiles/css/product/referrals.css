@@ -1,3 +1,9 @@
+body {
+	height: 100%;
+	width: 100%;
+	min-height: 600px;
+}
+
 div#nav-bar {
 	height: 54px;
 	width: 100%;
@@ -15,22 +21,38 @@ div#nav-bar div#nav-bar-inner {
 	float: center;
 	margin-left: auto;
 	margin-right: auto;
+	padding-left: 10px;
+	padding-right: 10px;
 }
 
 div#nav-bar div#nav-bar-inner a.top-option {
 	color: #FCD271;
-	font-size: 16px;
-	line-height: 56px;
-	margin-left: 12px;
+	font-size: 14px;
+	line-height: 54px;
+	margin-left: 0px;
 	margin-right: 2px;
 }
 
 div#nav-bar div#nav-bar-inner div#amb-logo-block {
 	display: inline-block;
 	float: left;
-	width: 350px;
 	height: 100%;
-	margin-right: 40px;
+	margin-right: 24px;
+}
+
+div#nav-bar div#nav-bar-inner div#preview-warning-block {
+	display: inline-block;
+	float: left;
+	margin-left: 8px;
+	height: 100%;
+	width: 273px;
+}
+
+div#nav-bar div#nav-bar-inner div#preview-warning-block p {
+	line-height: 12px;
+	color: red;
+	font-size: 10px;
+	margin-top: 14px;
 }
 
 div#nav-bar div#nav-bar-inner div#nav-bar-options {
@@ -40,15 +62,41 @@ div#nav-bar div#nav-bar-inner div#nav-bar-options {
 }
 
 div#nav-bar div#nav-bar-inner div#nav-bar-profile {
-	width: 300px;
-	height: 54px;
+	height: 44px;
 	display: inline-block;
 	float: right;
+	margin-top: 3px;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-profile div#cred-block {
+	height: 90%;
+	display: inline-block;
+	margin-right: 8px;
+	float: right;
+	text-align: right;
 }
 
 div#nav-bar div#nav-bar-inner div#nav-bar-profile p {
 	display: inline-block;
 	color: #eee;
+	float: right;
+	margin-bottom: 0;
+	line-height: 12px;
+	margin-top: 10px;
+	font-size: 14px;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-profile a#edit-profile {
+	display: inline-block;
+	float: right;
+}
+
+div#nav-bar div#nav-bar-inner div#nav-bar-profile img#nav-bar-img {
+	width: 44px;
+	height: 44px;
+	border: 3px solid white;
+	display: inline-block;
+	float: right;
 }
 
 div#nav-bar div#nav-bar-inner div#amb-logo-block a:hover {
@@ -56,8 +104,8 @@ div#nav-bar div#nav-bar-inner div#amb-logo-block a:hover {
 }
 
 div#nav-bar div#nav-bar-inner div#amb-logo-block span#logo-text {
-	line-height: 55px;
-	font-size: 17px;
+	line-height: 54px;
+	font-size: 15px;
 	font-family: arial, helvetica, sans-serif;
 	text-shadow: 0px 1px 1px rgba(0,0,0, 0.8);
 	letter-spacing: -1px;
@@ -77,3 +125,150 @@ strong.preview-logo {
 	margin-right: auto;
 	margin-left: auto;
 }
+
+div#main-content {
+	width: 100%;
+	min-height: 600px;
+	height: 100%;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#main-content div#header-container {
+	background: #102E37;
+	width: 100%;
+	height: 54px;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	border-bottom: 3px solid #FCD271;
+}
+
+div#main-content div#header-container div#header-inner {
+	width: 1000px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 12px;
+}
+
+div#main-content div#header-container div#header-inner h1 {
+	font-size: 26px;
+	color: white;
+	text-align: center;
+	margin: 0;
+	font-weight: bold;
+}
+
+div#main-content div#banner-container {
+	height: 440px;
+	width: 100%;
+	border-bottom: 40px solid #0d0d0d;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+}
+
+div#main-content div#banner-container div#banner-content {
+	height: 95%;
+	top: 10px;
+	position: relative;
+	width: 100%;
+	padding: 15px;
+	border-radius: 6px;
+}
+
+div.body-content {
+	width: 1000px!important;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+div#main-content div#banner-container div#banner-content h4 {
+	color: black;
+}
+
+div#banner-container div#left-half {
+	height: 100%;
+	width: 60%;
+	display: inline-block;
+	float: left;
+	background: url('static/img/callout-bg.png');
+}
+
+div#banner-container div#right-half {
+	height: 100%;
+	width: 38%;
+	padding: 12px;
+	display: inline-block;
+	float: right;
+	background: #eee;
+	border-radius: 6px;
+	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+	box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
+}
+
+div#banner-container div#right-half div#banner-profile {
+	width: 100%;
+	height: 100%;
+	display: inline-block;
+}
+
+div#banner-container div#right-half div#banner-profile h3 {
+	font-size: 22px;
+	float: left;
+	margin-top: 12px;
+	margin-bottom: 15px;
+	margin-left: 10px;
+}
+
+div#banner-container div#right-half div#banner-profile img#banner-profile-img {
+	border-radius: 120px;
+	background-color: #FCD271;
+	padding: 6px;
+	float: right;
+	display: inline-block;
+}
+
+
+div#banner-container div#right-half div#banner-profile div#quote-block {
+	width: 65%;
+	display: inline-block;
+	float: left;
+}
+
+div#banner-container div#right-half div#banner-profile div#quote-block img#quote-left {
+	float: left;
+}
+
+div#banner-container div#right-half div#banner-profile div#quote-block img#quote-right {
+	float: left;
+}
+
+div#banner-container div#right-half div#banner-profile div#quote-block p#quote {
+	font-size: 20px;
+	line-height: 15px;
+	float: left;
+	width: 70%;
+	margin-right: 4px;
+	margin-left: 4px;
+	text-align: center;
+}
+
+div#banner-container div#right-half div#banner-profile div#profile-text {
+	width: 100%;
+	display: inline-block;
+	text-overflow: ellipsis;
+	padding: 8px;
+	overflow: hidden;
+}
+
+div#banner-container div#right-half div#banner-profile div#profile-text p#bio {
+	font-size: 16px;
+	line-height: 19px;
+	font-style: italic;
+}
+
+

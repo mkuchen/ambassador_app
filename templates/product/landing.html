@@ -19,7 +19,7 @@
 		<div id="nav-bar">
 			<div id="nav-bar-inner">
 				<div id="amb-logo-block">
-					<a href="#">
+					<a href="/home/">
 						<strong class="preview-logo">
 							
 						</strong>
@@ -43,7 +43,7 @@
 						{% endif %}
 					</a>
 					<div id="cred-block">
-						<p> {{ member.user.username }} </p>
+						<p> {{ member.user.first_name }} {{ member.user.last_name }} </p><br>
 						<a href="/profile/{{member.user.username}}/" id="edit-profile"> edit profile </a>
 					</div>
 				</div>
@@ -59,10 +59,22 @@
 			<div id="banner-container" style="background:url('{{ referral.banner_image.url }}');background-size:100%;">
 				<div class="body-content" id="banner-content">
 					<div id="left-half">
-						<h4 style="font-family:{{referral.font_family}}"> {{ referral.banner_text }} </h4>
+						<h4 style="font-family:{{ referral.font_family }}"> {{ referral.banner_text }} </h4>
+						<a href="{% url 'purchase_referral' referral.pk %}"><button class="btn btn-primary">Purchase</button></a>
 					</div>
 					<div id="right-half">
-
+						<div id="banner-profile">
+							<img id="banner-profile-img" src="{{ referral.owner.profile_image.url }}" width="120" height="120">
+							<h3 style="font-family:{{ referral.font_family }}"> {{referral.owner.user.first_name }} {{referral.owner.user.last_name }} </h3>
+							<div id="quote-block">
+								<img id="quote-left" src="{% static 'img/quotation-marks-left.png' %}" width="20" height="20">
+								<p id="quote" style="font-family:{{ referral.font_family }}"> {{ referral.owner.quote }} </p>
+								<img id="quote-left" src="{% static 'img/quotation-marks-right.png' %}" width="20" height="20">
+							</div>
+							<div id="profile-text">
+								<p id="bio" style="font-family:{{ referral.font_family }}"> {{ referral.owner.bio }} </p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

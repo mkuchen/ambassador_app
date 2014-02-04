@@ -27,13 +27,13 @@ class OrderListJson(BaseDatatableView):
 	model = ReferralHist
 
 	# define the columns that will be returned
-	columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
+	columns = ['referral.link_title', 'stat.num_clicks', 'stat.num_purchases', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
 
 	# define column names that will be used in sorting
 	# order is important and should be same as order of columns
 	# displayed by datatables. For non sortable columns use empty
 	# value like ''
-	order_columns = ['referral.link_title', 'stat.num_clicks', 'referral.date_submitted', '', '']
+	order_columns = ['referral.link_title', 'stat.num_clicks', 'stat.num_purchases', 'referral.date_submitted', '', '']
 
 	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
 	# and make it return huge amount of data
@@ -46,11 +46,11 @@ class OrderListJson(BaseDatatableView):
 		json_data = []
 		for item in qs:
 			json_data.append([
-				'<a href="/landing/?link=%s">%s</a>' % (item.referral.link_title, item.referral.link_title),
-				item.stat.num_clicks,
-				item.referral.date_submitted.strftime("%B %d, %Y"),
-				item.referral.owner.user.username,
-				'<a style="margin-right:6px;text-decoration:underline;" href="/edit/%s/">edit</a> <a style="text-decoration:underline;" href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
+				'<a href="/landing/?link=%s" class="col-1">%s</a>' % (item.referral.link_title, item.referral.link_title),
+				'<span class="col-2">%s</span>' % item.stat.num_clicks,
+				'<span class="col-2">%s</span>' % item.stat.num_purchases,
+				'<span class="col-3">%s</span>' % item.referral.date_submitted.strftime("%B %d, %Y"),
+				'<a class="col-5" style="margin-right:6px;text-decoration:underline;" href="/edit/%s/">edit</a> <a style="text-decoration:underline;" href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
 				"%s %s %s %s %s %s" % (item.referral.date_submitted.year, item.referral.date_submitted.month, item.referral.date_submitted.day, item.referral.date_submitted.hour, item.referral.date_submitted.minute, item.referral.date_submitted.second),
 			])
 		return json_data
@@ -193,16 +193,8 @@ class SplashView(TemplateView):
 		return render(request, self.template_name, {'form':form})
 
 #############################################
-"""
-class ReferralEditView(UpdateView):
-	model = Referral
-	template_name = 'product/referral_create.html'
-	fields = ['link_title', 'logo_url', 'banner_background_url', 'banner_text', 'font_family']
-	success_url = 'home/'
-"""
 
 class ReferralDeleteView(View):
-
 	@method_decorator(login_required)
 	def get(self, request, referral_id, *args, **kwargs):
 		member = Member.objects.get(user=request.user)
@@ -217,6 +209,24 @@ class ReferralDeleteView(View):
 		return HttpResponseRedirect('/home/')
 
 
+class ReferralPurchaseView(View):
+	def get(self, request, referral_id, *args, **kwargs):
+		user = request.user
+		try:
+			referral = Referral.objects.get(pk=referral_id)
+		except ObjectDoesNotExist:
+			raise Http404
+		
+		if referral.owner.user != user:
+			raise PermissionDenied
+
+		ref_hists = ReferralHist.objects.filter(referral=referral)
+		hist = ref_hists.order_by('date')[0]
+		hist.stat.update_purchase()
+		hist.stat.save()
+		redirect_string = '/landing/?link=%s' % referral.link_title
+
+		return HttpResponseRedirect(redirect_string) 
 
 
 class ReferralCreateView(View):
@@ -247,7 +257,7 @@ class ReferralCreateView(View):
 			if referral.owner != member:
 				raise PermissionDenied
 
-			return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral, 'three':'true' })
+			return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral })
 
 		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'three':'true' })
 

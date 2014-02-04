@@ -8,13 +8,13 @@
 
 {% block content %}
 	<div style="margin: 30px">
-		<table class="table datatable" id="all-links" style="width:900px">
+		<table class="table datatable" id="all-links">
 			<thead>
 				<tr>
 					<th>Link Title</th>
-					<th># Clicks</th>
-					<th>Date Submitted</th>
-					<th>Owner</th>
+					<th>Clicks</th>
+					<th>Purchases</th>
+					<th>Submitted</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -40,8 +40,8 @@
 				"aoColumnDefs": [
                     { "sWidth": "200px", "aTargets": [0], },
                     { "sWidth": "40px", "aTargets": [1], },
-                    { "sWidth": "48px", "aTargets": [2], "iDataSort": 5},
-                    { "sWidth": "60px", "aTargets": [3], "bSortable": false, },
+                    { "sWidth": "40px", "aTargets": [2], },
+                    { "sWidth": "48px", "aTargets": [3], "iDataSort": 5},
                     { "sWidth": "90px", "aTargets": [4], "bSortable": false, },
                     { "bVisible": false, "aTargets": [5]}
                 ],
