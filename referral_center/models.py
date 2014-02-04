@@ -18,6 +18,10 @@ class Member(models.Model):
 	bio = models.TextField(default="")
 	profile_image = CloudinaryField("image", default=None, blank=True, null=True)
 
+	def cropped_image(self):
+		return self.logo_image.image( width = 150,  height = 150, 
+			crop = "thumb", gravity = "face" ) 
+
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
 	date_submitted = models.DateTimeField(auto_now_add=True)
@@ -36,11 +40,13 @@ class ReferralStat(models.Model):
 	## some stat fields
 	def update_counter(self):
 		self.num_clicks += 1
+		self.save()
 		return True
 
 	def update_purchase(self):
 		## do purchase stuff
 		self.num_purchases += 1
+		self.save()
 		return True
 
 	def get_stats_dict(self):

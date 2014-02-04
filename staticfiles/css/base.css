@@ -1,7 +1,7 @@
 html {
 	height: 100%;
 	width: 100%;
-	min-height: 600px;
+	min-height: 900px;
 }
 
 body {
@@ -9,7 +9,7 @@ body {
 	margin: 0;
 	height: 100%;
 	width: 100%;
-	min-height: 960px;
+	min-height: 900px;
 }
 
 div.form-group {
@@ -28,11 +28,16 @@ div.form-group img {
 	max-width: 150px;
 }
 
+div.results img {
+	max-width: 200px;
+}
+
 div#wrapper-outer {
 	width: 100%;
 	background-color: #E8EDE0;
 	height: 100%;
 	min-width: 1320px;
+	min-height: 600px;
 }
 
 div#wrapper-outer div#content-main {
@@ -40,11 +45,12 @@ div#wrapper-outer div#content-main {
 	float: left;
 	display: inline-block;
 	margin:10px;
+	width: 730px;
 }
 
 
 div#wrapper-outer div#header-outer {
-	min-width: 290px;
+	min-width: 64px;
 	height: 100%;
 	display: inline-block;
 	position: relative;
@@ -87,7 +93,7 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block div#pictur
 
 div#wrapper-outer div#header-outer div#header-inner div#profile-block div#picture-block img {
 	border-radius: 60px;
-	background-color: #eee;
+	background-color: #FCD271;
 	padding: 6px;
 	float: center;
 	margin-left: auto;
@@ -95,7 +101,7 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block div#pictur
 	display: block;
 }
 
-div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-text {
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text {
 	color: #eee;
 	line-height: 15px;
 	margin-top: 6px;
@@ -105,15 +111,29 @@ div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-
 div#wrapper-outer div#header-outer div#header-inner div#profile-block div#picture-block span#name {
 	font-size: 16px;
 	font-weight: bold;
-	color: #eee;
+	color: white;
 	text-align: left;
 }
 
-div#wrapper-outer div#header-outer div#header-inner div#profile-block p#profile-text span#quote {
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text span#quote {
 	font-style: italic;
 	color: #eee;
-	font-size: 16px;
-	text-align: right;
+	font-size: 14px;
+	text-align: center;
+	float: left;
+	width: 78%;
+}
+
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text img#quote-left {
+	float: left;
+}
+
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text img#quote-right {
+	float: right;
+}
+
+div#wrapper-outer div#header-outer div#header-inner div#profile-block div#profile-text span.q {
+	display: block;
 }
 
 div#wrapper-outer div#header-outer div#header-inner h1 {
@@ -157,7 +177,7 @@ div#wrapper-outer div#header-outer div#header-inner ul#header-list li {
 
 div#wrapper-outer div#header-outer div#header-inner ul#header-list li a {
 	color: #FCD271;
-	font-size: 16px;
+	font-size: 14px;
 	line-height: 22px;
 	width: 100%;
 	height: 100%;
@@ -198,7 +218,27 @@ strong.logo {
 	margin-left: auto;
 }
 
+strong.logo-1 {
+	width: 192px;
+	height: 42px;
+	background-image: url('https://s3.amazonaws.com/ambassador/static/images/v2/sprite_vertical.png');
+	background-position: -10px -10px;
+	text-indent: -9999px;
+	overflow: hidden;
+	float: center;
+	display: block;
+	margin-left: 0;
+	margin-right: 20px;
+}
+
+
+
 strong.logo a {
+	display: block;
+	height: 100%;
+}
+
+strong.logo-1 a{
 	display: block;
 	height: 100%;
 }
@@ -227,29 +267,49 @@ div#wrapper-outer div#content-main div#header {
 
 
 div#wrapper-outer div#content-main table#all-links {
-	width: 65%;
+	width: 600px;
 }
 
 div#wrapper-outer div#content-main table#all-links th {
 	line-height: 36px;
-	font-size: 16px;
+	font-size: 14px;
 	padding-left: 8px;
 	color: #fff;
 }
 
 div#wrapper-outer div#content-main table#all-links tr {
-	font-size: 17px;
 	border: 2px solid #fff;
+}
+
+div#wrapper-outer div#content-main table#all-links tr a.col-1 {
+	font-size: 14px;
+}
+
+div#wrapper-outer div#content-main table#all-links tr span.col-2 {
+	font-size: 12px;
+}
+
+div#wrapper-outer div#content-main table#all-links tr span.col-3 {
+	font-size: 12px;
+}
+
+div#wrapper-outer div#content-main table#all-links tr span.col-4 {
+	font-size: 13px;
+}
+
+div#wrapper-outer div#content-main table#all-links tr span.col-5 {
+	font-size: 13px;
 }
 
 div#wrapper-outer div#content-main table#all-links thead tr {
 	background-color: #428bca !important;
-	height: 46px;
 	font-size: 18px;
 }
 
 div#wrapper-outer div#content-main table#all-links tr td {
 	background-color: transparent !important;
+	font-size: 12px;
+	line-height: 14px;
 }
 
 div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
@@ -280,7 +340,7 @@ div#profile-block div#profile-left {
 
 div#profile-block div#profile-left strong {
 	display: block;
-	margin-bottom: 30px;
+	margin-bottom: 33px;
 }
 
 div#profile-block div#profile-right {
@@ -316,5 +376,17 @@ div#cloudinary-input-block {
 	float: left;
 	margin-left: 12px;
 	position: relative;
-	top: 70px;
+}
+
+div#cloudinary-input-block div#profile-pic-info {
+	width: 317px;
+	float: left;
+	display: inline-block;
+	height: 70px;
+	margin-left: 12px;
+	margin-top: 52px;
+}
+
+input#id_profile_image {
+	float: left;
 }
