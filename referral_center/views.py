@@ -10,7 +10,7 @@ from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
 from referral_center.forms import AdminLinkForm, LinkForm, CreateUserForm, UpdateMemberForm
-from referral_center.models import Referral, ReferralStat, ReferralHist, Member
+from referral_center.models import Referral, ReferralStat, Member
 from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView, UpdateView
 from ambassador_app.mixins import *
 from braces.views import AjaxResponseMixin, JSONResponseMixin
@@ -24,69 +24,43 @@ import json
 
 class OrderListJson(BaseDatatableView):
 	# The model we're going to show
-	model = ReferralHist
+	model = ReferralStat
 
 	# define the columns that will be returned
-	columns = ['referral.link_title', 'stat.num_clicks', 'stat.num_purchases', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
+	columns = ['referral.link_title', 'num_clicks', 'num_purchases', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
 
 	# define column names that will be used in sorting
 	# order is important and should be same as order of columns
 	# displayed by datatables. For non sortable columns use empty
 	# value like ''
-	order_columns = ['referral.link_title', 'stat.num_clicks', 'stat.num_purchases', 'referral.date_submitted', '', '']
+	order_columns = ['referral.link_title', 'num_clicks', 'num_purchases', 'referral.date_submitted', '', '']
 
 	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
 	# and make it return huge amount of data
 	max_display_length = 500
 
 	def get_initial_queryset(self):
-		return ReferralHist.objects.filter(referral__owner__user=self.request.user)
+		return ReferralStat.objects.all()
+		#return ReferralStat.objects.filter(referral__owner__user=self.request.user, active=True)
 
 	def prepare_results(self, qs):
 		json_data = []
 		for item in qs:
 			json_data.append([
-				'<a href="/landing/?link=%s" class="col-1">%s</a>' % (item.referral.link_title, item.referral.link_title),
-				'<span class="col-2">%s</span>' % item.stat.num_clicks,
-				'<span class="col-2">%s</span>' % item.stat.num_purchases,
-				'<span class="col-3">%s</span>' % item.referral.date_submitted.strftime("%B %d, %Y"),
-				'<a class="col-5" style="margin-right:6px;text-decoration:underline;" href="/edit/%s/">edit</a> <a style="text-decoration:underline;" href="/delete/%s/">delete</a>' % (item.referral.id, item.referral.id),
-				"%s %s %s %s %s %s" % (item.referral.date_submitted.year, item.referral.date_submitted.month, item.referral.date_submitted.day, item.referral.date_submitted.hour, item.referral.date_submitted.minute, item.referral.date_submitted.second),
+				item.referral.link_title,
+				item.num_clicks,
+				item.num_purchases,
+				item.referral.date_submitted.strftime("%B %d, %Y"),
+				item.referral.id,
+				"%s %s %s %s %s %s" % (	item.referral.date_submitted.year,
+										item.referral.date_submitted.month,
+										item.referral.date_submitted.day,
+										item.referral.date_submitted.hour,
+										item.referral.date_submitted.minute,
+										item.referral.date_submitted.second,
+									),
 			])
 		return json_data
-
-	"""
-	def render_column(self, row, column):
-		# We want to render custom columns
-		if column == 'referral.date_submitted':
-			return row.referral.date_submitted.strftime("%B %d, %Y")
-		elif column == 'referral.link_title':
-			return '<a href="/landing/%s/">%s</a>' % (row.referral.link_title, row.referral.link_title)
-		elif column == 'referral.id':
-			return '<a style="margin-right:6px" href="/edit/%s/">edit</a> <a href="/delete/%s/">delete</a>' % (row.referral.id, row.referral.id)
-		else:
-			return super(OrderListJson, self).render_column(row, column)
-	"""
-	"""
-	def filter_queryset(self, qs):
-		# use request parameters to filter queryset
-
-		# simple example:
-		sSearch = self.request.POST.get('sSearch', None)
-		if sSearch:
-			qs = qs.filter(name__istartswith=sSearch)
-
-		# more advanced example
-		filter_customer = self.request.POST.get('customer', None)
-
-		if filter_customer:
-			customer_parts = filter_customer.split(' ')
-			qs_params = None
-			for part in customer_parts:
-				q = Q(customer_firstname__istartswith=part)|Q(customer_lastname__istartswith=part)
-				qs_params = qs_params | q if qs_params else q
-			qs = qs.filter(qs_params)
-"""
 
 class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 	template_name = 'product/user_profile.html'
@@ -220,10 +194,8 @@ class ReferralPurchaseView(View):
 		if referral.owner.user != user:
 			raise PermissionDenied
 
-		ref_hists = ReferralHist.objects.filter(referral=referral)
-		hist = ref_hists.order_by('date')[0]
-		hist.stat.update_purchase()
-		hist.stat.save()
+		stat = ReferralStat.objects.get(referral=referral, active=True)
+		stat.update_purchase()
 		redirect_string = '/landing/?link=%s' % referral.link_title
 
 		return HttpResponseRedirect(redirect_string) 
@@ -300,20 +272,31 @@ class ReferralCreateView(View):
 				ref.save()
 			else:
 				ref = Referral.objects.create(
-												link_title=form.cleaned_data['link_title'],
-												date_submitted=datetime.datetime.now(),
-												banner_text=form.cleaned_data['banner_text'],
-												font_family=form.cleaned_data['font_family'],
-												owner=member,
-											)
+							link_title=form.cleaned_data['link_title'],
+							date_submitted=datetime.datetime.now(),
+							banner_text=form.cleaned_data['banner_text'],
+							font_family=form.cleaned_data['font_family'],
+							owner=member,
+						)
+
+				ReferralStat.objects.create(
+					referral=ref,
+					latest=True,
+					active=False,
+					date_recorded=datetime.datetime.now()
+				)
+
+				ReferralStat.objects.create(
+					referral=ref,
+					latest=False,
+					active=True
+				)
 				if form.cleaned_data['banner_image']:
 					ref.banner_image=form.cleaned_data['banner_image']
 				if form.cleaned_data['logo_image']:
 					ref.logo_image=form.cleaned_data['logo_image']
 				ref.save()
 
-				ref_stat = ReferralStat.objects.create()
-				ref_hist = ReferralHist.objects.create(date=date_submitted, referral=ref, stat=ref_stat)
 			return HttpResponseRedirect('/home/')
 		else:
 			context['errors'] = form.errors
@@ -338,10 +321,8 @@ class LandingRedirectView(RedirectView):
 
 	def get_redirect_url(self, title):
 		referral = get_object_or_404(Referral, link_title=title)
-		ref_hists = ReferralHist.objects.filter(referral=referral)
-		hist = ref_hists.order_by('date')[0]
-		hist.stat.update_counter()
-		hist.stat.save()
+		stat = ReferralStat.objects.get(referral=referral, active=True)
+		stat.update_counter()
 		query_params = urllib.urlencode( {'link': title} )
 		return '/landing/?'+query_params
 
