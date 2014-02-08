@@ -38,11 +38,43 @@
 				"bFilter": false,
 				"bPaginate": true,
 				"aoColumnDefs": [
-                    { "sWidth": "200px", "aTargets": [0], },
-                    { "sWidth": "40px", "aTargets": [1], },
-                    { "sWidth": "40px", "aTargets": [2], },
-                    { "sWidth": "48px", "aTargets": [3], "iDataSort": 5},
-                    { "sWidth": "90px", "aTargets": [4], "bSortable": false, },
+                    { 
+                    	"mRender": function ( data, type, row ) {
+                    		return '<a href="/landing/?link=' + data + '" class="col-1">' + data +'</a>'
+                    	},
+                    	"sWidth": "200px",
+                    	"aTargets": [0],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "40px",
+                    	"aTargets": [1],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "40px",
+                    	"aTargets": [2],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "48px",
+                    	"aTargets": [3],
+                    	"iDataSort": 5
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-b" href="/delete/' + data + '/">delete</a>'
+                    	},
+                    	"sWidth": "90px",
+                    	"aTargets": [4],
+                    	"bSortable": false,
+                    },
                     { "bVisible": false, "aTargets": [5]}
                 ],
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",

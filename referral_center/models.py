@@ -7,6 +7,7 @@ import cloudinary.api
 from cloudinary.models import CloudinaryField
 
 import urllib
+import datetime
 
 from south.modelsinspector import add_introspection_rules
 add_introspection_rules([], ["^cloudinary\.models\.CloudinaryField"])
@@ -20,7 +21,9 @@ class Member(models.Model):
 
 	def cropped_image(self):
 		return self.logo_image.image( width = 150,  height = 150, 
-			crop = "thumb", gravity = "face" ) 
+			crop = "thumb", gravity = "face" )
+
+
 
 class Referral(models.Model):
 	link_title = models.CharField(max_length=500)
@@ -33,18 +36,23 @@ class Referral(models.Model):
 	owner = models.ForeignKey(Member, blank=True, null=True)
 
 
+
 class ReferralStat(models.Model):
+	latest = models.BooleanField(default=False)
+	active = models.BooleanField(default=True)
+	date_recorded = models.DateTimeField(blank=True, null=True, default=None)
+	
+	referral = models.ForeignKey(Referral, blank=True, null=True, default=None)
+
 	num_clicks = models.IntegerField(default=0)
 	num_purchases = models.IntegerField(default=0)
 	
-	## some stat fields
 	def update_counter(self):
 		self.num_clicks += 1
 		self.save()
 		return True
 
 	def update_purchase(self):
-		## do purchase stuff
 		self.num_purchases += 1
 		self.save()
 		return True
@@ -58,9 +66,7 @@ class ReferralStat(models.Model):
 		}
 		return stats
 
-class ReferralHist(models.Model):
-	date = models.DateTimeField('date calculated')
+	def time_since_posted(self):
+		return datetime.datetime.now() - self.date_posted
 
-	referral = models.ForeignKey(Referral)
-	stat = models.OneToOneField(ReferralStat)
 
