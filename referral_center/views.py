@@ -40,8 +40,8 @@ class OrderListJson(BaseDatatableView):
 	max_display_length = 500
 
 	def get_initial_queryset(self):
-		return ReferralStat.objects.all()
-		#return ReferralStat.objects.filter(referral__owner__user=self.request.user, active=True)
+		#return ReferralStat.objects.all()
+		return ReferralStat.objects.filter(active=True).filter(referral__owner__user=self.request.user)
 
 	def prepare_results(self, qs):
 		json_data = []
@@ -237,10 +237,9 @@ class ReferralCreateView(View):
 	def post(self, request, referral_id=None):
 		user = request.user
 		ref = None
-		member = None
+		member = Member.objects.get(user=user)
 		if referral_id:
 			try:
-				member = Member.objects.get(user=user)
 				ref = Referral.objects.get(pk=referral_id)
 			except ObjectDoesNotExist:
 				raise Http404

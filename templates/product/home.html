@@ -8,6 +8,8 @@
 
 {% block content %}
 	<div style="margin: 30px">
+		<a data-toggle="modal" href="#chartLink" res="13" class="col-1 chart-link">CLICK ME NIGGA</a>
+
 		<table class="table datatable" id="all-links">
 			<thead>
 				<tr>
@@ -24,9 +26,34 @@
 	</div>
 {% endblock %}
 
+{% block modals %}
+	{% include "product/chart_modal.html" %}
+{% endblock %}
+
 {% block javascript %}
-	<script type="text/javascript"?>
+	<script type="text/javascript">
+		
+
 		$(document).ready(function() {
+			$(document).on("click", ".chart-link", function(){
+				$('#chartModal').modal('show') // show the modal
+                    var search_r = $('a', this).attr('res'); // grab the pk of the referral we want
+                    $.ajax({  // post it!
+                         type: 'POST',
+                         url: '{% url "chart_data" %}',
+                         data: frm.serialize(),
+                         crossDomain: false,
+                         success: function (data) {
+                              //$("#message-div").html(data);
+                              console.log(data)
+                         },
+                         error: function(data) {
+                              console.log(data)
+                              //$("#message-div").html("Something went wrong!");
+                         }
+                    });
+			});
+
 			// datatables init
 			var oTable = $('.datatable').dataTable({
 				// ...
@@ -40,9 +67,9 @@
 				"aoColumnDefs": [
                     { 
                     	"mRender": function ( data, type, row ) {
-                    		return '<a href="/landing/?link=' + data + '" class="col-1">' + data +'</a>'
+                    		return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
                     	},
-                    	"sWidth": "200px",
+                    	"sWidth": "160px",
                     	"aTargets": [0],
                     },
                     {
@@ -69,9 +96,9 @@
                     },
                     {
                     	"mRender": function ( data, type, row ) {
-                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-b" href="/delete/' + data + '/">delete</a>'
+                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a class="col-5-b" href="/landing/?link=' + row[0] + '" class="col-1">view</a>'
                     	},
-                    	"sWidth": "90px",
+                    	"sWidth": "120px",
                     	"aTargets": [4],
                     	"bSortable": false,
                     },
@@ -80,6 +107,10 @@
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
+
+			
 		});
+
+		
 	</script>
 {% endblock %}
