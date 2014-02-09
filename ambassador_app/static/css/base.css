@@ -289,13 +289,13 @@ div#wrapper-outer div#content-main table#all-links tr span.col-2 {
 	font-size: 12px;
 }
 
-div#wrapper-outer div#content-main table#all-links tr span.col-5-a {
+div#wrapper-outer div#content-main table#all-links tr a.col-5-a {
 	font-size: 13px;
 	margin-right:6px;
 	text-decoration:underline;
 }
 
-div#wrapper-outer div#content-main table#all-links tr span.col-5-b {
+div#wrapper-outer div#content-main table#all-links tr a.col-5-b {
 	text-decoration:underline;
 }
 
