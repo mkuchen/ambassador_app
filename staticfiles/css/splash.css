@@ -175,7 +175,7 @@ div#banner-splash-inner {
 
 div#banner-splash div#banner-splash-left {
 	border-radius: 3px;
-	width: 54%;
+	width: 49%;
 	height: 450px;
 	margin-bottom: 2px;
 	float: left;
@@ -226,7 +226,7 @@ div#banner-splash div#banner-splash-left div.info-box ul li:before {
 
 div#banner-splash div#banner-splash-right {
 	border-radius: 3px;
-	width: 45%;
+	width: 49%;
 	height: 450px;
 	margin-left: 9px;
 	margin-bottom: 2px;
