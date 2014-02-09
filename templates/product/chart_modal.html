@@ -1,28 +1,16 @@
 <div id="chartModal" class="modal fade">
   <div id="modal-main" class="modal-dialog">
     <div class="modal-content">
-      CHART MODAL YEAAAAA
-      <!--
-      <form id="login-form" class="well" method="post" action="{% url 'auth' %}">
-        {% csrf_token %}
-
-        <div class="modal-header">
-          <a type="button" class="close" data-dismiss="modal">×</a>
-          <h3> User Login </h3>
-          {% if form.errors %}
-          <p>Your username and password didn't match. Please try again.</p>
-          {% endif %}
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control" name="username" style="width:256px" placeholder="username"/><br>
-          <input type="password" class="form-control" name="password" style="width:256px" placeholder="password"/>
-        </div>
-        <div class="modal-footer">
-          <input class="btn btn-primary" name="submit2" type="submit" value="Login" />
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
-          <input type="hidden" name="next" value="{{ next }}" />
-        </div>
-      </form>-->
+      <div class="modal-header">
+        <a type="button" class="close" data-dismiss="modal">×</a>
+        <h3 style="text-align:center"> Click and Purchase History </h3>
+      </div>
+      <div class="modal-body">
+        <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>
