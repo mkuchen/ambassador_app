@@ -186,7 +186,8 @@ div.body-content {
 }
 
 div#main-content div#banner-container div#banner-content h4 {
-	color: black;
+	color: #ffffff;
+	font-weight: bold;
 }
 
 div#banner-container div#left-half {
@@ -194,8 +195,10 @@ div#banner-container div#left-half {
 	width: 60%;
 	display: inline-block;
 	float: left;
-	background: url('static/img/callout-bg.png');
+	background: url('/static/img/callout-bg.png');
+	padding: 20px;
 }
+
 
 div#banner-container div#right-half {
 	height: 100%;

@@ -52,29 +52,7 @@
 				<textarea cols="40" class="form-control full" id="id_bio" name="bio" rows="10">{{ member.bio }}</textarea><br>
 				
 				<input type="submit" value="Save" class="btn btn-primary">
-				<!--
-				<div class="profile-info-block">
-					<div id="inner-one">
-						<input id="id_profile_image" name="profile_image" type="file">
-					</div>
-				</div>
-				<div class="profile-info-block">
-					<div id="inner-two">
-						<input id="id_display_name" maxlength="500" name="display_name" type="text" class="form-control" placeholder="Enter display name" style="width:463px;float:left" value="{{ member.display_name }}"><br><br>
-					</div>
-				</div>
-				<div class="profile-info-block">
-					<div id="inner-three">
-						<input id="id_quote" maxlength="500" name="quote" type="text" class="form-control" placeholder="Enter quote" style="width:463px;float:left" value="{{ member.quote }}"><br><br>
-					</div>
-				</div>
-				<div class="profile-info-block">
-					<div id="inner-four">
-						<textarea id="id_bio" maxlength="1000" name="bio" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:463px">{{ member.bio }}</textarea><br><br><br>
-					</div>
-				</div>
-				<p><input type="submit" value="Save!" /></p>
-				-->
+
 			</form>
 		</div>
 	</div>
@@ -96,9 +74,83 @@
 	</div>
 {% endblock %}
 
+{% block modals %}
+	{% include "product/chart_modal.html" %}
+{% endblock %}
+
 {% block javascript %}
 	<script type="text/javascript"?>
 		$(document).ready(function() {
+              // hicharts plotting function
+			$(document).on("click", ".chart-link", function(){
+				$('#chartModal').modal('show') // show the modal
+                    var search_r = $(this).attr('res'); // grab the pk of the referral we want
+                    var plotting = function plotData(clickData, purchaseData) {
+                         $('#container').highcharts({
+                              chart: {
+                                   type: 'spline'
+                              },
+                              title: {
+                                   text: 'Clicks/Purchases vs Time'
+                              },
+                              subtitle: {
+                                   text: ''
+                              },
+                              xAxis: {
+                                   type: 'datetime',
+                                   dateTimeLabelFormats: { // don't display the dummy year
+                                        month: '%e. %b',
+                                        year: '%b'
+                                   }
+                              },
+                              yAxis: {
+                                   title: {
+                                        text: 'Qty.'
+                                   },
+                                   min: 0
+                              },
+                              tooltip: {
+                                   formatter: function() {
+                                       return '<b>'+ this.series.name +'</b><br/>'+
+                                       Highcharts.dateFormat('%e. %b', this.x) +': '+ this.y;
+                                   }
+                              },
+                           
+                              series: [{
+                                   name: 'Clicks',
+                                   data: clickData
+                              }, {
+                                   name: 'Purchases',
+                                   data: purchaseData
+                              }]
+                         });
+                    };
+
+                    $.ajax({  // Get highcharts data for the referral
+                         type: 'GET',
+                         url: '/hicharts/chart-data/'+search_r+'/',
+                         data: null,
+                         crossDomain: false,
+                         success: function (data) {
+                              clickData = data['clicks'];
+                              purchaseData = data['purchases'];
+                              for (x in clickData) {
+                                   clickData[x][0] = Date.UTC(clickData[x][0][0], clickData[x][0][1], clickData[x][0][2], clickData[x][0][3], clickData[x][0][4], clickData[x][0][5], clickData[x][0][6]);
+                              }
+                              for (x in purchaseData) {
+                                   purchaseData[x][0] = Date.UTC(purchaseData[x][0][0], purchaseData[x][0][1], purchaseData[x][0][2], purchaseData[x][0][3], purchaseData[x][0][4], purchaseData[x][0][5], purchaseData[x][0][6]);
+                              }
+                              clickData.sort();
+                              purchaseData.sort();
+                              plotting(clickData, purchaseData);
+                              
+                         },
+                         error: function(data) {
+                              console.log('Error, highcharts GET failed');
+                         }
+                    });
+			});
+
 			// datatables init
 			var oTable = $('.datatable').dataTable({
 				// ...
@@ -110,17 +162,50 @@
 				"bFilter": false,
 				"bPaginate": true,
 				"aoColumnDefs": [
-                    { "sWidth": "160px", "aTargets": [0], },
-                    { "sWidth": "30px", "aTargets": [1], },
-                    { "sWidth": "30px", "aTargets": [2], },
-                    { "sWidth": "68px", "aTargets": [3], "iDataSort": 5},
-                    { "sWidth": "90px", "aTargets": [4], "bSortable": false, },
+                    { 
+                    	"mRender": function ( data, type, row ) {
+                    		return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
+                    	},
+                    	"sWidth": "160px",
+                    	"aTargets": [0],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "40px",
+                    	"aTargets": [1],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "40px",
+                    	"aTargets": [2],
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<span class="col-2">' + data + '</span>'
+                    	},
+                    	"sWidth": "48px",
+                    	"aTargets": [3],
+                    	"iDataSort": 5
+                    },
+                    {
+                    	"mRender": function ( data, type, row ) {
+                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a class="col-5-b" href="/landing/?link=' + row[0] + '" class="col-1">view</a>'
+                    	},
+                    	"sWidth": "120px",
+                    	"aTargets": [4],
+                    	"bSortable": false,
+                    },
                     { "bVisible": false, "aTargets": [5]}
                 ],
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
-		});	</script>
+		});
+	</script>
 
 
 
