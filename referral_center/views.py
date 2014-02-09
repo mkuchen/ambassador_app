@@ -21,6 +21,29 @@ import datetime
 import urllib
 import json
 
+class  ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
+	content_type = None
+
+	def get_content_type(self):
+		return u'application/json'
+
+	def get_ajax(self, request, referral_id, *args, **kwargs):
+		try:
+			mem = Member.objects.get(user=request.user)
+			ref = Referral.objects.get(pk=referral_id)
+		except ObjectDoesNotExist:
+			raise Http404
+		
+		if ref.owner != mem:
+			raise PermissionDenied
+		
+		stats = ReferralStat.objects.filter(referral=ref).filter(active=False)
+		clicks = [ ((stat.date_recorded.year, stat.date_recorded.month-1, stat.date_recorded.day, stat.date_recorded.hour, stat.date_recorded.minute, stat.date_recorded.second, stat.date_recorded.microsecond), stat.num_clicks) for stat in stats ]
+		purchases = [ ((stat.date_recorded.year, stat.date_recorded.month-1, stat.date_recorded.day, stat.date_recorded.hour, stat.date_recorded.minute, stat.date_recorded.second, stat.date_recorded.microsecond), stat.num_purchases) for stat in stats ]
+		json_dict = { 'clicks': clicks, 'purchases': purchases}
+		return self.render_json_response(json_dict)
+
+
 
 class OrderListJson(BaseDatatableView):
 	# The model we're going to show

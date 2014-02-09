@@ -8,8 +8,6 @@
 
 {% block content %}
 	<div style="margin: 30px">
-		<a data-toggle="modal" href="#chartLink" res="13" class="col-1 chart-link">CLICK ME NIGGA</a>
-
 		<table class="table datatable" id="all-links">
 			<thead>
 				<tr>
@@ -32,24 +30,72 @@
 
 {% block javascript %}
 	<script type="text/javascript">
-		
-
 		$(document).ready(function() {
+               // hicharts plotting function
 			$(document).on("click", ".chart-link", function(){
 				$('#chartModal').modal('show') // show the modal
-                    var search_r = $('a', this).attr('res'); // grab the pk of the referral we want
+                    var search_r = $(this).attr('res'); // grab the pk of the referral we want
+                    var plotting = function plotData(clickData, purchaseData) {
+                    $('#container').highcharts({
+                         chart: {
+                              type: 'spline'
+                         },
+                         title: {
+                              text: 'Clicks/Purchases vs Time'
+                         },
+                         subtitle: {
+                              text: ''
+                         },
+                         xAxis: {
+                              type: 'datetime',
+                              dateTimeLabelFormats: { // don't display the dummy year
+                                   month: '%e. %b',
+                                   year: '%b'
+                              }
+                         },
+                         yAxis: {
+                              title: {
+                                   text: 'Qty.'
+                              },
+                              min: 0
+                         },
+                         tooltip: {
+                              formatter: function() {
+                                  return '<b>'+ this.series.name +'</b><br/>'+
+                                  Highcharts.dateFormat('%e. %b', this.x) +': '+ this.y;
+                              }
+                         },
+                      
+                         series: [{
+                              name: 'Clicks',
+                              data: clickData
+                         }, {
+                              name: 'Purchases',
+                              data: purchaseData
+                         }]
+                    });
+               };
                     $.ajax({  // post it!
-                         type: 'POST',
-                         url: '{% url "chart_data" %}',
-                         data: frm.serialize(),
+                         type: 'GET',
+                         url: '/hicharts/chart-data/'+search_r+'/',
+                         data: null,
                          crossDomain: false,
                          success: function (data) {
-                              //$("#message-div").html(data);
-                              console.log(data)
+                              clickData = data['clicks'];
+                              purchaseData = data['purchases'];
+                              for (x in clickData) {
+                                   clickData[x][0] = Date.UTC(clickData[x][0][0], clickData[x][0][1], clickData[x][0][2], clickData[x][0][3], clickData[x][0][4], clickData[x][0][5], clickData[x][0][6]);
+                              }
+                              for (x in purchaseData) {
+                                   purchaseData[x][0] = Date.UTC(purchaseData[x][0][0], purchaseData[x][0][1], purchaseData[x][0][2], purchaseData[x][0][3], purchaseData[x][0][4], purchaseData[x][0][5], purchaseData[x][0][6]);
+                              }
+                              clickData.sort();
+                              purchaseData.sort();
+                              plotting(clickData, purchaseData);
+                              
                          },
                          error: function(data) {
-                              console.log(data)
-                              //$("#message-div").html("Something went wrong!");
+                              console.log('Error, hicharts GET failed');
                          }
                     });
 			});
@@ -107,10 +153,6 @@
                 "sAjaxSource": "/datatables/all-refs/?username={{ user.username }}",
 
 			});
-
-			
 		});
-
-		
 	</script>
 {% endblock %}

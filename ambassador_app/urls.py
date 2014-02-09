@@ -29,7 +29,7 @@ urlpatterns = patterns('',
     # datatables AJAX
     url(r'^datatables/all-refs/$', login_required(OrderListJson.as_view()), name='order_list_json'),
     # hicharts AJAX
-    #url(r'^)
+    url(r'^hicharts/chart-data/(?P<referral_id>[\w|\W]+)/$', ChartDataJson.as_view(), name='chart_data_json'),
     #url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),# favicon durrr
     #url(r'^admin/doc/$', include('django.contrib.admindocs.urls')),
     #url(r'^admin/$', include(admin.site.urls)),

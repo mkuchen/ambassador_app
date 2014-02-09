@@ -1,6 +1,6 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.management.base import BaseCommand, CommandError
-from referral_center.models import Referral, ReferralHist, ReferralStat
+from referral_center.models import Referral, ReferralStat
 import datetime
 
 class Command(BaseCommand):
@@ -18,16 +18,16 @@ class Command(BaseCommand):
 				last_recorded_stat = ReferralStat.objects.create(referral=referral, latest=True, active=False, date_recorded=datetime.datetime.now())
 			
 			try:
-				old_active_stat = ReferralStat.objects.get(referral=Referral, active=True)
+				old_active_stat = ReferralStat.objects.get(referral=referral, active=True)
 			except ObjectDoesNotExist:
-				self.stdout.write('Error, was not able to find active active ReferralStat object for "%s".  Creating now.' % referral.link_title)
+				self.stdout.write('Error, was not able to find active ReferralStat object for "%s".  Creating now.' % referral.link_title)
 				old_active_stat = ReferralStat.objects.create(referral=referral, latest=False, active=True)
 
 			# create new active referralstat object
 			new_active_stat = ReferralStat.objects.create(
 												referral=referral,
-												num_clicks=last_recorded_stat.num_clicks,
-												num_purchases=last_recorded_stat.num_purchases,
+												num_clicks=old_active_stat.num_clicks,
+												num_purchases=old_active_stat.num_purchases,
 											)
 
 			# make the previously active referralstat object not active, but now latest recorded
