@@ -348,27 +348,59 @@ class LandingRedirectView(RedirectView):
 		query_params = urllib.urlencode( {'link': title} )
 		return '/landing/?'+query_params
 
-class LandingView(DetailView):
+class LandingPreviewView(DetailView):
 	model = Referral
 	template_name = 'product/landing.html'
-	#queryset = Referral.objects.
+
 	def get(self, request, *args, **kwargs):
 		title = request.GET.get('link', '')
-		member = Member.objects.get(user=request.user)
-
 		if not title:
 			raise Http404
-		
+
+		user = request.user
+
+		if not user.is_authenticated():
+			raise PermissionDenied
+
 		try:
-			ref = Referral.objects.get(link_title=title, owner=member)
+			member = Member.objects.get(user=request.user)
+		except ObjectDoesNotExist:
+			raise Http404
+
+
+		try:
+			ref = Referral.objects.get(link_title=title)
 		except:
 			raise Http404
+
+		if ref.owner != member:
+			raise PermissionDenied
 
 		context = self.get_context_data()
 		context['title'] = title
 		context['referral'] = ref
 		context['member'] = member
 		context['preview'] = 'true'
+		return self.render_to_response(context)
+
+class LandingView(DetailView):
+	model = Referral
+	template_name = 'product/landing.html'
+
+	def get(self, request, *args, **kwargs):
+		title = request.GET.get('link', '')
+		
+		if not title:
+			raise Http404
+		
+		try:
+			ref = Referral.objects.get(link_title=title)
+		except:
+			raise Http404
+
+		context = self.get_context_data()
+		context['title'] = title
+		context['referral'] = ref
 		return self.render_to_response(context)
 
 

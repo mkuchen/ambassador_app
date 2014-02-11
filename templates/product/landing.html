@@ -36,10 +36,10 @@
 				</div>
 				<div id="nav-bar-profile">
 					<a href="/profile/{{member.user.username}}/">
-						{% if member.profile_image == "" %}
+						{% if referral.owner.profile_image == "" %}
 						<img id="nav-bar-img" src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="50" height="50">
 						{% else %}
-						<img id="nav-bar-img" src="{{ member.profile_image.url }}" alt="profile-pic" width="50" height="50">
+						<img id="nav-bar-img" src="{{ referral.owner.profile_image.url }}" alt="profile-pic" width="50" height="50">
 						{% endif %}
 					</a>
 					<div id="cred-block">

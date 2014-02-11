@@ -174,27 +174,33 @@ div#banner-splash-inner {
 }
 
 div#banner-splash div#banner-splash-left {
-	border-radius: 3px;
 	width: 49%;
 	height: 450px;
 	margin-bottom: 2px;
 	float: left;
-	background: #E8EDE0;
-}
-
-div#banner-splash div#banner-splash-left {
 	position: relative;
 	z-index: 2;
 }
 
+div#banner-splash div#banner-splash-left div.pic-block {
+	margin-top: 6px;
+	background: white;
+	border-radius: 3px;
+	height: 520px;
+	padding: 20px;
+}
+
 div#banner-splash div#banner-splash-left div.info-box {
 	position: relative;
+	border-radius: 3px;
 	margin: 0 auto;
 	text-align: center;
 	padding: 20px;
 	width: 100%;
-	height: 450px;
+	height: 230px;
 	text-align: left;
+	background: #E8EDE0;
+
 }
 
 div#banner-splash div#banner-splash-left div.info-box h5 {
@@ -239,7 +245,7 @@ div#banner-splash div#banner-splash-right div#right-top {
 	margin-bottom: 7px;
 	padding-bottom: 13px;
 	background: transparent;
-	padding: 26px 0;
+	padding: 40px 0;
 	border-radius: 4px;
 }
 
@@ -254,12 +260,21 @@ div#banner-splash div#banner-splash-right div#right-top ul li:before {
 }
 
 div#banner-splash div#banner-splash-right div#right-bottom {
-	height: 242px;
+	height: 520px;
 	width: 100%;
 	display: inline-block;
-	background: #E8EDE0;
+	background: white;
 	border-radius: 4px;
 	padding: 12px;
+}
+
+div#banner-splash div#banner-splash-right div#right-bottom img {
+	width: 90%;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+	margin-top: 5px;
 }
 
 
