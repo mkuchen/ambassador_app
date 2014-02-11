@@ -114,7 +114,8 @@
 				"aoColumnDefs": [
                     { 
                     	"mRender": function ( data, type, row ) {
-                    		return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
+                              return '<a href="/landing-preview/?link=' + data + '" class="col-1">' + data + '</a>'
+                    		//return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
                     	},
                     	"sWidth": "160px",
                     	"aTargets": [0],
@@ -143,7 +144,7 @@
                     },
                     {
                     	"mRender": function ( data, type, row ) {
-                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a class="col-5-b" href="/landing/?link=' + row[0] + '" class="col-1">view</a>'
+                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a data-toggle="modal" href="#chartLink" res="' + data + '" class="col-5-b chart-link">stats</a>'
                     	},
                     	"sWidth": "120px",
                     	"aTargets": [4],

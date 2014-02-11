@@ -24,6 +24,7 @@ urlpatterns = patterns('',
     url(r'^purchase/(?P<referral_id>[\w|\W]+)/$', ReferralPurchaseView.as_view(), name='purchase_referral'),
     url(r'^landing/(?P<title>[\w|\W]+)/$', LandingRedirectView.as_view()),
     url(r'^landing/$', LandingView.as_view(), name='main_landing'),
+    url(r'^landing-preview/$', LandingPreviewView.as_view(), name='preview_landing'),
     # product home
     url(r'^home/$', HomeView.as_view(), name='home'),
     # datatables AJAX

@@ -21,15 +21,19 @@
 			<form method="post" action="{% url 'update_user' username=member.user.username %}" enctype="multipart/form-data">
 				{% csrf_token %}
 
-				{% if posted %}
-					{% cloudinary posted.profile_image THUMBNAIL %}
-			      	<div class="results">
-			        {% if errors %}
-			          	Errors: {{ errors }}
-			        {% endif %}
-			      	</div>
-				{% endif %}
+				
 				<div id="cloudinary-input-block">
+                    {% if posted %}
+                         {% cloudinary posted.profile_image THUMBNAIL %}
+                         <div id="profile-pic-info">
+                            {% if errors %}
+                                   Errors: {{ errors }}
+                            {% endif %}
+                            <p>Currently: <a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a></p>
+                            <input id="id_profile_image" name="profile_image" type="file">
+                         </div>
+
+                    {% else %}
 					{% if member.profile_image %}
 						{% cloudinary member.profile_image THUMBNAIL %}
 						<div id="profile-pic-info">
@@ -43,6 +47,7 @@
 							<input id="id_profile_image" name="profile_image" type="file">
 						</div>
 					{% endif %}
+                    {% endif %}
 				</div>
 
 				<input id="id_display_name" class="form-control full" maxlength="60" name="display_name" type="text" value="{{ member.display_name }}"><br>
