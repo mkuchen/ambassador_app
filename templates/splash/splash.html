@@ -34,8 +34,8 @@
 							<div id="auth-block">
 								<div class="tools-box">
 									<ul>
-										<li><a data-toggle="modal" href="#loginModal" id="login-link"> Login </a></li>
-										<li><a data-toggle="modal" href="#createUserModal" id="create-link"> Sign Up </a></li>
+										<li><a data-toggle="modal" href="#loginModal" class="login-link"> Login </a></li>
+										<li><a data-toggle="modal" href="#createUserModal" class="create-link"> Sign Up </a></li>
 									</ul>
 								</div>
 							</div>
@@ -51,20 +51,21 @@
 							<h5> Design Specs </h5>
 							<p> The specs for the engineering challenge are posted <a href="https://docs.google.com/document/d/1RbM86xFSPeO8p53HPedPHzFF3jDg_c8PvQl36tcDkIA/pub" target="blank">here</a>.  My take on the app contains all requirements for the challenge, plus a few extra ones I thought might add a nice touch:</p>
 							<ul>
-								<li> A user profile service for users to generate and sign in to their accounts </li>
-								<li> Historical tracking for click generation </li>
-								<li> Custom input fields on drip pages for background colors, banner images, informational column layout, and special text/image fields </li>
+								<li> <p>A standard Django user profile service for users to <a data-toggle="modal" href="#createUserModal" class="create-link"> up </a> and <a data-toggle="modal" href="#loginModal" class="login-link"> Login </a> to their accounts</p> </li>
+								<li> <p id="pic-left">The addition of "purchase" tracking, which allows the calculation of a click-thru rate by dividing the number of purchases by the number of clicks for a referral, as well as historical tracking for clicks/purchases using Highcharts.js.</p>
+									<img id="img" src="{% static 'img/screengrab2.png' %}" height="" width="240">
+								</li>
+								<li> <p>Custom input fields on drip pages for background colors, banner images, informational column layout, and special text/image fields</p> </li>
 							</ul>
 						</div>
 						<div class="pic-block">
-							<img id="img2" src="{% static 'img/screengrab2.png' %}" height="" width="200">
-							<img id="img3" src="{% static 'img/screengrab3.png' %}" height="" width="400">
+							<img id="img" src="{% static 'img/screengrab3.png' %}" height="" width="383">
 						</div>
 					</div>
 					<div id="banner-splash-right" class="content-slide-from-right">
 						<div id="right-top">
 							<div id="profile-pic-container">
-								<img src="{% static 'img/mitch.png' %}" height="150" width="144">
+								<img src="{% static 'img/mitch.jpg' %}" height="150" width="144">
 							</div>
 							<h4><strong>Mitch Kuchenberg</strong></h4>
 							<p> <span>Bachelor of Science in Social Computing Informatics <br> December 2013, University of Michigan, Ann Arbor</span> </p>
@@ -75,8 +76,8 @@
 							</ul>
 						</div>
 						<div id="right-bottom">
-							<img id="img1" src="{% static 'img/screengrab1.png' %}" height="" width="400">
-							<img id="img4" src="{% static 'img/screengrab4.png' %}" height="" width="400">
+							<img id="img-top" src="{% static 'img/screengrab1.png' %}" height="" width="480">
+							<img id="img-bottom" src="{% static 'img/screengrab4.png' %}" height="" width="480">
 						</div>
 					</div>
 				</div>
@@ -90,11 +91,11 @@
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript">
 			
-			$("#login-link").click(function() {
+			$(".login-link").click(function() {
 				$('#loginModal').modal('show')
 			});
 
-			$("#create-link").click(function() {
+			$(".create-link").click(function() {
 				$('#createUserModal').modal('show')
 			});
 
