@@ -10,6 +10,10 @@
 	src: url('/static/fonts/Aller/Aller_Rg.ttf');
 }
 
+body {
+	min-height: 960px!important;
+}
+
 div.box-shadow {
 	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
@@ -175,7 +179,6 @@ div#banner-splash-inner {
 
 div#banner-splash div#banner-splash-left {
 	width: 49%;
-	height: 450px;
 	margin-bottom: 2px;
 	float: left;
 	position: relative;
@@ -186,8 +189,14 @@ div#banner-splash div#banner-splash-left div.pic-block {
 	margin-top: 6px;
 	background: white;
 	border-radius: 3px;
-	height: 520px;
-	padding: 20px;
+	padding: 16px;
+}
+
+div#banner-splash div#banner-splash-left div.pic-block img#img{
+	display: block;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 div#banner-splash div#banner-splash-left div.info-box {
@@ -197,7 +206,6 @@ div#banner-splash div#banner-splash-left div.info-box {
 	text-align: center;
 	padding: 20px;
 	width: 100%;
-	height: 230px;
 	text-align: left;
 	background: #E8EDE0;
 
@@ -210,11 +218,12 @@ div#banner-splash div#banner-splash-left div.info-box h5 {
 
 div#banner-splash div#banner-splash-left div.info-box p {
 	font-size: 17px;
-	line-height: 17px;
+	line-height: 21px;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul {
-	
+	display: inline-block;
+	width: 100%;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul li {
@@ -222,18 +231,39 @@ div#banner-splash div#banner-splash-left div.info-box ul li {
 	margin-top: 7px;
 	margin-bottom: 7px;
 	line-height: 14px;
-	text-indent: -8px;
+	text-indent: 0px;
+	float: left;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li p {
+	float: left;
+	display: inline-block;
+	font-size: 15px;
+	line-height: 18px;
+	width: 91%;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li p#pic-left {
+	width: 39%;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul li:before {
 	content: "•    ";
     color: #2BBBD8; /* or whatever color you prefer */
+    float: left;
+    margin-right: 8px;
+    margin-top: 2px;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li img {
+	float: left;
+	margin-left: 24px;
+	margin-top: -26px;
 }
 
 div#banner-splash div#banner-splash-right {
 	border-radius: 3px;
 	width: 49%;
-	height: 450px;
 	margin-left: 9px;
 	margin-bottom: 2px;
 	float: left;
@@ -245,7 +275,7 @@ div#banner-splash div#banner-splash-right div#right-top {
 	margin-bottom: 7px;
 	padding-bottom: 13px;
 	background: transparent;
-	padding: 40px 0;
+	padding: 53px 0;
 	border-radius: 4px;
 }
 
@@ -260,21 +290,22 @@ div#banner-splash div#banner-splash-right div#right-top ul li:before {
 }
 
 div#banner-splash div#banner-splash-right div#right-bottom {
-	height: 520px;
 	width: 100%;
 	display: inline-block;
 	background: white;
 	border-radius: 4px;
-	padding: 12px;
+	padding: 16px;
 }
 
 div#banner-splash div#banner-splash-right div#right-bottom img {
-	width: 90%;
 	float: center;
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
-	margin-top: 5px;
+}
+
+div#banner-splash div#banner-splash-right div#right-bottom img#img-bottom {
+	margin-top: 18px;
 }
 
 
