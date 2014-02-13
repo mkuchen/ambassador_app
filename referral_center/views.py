@@ -124,14 +124,19 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 			raise PermissionDenied()
 
 		form = UpdateMemberForm(request.POST, request.FILES)
-		context = {'member':self.get_object(), 'form':form, 'two':'true'}
+		context = {'form':form, 'two':'true'}
 		context['posted'] = form.instance
 
 		if form.is_valid():
 			form.save(commit=False)
 			mem = self.get_object()
-			mem.profile_image = form.cleaned_data['profile_image']
+			if form.cleaned_data['profile_image'] is not None:
+				mem.profile_image = form.cleaned_data['profile_image']
+			mem.display_name = form.cleaned_data['display_name']
+			mem.quote = form.cleaned_data['quote']
+			mem.bio = form.cleaned_data['bio']
 			mem.save()
+			context['member'] = mem
 		else:
 			context['errors'] = form.errors
 		
@@ -230,11 +235,11 @@ class ReferralCreateView(View):
 	fields = ['link_title', 'logo_image', 'banner_image', 'banner_text', 'font_family']
 	success_url = 'home/'
 
-	def get_form(self, *args, **kwargs):
+	def get_form(self, ref=None, *args, **kwargs):
 		user = self.request.user
 		if user.is_staff:
-			return AdminLinkForm()
-		return LinkForm()
+			return AdminLinkForm(instance=ref)
+		return LinkForm(instance=ref)
 
 	@method_decorator(login_required)
 	def get(self, request, referral_id=None, *args, **kwargs):
@@ -252,7 +257,7 @@ class ReferralCreateView(View):
 			if referral.owner != member:
 				raise PermissionDenied
 
-			return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'object':referral })
+			return render(request, self.template_name, { 'form':self.get_form(referral), 'member':member, 'object':referral })
 
 		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'three':'true' })
 
@@ -322,6 +327,7 @@ class ReferralCreateView(View):
 			return HttpResponseRedirect('/home/')
 		else:
 			context['errors'] = form.errors
+			context['form'] = form
 			if ref:
 				context['object'] = ref
 			if member:

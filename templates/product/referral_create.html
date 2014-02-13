@@ -18,6 +18,7 @@
 		{% else %}
 		<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
 		{% endif %}
+
 			{% csrf_token %}
 
 			{% if posted %}
@@ -38,7 +39,7 @@
 
 			<div class="form-group">
 				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
-				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" {% if object %}value="{{ object.link_title }}"{% endif %}><br><br>
+				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" value="{{ form.link_title.value|default_if_none:'' }}"><br><br>
 			</div>
 			<div class="form-group">
 				<label for="id_logo_image" class="col-lg-2 control-label">Logo Image</label>
@@ -58,17 +59,7 @@
 				{% endif %}
 				<input class="referral-files" id="id_banner_image" name="banner_image" type="file">
 			</div>
-			<!--
-			<div class="form-group">
-				<label for="id_logo_url" class="col-lg-2 control-label">Logo URL</label>
-				<input id="id_logo_url" maxlength="1000" name="logo_url" type="text" class="form-control" placeholder="Enter logo URL" style="width:700px;float:left" {% if object %}value="{{ object.logo_url }}"{% endif %}><br><br>
-			</div>-->
-			<!--
-			<div class="form-group">
-				<label for="id_banner_background_url" class="col-lg-2 control-label">Banner Background</label>
-				<input id="id_banner_background_url" maxlength="1000" name="banner_background_url" type="text" class="form-control" placeholder="Enter banner image URL" style="width:700px;float:left" {% if object %}value="{{ object.banner_background_url }}"{% endif %}><br><br><br>
-			</div>-->
-
+			
 			<div class="form-group">
 				<label for="id_banner_text" class="col-lg-2 control-label">Banner Text</label>
 				<textarea id="id_banner_text" maxlength="1000" name="banner_text" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:700px">{% if object %}{{ object.banner_text }}{% endif %}</textarea><br><br><br>
@@ -87,43 +78,6 @@
 
 			<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Create{% endif %}" style="float:left;margin-right:6px"/>
 			<input type="button" class="btn btn-danger" value="Cancel" onclick=location.href='/home/';>
-			{% if form.link_title.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.link_title.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}<br>
-			<!--
-			{% if form.logo_url.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.logo_url.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}<br>-->
-			<!--
-			{% if form.banner_background_url.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.banner_background_url.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}<br>-->
-			{% if form.banner_text.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.banner_text.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}<br>
-			{% if form.font_family.errors %}
-			    <ol style="display:inline-block;margin-top:8px">
-				    {% for error in form.font_family.errors %}
-				        <li style="color:red;font-weight:normal;line-height:12px;font-style:italic">{{ error|escape }}</li>
-				    {% endfor %}
-			    </ol>
-			{% endif %}<br>
 		</form>
 	</div>
 {% endblock %}

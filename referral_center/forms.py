@@ -12,6 +12,7 @@ class AdminLinkForm(ModelForm):
 
 	logo_image = CloudinaryFileField(required=False)
 	banner_image = CloudinaryFileField(required=False)
+	link_title = forms.SlugField(max_length=500)
 
 
 class LinkForm(ModelForm):
@@ -21,12 +22,13 @@ class LinkForm(ModelForm):
 
 	logo_image = CloudinaryFileField(required=False)
 	banner_image = CloudinaryFileField(required=False)
+	link_title = forms.SlugField(max_length=500)
 
 
 class UpdateMemberForm(ModelForm):
 	class Meta:
 		model = Member
-		exclude = ['user']
+		exclude = ['user_id', 'user']
 	profile_image = CloudinaryFileField(required=False)
 
 
