@@ -45,16 +45,6 @@ div.header-slide-1 {
 	top: -200px;
 }
 
-div.content-slide-from-left {
-	position: relative;
-	left: -2000px;
-}
-
-div.content-slide-from-right {
-	position: relative;
-	left: 3000px;
-}
-
 div#header-splash-outer {
 	width: 68%;
 	min-width: 1100px;

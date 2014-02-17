@@ -18,7 +18,7 @@
 
 	<body id="home">
 		<div id="wrapper-outer">
-			<div id="header-outer" class="col-md-2">
+			<div id="header-outer" class="col-md-2" style="{% if not slide %}left:0;{% endif %}">
 				<div id="header-inner">
 					<div id="logo-block">
 						<div id="logo-container">
@@ -69,12 +69,14 @@
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="http://code.highcharts.com/highcharts.js"></script>
 		<script type="text/javascript" src="http://code.highcharts.com/modules/exporting.js"></script>
+		{% if slide %}
 		<script type="text/javascript">
 			$(document).ready(function() {
 				// nav slide in
 				$("div#header-outer").animate( {left:'0'}, 1600 );
 			});
 		</script>
+		{% endif %}
 		{% block javascript %}
 
 		{% endblock %}

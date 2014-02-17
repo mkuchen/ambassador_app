@@ -207,6 +207,12 @@ class ReferralDeleteView(View):
 
 		if ref.owner != member:
 			raise PermissionDenied
+
+		# delete historical tracking data
+		stats = ReferralStat.objects.filter(referral=ref)
+		for stat in stats:
+			stat.delete()
+		# delete referral
 		ref.delete()
 		return HttpResponseRedirect('/home/')
 
@@ -249,6 +255,15 @@ class ReferralCreateView(View):
 			raise PermissionDenied
 		referral = None
 		if referral_id:
+			context = {
+						'form':self.get_form(referral),
+						'member':member,
+						'object':referral
+					}
+			slide = request.GET.get('slide', '')
+
+			if slide:
+				context['slide'] = True
 			try:
 				referral = Referral.objects.get(pk=referral_id)
 			except ObjectDoesNotExist:
@@ -257,7 +272,7 @@ class ReferralCreateView(View):
 			if referral.owner != member:
 				raise PermissionDenied
 
-			return render(request, self.template_name, { 'form':self.get_form(referral), 'member':member, 'object':referral })
+			return render(request, self.template_name, context)
 
 		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'three':'true' })
 
@@ -341,7 +356,14 @@ class HomeView(View):
 	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		member = Member.objects.get(user=request.user)
-		return render(request, self.template_name, { 'member':member, 'one':'true' })
+		context = {
+					'member':member,
+					'one':'true'
+				}
+		slide = request.GET.get('slide', '')
+		if slide:
+			context['slide'] = True
+		return render(request, self.template_name, context)
 
 
 class LandingRedirectView(RedirectView):
@@ -421,7 +443,7 @@ class LoginAuthView(GenericView):
 	def post(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
-			return redirect( request.GET.get('next', '/home') )
+			return redirect( request.GET.get('next', '/home/') )
 		else:
 			username = request.POST['username']
 			password = request.POST['password']
@@ -429,6 +451,6 @@ class LoginAuthView(GenericView):
 			user = authenticate(username=username, password=password)
 			if user is not None:
 				login(request, user)
-				return redirect( '/home/' )
+				return redirect( '/home/?slide=true' )
 				
-			return redirect( '/home/' )
+			return redirect( '/home/?slide=true' )
