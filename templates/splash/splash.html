@@ -46,7 +46,7 @@
 			</div>
 			<div id="banner-splash">
 				<div id="banner-splash-inner">
-					<div id="banner-splash-left" class="content-slide-from-left">
+					<div id="banner-splash-left">
 						<div class="info-box">
 							<h5> Design Specs </h5>
 							<p> The specs for the engineering challenge are posted <a href="https://docs.google.com/document/d/1RbM86xFSPeO8p53HPedPHzFF3jDg_c8PvQl36tcDkIA/pub" target="blank">here</a>.  My take on the app contains all requirements for the challenge, plus a few extra ones I thought might add a nice touch:</p>
@@ -62,7 +62,7 @@
 							<img id="img" src="{% static 'img/screengrab3.png' %}" height="" width="383">
 						</div>
 					</div>
-					<div id="banner-splash-right" class="content-slide-from-right">
+					<div id="banner-splash-right">
 						<div id="right-top">
 							<div id="profile-pic-container">
 								<img src="{% static 'img/mitch.jpg' %}" height="150" width="144">
@@ -101,8 +101,6 @@
 
 			$(document).ready(function() {
 				$("div.header-slide-1").animate({top:'0'}, 1200);
- 				$("div.content-slide-from-left").animate({left:'0'}, 1200);
- 				$("div.content-slide-from-right").animate({left:'0'}, 1200);
 			});
 		</script>
 	</body>
