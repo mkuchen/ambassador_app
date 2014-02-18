@@ -1,25 +1,28 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.core.exceptions import PermissionDenied, ObjectDoesNotExist
-from django.core.urlresolvers import reverse, resolve
+from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
+from django.core.urlresolvers import resolve, reverse
 from django import http
-from django.http import HttpResponse, HttpResponseRedirect, Http404
+from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
-from referral_center.forms import AdminLinkForm, LinkForm, CreateUserForm, UpdateMemberForm
-from referral_center.models import Referral, ReferralStat, Member
-from vanilla import CreateView, FormView, TemplateView, GenericView, DetailView, RedirectView, UpdateView
+
 from ambassador_app.mixins import *
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from cloudinary.forms import cl_init_js_callbacks
 
-import sys
+from referral_center.decorators import owns_ref
+from referral_center.forms import AdminLinkForm, CreateUserForm, LinkForm, UpdateMemberForm
+from referral_center.models import Member, Referral, ReferralStat
+from vanilla import CreateView, DetailView, FormView, GenericView, RedirectView, TemplateView, UpdateView
+
 import datetime
-import urllib
 import json
+import sys
+import urllib
 
 class  ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
@@ -27,15 +30,13 @@ class  ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
 	def get_content_type(self):
 		return u'application/json'
 
+	@owns_ref
 	def get_ajax(self, request, referral_id, *args, **kwargs):
 		try:
-			mem = Member.objects.get(user=request.user)
 			ref = Referral.objects.get(pk=referral_id)
 		except ObjectDoesNotExist:
 			raise Http404
-		
-		if ref.owner != mem:
-			raise PermissionDenied
+	
 		
 		stats = ReferralStat.objects.filter(referral=ref).filter(active=False)
 		clicks = [ ((stat.date_recorded.year, stat.date_recorded.month-1, stat.date_recorded.day, stat.date_recorded.hour, stat.date_recorded.minute, stat.date_recorded.second, stat.date_recorded.microsecond), stat.num_clicks) for stat in stats ]
@@ -197,17 +198,12 @@ class SplashView(TemplateView):
 #############################################
 
 class ReferralDeleteView(View):
+	@owns_ref
 	@method_decorator(login_required)
 	def get(self, request, referral_id, *args, **kwargs):
 		member = Member.objects.get(user=request.user)
-		try:
-			ref = Referral.objects.get(pk=referral_id)
-		except ObjectDoesNotExist:
-			raise Http404
-
-		if ref.owner != member:
-			raise PermissionDenied
-
+		ref = Referral.objects.get(pk=referral_id)
+		
 		# delete historical tracking data
 		stats = ReferralStat.objects.filter(referral=ref)
 		for stat in stats:
@@ -247,49 +243,32 @@ class ReferralCreateView(View):
 			return AdminLinkForm(instance=ref)
 		return LinkForm(instance=ref)
 
+	@owns_ref
 	@method_decorator(login_required)
-	def get(self, request, referral_id=None, *args, **kwargs):
-		try:
-			member = Member.objects.get(user=request.user)
-		except ObjectDoesNotExist:
-			raise PermissionDenied
-		referral = None
+	def get(self, request, referral_id=None, *args, **kwargs):		
 		if referral_id:
+			referral = Referral.objects.get(pk=referral_id)
 			context = {
-						'form':self.get_form(referral),
-						'member':member,
-						'object':referral
-					}
-			slide = request.GET.get('slide', '')
+				'form':self.get_form(referral),
+				'member':Member.objects.get(user=request.user),
+				'object':referral
+			}
 
-			if slide:
+			if request.GET.get('slide', ''):
 				context['slide'] = True
-			try:
-				referral = Referral.objects.get(pk=referral_id)
-			except ObjectDoesNotExist:
-				raise Http404
-
-			if referral.owner != member:
-				raise PermissionDenied
 
 			return render(request, self.template_name, context)
 
-		return render(request, self.template_name, { 'form':self.get_form(), 'member':member, 'three':'true' })
+		return render(request, self.template_name, { 'form':self.get_form(), 'member':Member.objects.get(user=request.user), 'three':'true' })
 
+	@owns_ref
 	@method_decorator(login_required)
-	def post(self, request, referral_id=None):
-		user = request.user
+	def post(self, request, referral_id=None, *args, **kwargs):
 		ref = None
-		member = Member.objects.get(user=user)
+		member = Member.objects.get(user=request.user)
 		if referral_id:
-			try:
-				ref = Referral.objects.get(pk=referral_id)
-			except ObjectDoesNotExist:
-				raise Http404
-
-			if ref.owner != member:
-				raise PermissionDenied
-
+			ref = Referral.objects.get(pk=referral_id)
+			
 		if user.is_staff:
 			form = AdminLinkForm(request.POST, request.FILES)
 		else:
@@ -314,12 +293,12 @@ class ReferralCreateView(View):
 				ref.save()
 			else:
 				ref = Referral.objects.create(
-							link_title=form.cleaned_data['link_title'],
-							date_submitted=datetime.datetime.now(),
-							banner_text=form.cleaned_data['banner_text'],
-							font_family=form.cleaned_data['font_family'],
-							owner=member,
-						)
+					link_title=form.cleaned_data['link_title'],
+					date_submitted=datetime.datetime.now(),
+					banner_text=form.cleaned_data['banner_text'],
+					font_family=form.cleaned_data['font_family'],
+					owner=member,
+				)
 
 				ReferralStat.objects.create(
 					referral=ref,
@@ -360,8 +339,7 @@ class HomeView(View):
 					'member':member,
 					'one':'true'
 				}
-		slide = request.GET.get('slide', '')
-		if slide:
+		if request.GET.get('slide', ''):
 			context['slide'] = True
 		return render(request, self.template_name, context)
 
@@ -380,35 +358,24 @@ class LandingPreviewView(DetailView):
 	model = Referral
 	template_name = 'product/landing.html'
 
+	@method_decorator(login_required)
 	def get(self, request, *args, **kwargs):
 		title = request.GET.get('link', '')
 		if not title:
 			raise Http404
-
-		user = request.user
-
-		if not user.is_authenticated():
-			raise PermissionDenied
-
-		try:
-			member = Member.objects.get(user=request.user)
-		except ObjectDoesNotExist:
-			raise Http404
-
-
-		try:
-			ref = Referral.objects.get(link_title=title)
-		except:
-			raise Http404
+		
+		member = get_object_or_404(Member, user=request.user)
+		ref = get_object_or_404(Referral, link_title=title)
 
 		if ref.owner != member:
 			raise PermissionDenied
 
-		context = self.get_context_data()
-		context['title'] = title
-		context['referral'] = ref
-		context['member'] = member
-		context['preview'] = 'true'
+		context = {
+			'title' : title,
+			'referral' : ref,
+			'member' : member,
+			'preview' : 'true',
+		}
 		return self.render_to_response(context)
 
 class LandingView(DetailView):
@@ -421,14 +388,12 @@ class LandingView(DetailView):
 		if not title:
 			raise Http404
 		
-		try:
-			ref = Referral.objects.get(link_title=title)
-		except:
-			raise Http404
+		ref = get_object_or_404(Referral, link_title=title)
 
-		context = self.get_context_data()
-		context['title'] = title
-		context['referral'] = ref
+		context = {
+			'title' : title
+			'referral' : ref
+		}
 		return self.render_to_response(context)
 
 
