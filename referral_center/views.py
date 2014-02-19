@@ -391,7 +391,7 @@ class LandingView(DetailView):
 		ref = get_object_or_404(Referral, link_title=title)
 
 		context = {
-			'title' : title
+			'title' : title,
 			'referral' : ref
 		}
 		return self.render_to_response(context)
