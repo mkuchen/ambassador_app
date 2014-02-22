@@ -119,7 +119,15 @@
 			                		for (var item in data['errors'][key]) {
 			                			errorListStr = errorListStr + data['errors'][key][item] + "  ";
 			                		}
-			                		errorStr = errorStr + "<li>" + key + ": " + errorListStr + "</li>";
+			                		if (key == 'password1' || key =='password2') {
+			                			errorStr = errorStr + "<li>password: " + errorListStr + "</li>";
+			                		}
+			                		else if (key == '__all__') {
+			                			errorStr = errorStr + "<li>password: Password fields didn't match.</li>"
+			                		}
+			                		else {
+			                			errorStr = errorStr + "<li>" + key + ": " + errorListStr + "</li>";
+			                		}
 			                	}
 			                	errorStr = errorStr + "</ul>";
 			                	$("span#create-user-errors").html(errorStr);

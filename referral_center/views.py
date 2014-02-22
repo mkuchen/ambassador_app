@@ -114,12 +114,15 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 
 	def post_ajax(self, request, *args, **kwargs):
 		form = CreateUserForm(request.POST)
+		form.clean()
+		user = None
 		if form.is_valid():
 			new_user = form.save()
+			user = authenticate(username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
 		else:
 			return self.render_json_response({'status': 'error', 'errors': form.errors})
 
-		user = authenticate(username=new_user.username, password=new_user.password)
+		
 		if user is not None:
 			login(request, user)
 			return self.render_json_response({'status': 'ok'})
