@@ -485,3 +485,14 @@ div#footer-splash-inner {
 	color: #fff;
 	cursor: pointer;
 }
+
+span#create-user-errors {
+	color: red;
+	display: inline-block;
+	margin-top: 6px;
+	margin-bottom: 6px;
+}
+
+span#create-user-errors ul {
+	list-style-type: square;
+}
