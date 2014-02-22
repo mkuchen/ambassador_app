@@ -24,67 +24,30 @@ import json
 import sys
 import urllib
 
-class  ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
-	content_type = None
 
-	def get_content_type(self):
-		return u'application/json'
-
-	@owns_ref
-	def get_ajax(self, request, referral_id, *args, **kwargs):
-		try:
-			ref = Referral.objects.get(pk=referral_id)
-		except ObjectDoesNotExist:
-			raise Http404
-	
-		
-		stats = ReferralStat.objects.filter(referral=ref).filter(active=False)
-		clicks = [ ((stat.date_recorded.year, stat.date_recorded.month-1, stat.date_recorded.day, stat.date_recorded.hour, stat.date_recorded.minute, stat.date_recorded.second, stat.date_recorded.microsecond), stat.num_clicks) for stat in stats ]
-		purchases = [ ((stat.date_recorded.year, stat.date_recorded.month-1, stat.date_recorded.day, stat.date_recorded.hour, stat.date_recorded.minute, stat.date_recorded.second, stat.date_recorded.microsecond), stat.num_purchases) for stat in stats ]
-		json_dict = { 'clicks': clicks, 'purchases': purchases}
-		return self.render_json_response(json_dict)
+class LogoutView(GenericView):
+	@method_decorator(login_required)
+	def get(self, request, *args, **kwargs):
+		logout(request)
+		return redirect('/')
 
 
+class LoginAuthView(GenericView):
+	def post(self, request, *args, **kwargs):
+		user = self.request.user
+		if user.is_authenticated():
+			return redirect(request.GET.get('next', '/home/'))
+		else:
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(username=username, password=password)
+			if user is not None:
+				login(request, user)
+				return redirect('/home/?slide=true')
+			else:
+				return redirect('/home/?slide=true')
 
-class OrderListJson(BaseDatatableView):
-	# The model we're going to show
-	model = ReferralStat
 
-	# define the columns that will be returned
-	columns = ['referral.link_title', 'num_clicks', 'num_purchases', 'referral.date_submitted', 'referral.owner.user.username', 'referral.id', 'referral.date_submitted']
-
-	# define column names that will be used in sorting
-	# order is important and should be same as order of columns
-	# displayed by datatables. For non sortable columns use empty
-	# value like ''
-	order_columns = ['referral.link_title', 'num_clicks', 'num_purchases', 'referral.date_submitted', '', '']
-
-	# set max limit of records returned, this is used to protect our site if someone tries to attack our site
-	# and make it return huge amount of data
-	max_display_length = 500
-
-	def get_initial_queryset(self):
-		#return ReferralStat.objects.all()
-		return ReferralStat.objects.filter(active=True).filter(referral__owner__user=self.request.user)
-
-	def prepare_results(self, qs):
-		json_data = []
-		for item in qs:
-			json_data.append([
-				item.referral.link_title,
-				item.num_clicks,
-				item.num_purchases,
-				item.referral.date_submitted.strftime("%B %d, %Y"),
-				item.referral.id,
-				"%s %s %s %s %s %s" % (	item.referral.date_submitted.year,
-										item.referral.date_submitted.month,
-										item.referral.date_submitted.day,
-										item.referral.date_submitted.hour,
-										item.referral.date_submitted.minute,
-										item.referral.date_submitted.second,
-									),
-			])
-		return json_data
 
 class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 	template_name = 'product/user_profile.html'
@@ -115,7 +78,6 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 			'two': True,
 			'member': self.get_object()
 		}
-
 		return render(request, self.template_name, context)
 
 	@method_decorator(login_required)
@@ -127,7 +89,6 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 		form = UpdateMemberForm(request.POST, request.FILES)
 		context = {'form':form, 'two':'true'}
 		context['posted'] = form.instance
-
 		if form.is_valid():
 			form.save(commit=False)
 			mem = self.get_object()
@@ -140,10 +101,11 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 			context['member'] = mem
 		else:
 			context['errors'] = form.errors
-		
 		return render(request, 'product/user_profile.html', context)
 
-"""
+
+
+
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
 
@@ -154,17 +116,17 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 		form = CreateUserForm(request.POST)
 		if form.is_valid():
 			new_user = form.save()
+		else:
+			return self.render_json_response({'status': 'error', 'errors': form.errors})
 
 		user = authenticate(username=new_user.username, password=new_user.password)
 		if user is not None:
 			login(request, user)
-			return HttpResponseRedirect('/home/')
+			return self.render_json_response({'status': 'ok'})
 		else:
-			return HttpResponseRedirect('/splash/')
-		#return self.render_json_response(json_dict)
+			return self.render_json_response({'status': 'error', 'errors': {'login':['there was an error logging you in!']}})
 
 """
-
 class CreateUser(View):
 	def post(self, request, *args, **kwargs):
 		form = CreateUserForm(request.POST)
@@ -181,7 +143,7 @@ class CreateUser(View):
 			return HttpResponseRedirect('/home/')
 		else:
 			return HttpResponseRedirect('/hurr/')
-
+"""
 #############################################
 
 class SplashView(TemplateView):
@@ -391,31 +353,111 @@ class LandingView(DetailView):
 		ref = get_object_or_404(Referral, link_title=title)
 
 		context = {
-			'title' : title,
-			'referral' : ref
+			'title': title,
+			'referral': ref,
 		}
 		return self.render_to_response(context)
 
 
-class LogoutView(GenericView):
-	@method_decorator(login_required)
-	def get(self, request, *args, **kwargs):
-		logout(request)
-		return redirect('/')
+class OrderListJson(BaseDatatableView):
+	# The model we're going to show
+	model = ReferralStat
+
+	# define the columns that will be returned
+	columns = [
+		'referral.link_title', 'num_clicks', 'num_purchases',
+		'referral.date_submitted','referral.owner.user.username', 'referral.id',
+		'referral.date_submitted'
+	]
+
+	# define column names that will be used in sorting
+	# order is important and should be same as order of columns
+	# displayed by datatables. For non sortable columns use empty
+	# value like ''
+	order_columns = ['referral.link_title', 'num_clicks',
+						'num_purchases', 'referral.date_submitted', '', '']
+
+	max_display_length = 500
+
+	def get_initial_queryset(self):
+		#return ReferralStat.objects.all()
+		return ReferralStat.objects.filter(active=True).filter(referral__owner__user=self.request.user)
+
+	def prepare_results(self, qs):
+		json_data = []
+		for item in qs:
+			json_data.append([
+				item.referral.link_title,
+				item.num_clicks,
+				item.num_purchases,
+				item.referral.date_submitted.strftime("%B %d, %Y"),
+				item.referral.id,
+				"%s %s %s %s %s %s" % (	
+					item.referral.date_submitted.year,
+					item.referral.date_submitted.month,
+					item.referral.date_submitted.day,
+					item.referral.date_submitted.hour,
+					item.referral.date_submitted.minute,
+					item.referral.date_submitted.second,
+				),
+			])
+		return json_data
 
 
-class LoginAuthView(GenericView):
-	def post(self, request, *args, **kwargs):
-		user = self.request.user
-		if user.is_authenticated():
-			return redirect( request.GET.get('next', '/home/') )
-		else:
-			username = request.POST['username']
-			password = request.POST['password']
-			
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				return redirect( '/home/?slide=true' )
-				
-			return redirect( '/home/?slide=true' )
+
+class ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
+	content_type = None
+
+	def get_content_type(self):
+		return u'application/json'
+
+	@owns_ref
+	def get_ajax(self, request, referral_id, *args, **kwargs):
+		try:
+			ref = Referral.objects.get(pk=referral_id)
+		except ObjectDoesNotExist:
+			raise Http404
+	
+		
+		stats = ReferralStat.objects.filter(referral=ref).filter(active=False)
+		clicks = [ (
+			(
+				stat.date_recorded.year, \
+				stat.date_recorded.month-1, \
+				stat.date_recorded.day, \
+				stat.date_recorded.hour, \
+				stat.date_recorded.minute, \
+				stat.date_recorded.second, \
+				stat.date_recorded.microsecond,
+			),
+			stat.num_clicks,
+		) for stat in stats ]
+
+		purchases = [ (
+			(
+				stat.date_recorded.year, \
+				stat.date_recorded.month-1, \
+				stat.date_recorded.day, \
+				stat.date_recorded.hour, \
+				stat.date_recorded.minute, \
+				stat.date_recorded.second, \
+				stat.date_recorded.microsecond,
+			),
+			stat.num_purchases,
+		) for stat in stats ]
+
+		click_thrus = [ (
+			(
+				stat.date_recorded.year, \
+				stat.date_recorded.month-1, \
+				stat.date_recorded.day, \
+				stat.date_recorded.hour, \
+				stat.date_recorded.minute, \
+				stat.date_recorded.second, \
+				stat.date_recorded.microsecond,
+			),
+			(stat.num_purchases / stat.num_clicks),
+		) for stat in stats ]
+		json_dict = { 'clicks': clicks, 'purchases': purchases, 'click-thrus': click_thrus}
+		return self.render_json_response(json_dict)
+

@@ -15,7 +15,7 @@ urlpatterns = patterns('',
     url(r'^$', SplashView.as_view(), name='base'),
     url(r'^splash/$', SplashView.as_view()),
     # user views
-    url(r'^new-account/$', CreateUser.as_view(), name='create_user'),
+    url(r'^new-account/$', CreateUserAJAX.as_view(), name='create_user'),
     url(r'^profile/(?P<username>[\w|\W]+)/$', UserProfileView.as_view(), name='update_user'),
     # referral views
     url(r'^create/$', ReferralCreateView.as_view(), name='create_referral'),

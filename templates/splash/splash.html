@@ -90,17 +90,48 @@
 		<script type="text/javascript" src="{% static 'js/libs/bootstrap.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript" src="{% static 'js/libs/jquery.dataTables.min.js' %}" charset="utf-8"></script>
 		<script type="text/javascript">
-			
-			$(".login-link").click(function() {
-				$('#loginModal').modal('show')
-			});
-
-			$(".create-link").click(function() {
-				$('#createUserModal').modal('show')
-			});
-
 			$(document).ready(function() {
-				$("div.header-slide-1").animate({top:'0'}, 1200);
+				$("div.header-slide-1").animate({top:'0'}, 1200); // nav slide in
+				$(".login-link").click(function() {
+					$('#loginModal').modal('show')
+				});
+
+				$(".create-link").click(function() {
+					$('#createUserModal').modal('show')
+				});
+				$("#create-user-form").submit(function(e){
+					var datastring = $("#create-user-form").serialize();
+					$.ajax({
+			            type: "POST",
+			            url: "/new-account/",
+			            data: datastring,
+			            dataType: "json",
+			            success: function(data) {
+			                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
+			                // do what ever you want with the server response
+			                if (data['status'] == 'ok') {
+			            		window.location.href = "/home/";
+			                }
+			                else {
+			                	var errorStr = "<b>There was a problem with your submission!</b><br><ul>";
+			                	for (var key in data['errors']) {
+			                		var errorListStr = "";
+			                		for (var item in data['errors'][key]) {
+			                			errorListStr = errorListStr + data['errors'][key][item] + "  ";
+			                		}
+			                		errorStr = errorStr + "<li>" + key + ": " + errorListStr + "</li>";
+			                	}
+			                	errorStr = errorStr + "</ul>";
+			                	$("span#create-user-errors").html(errorStr);
+			                }
+			            },
+			            error: function(){
+			            	$("span#create-user-errors").html("There was an error!");
+			            	return false;
+			            }
+			        });
+			        return false;
+				})
 			});
 		</script>
 	</body>

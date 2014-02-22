@@ -1,7 +1,7 @@
 <div id="createUserModal" class="modal fade">
   <div id="modal-main-1" class="modal-dialog">
     <div class="modal-content">
-      <form id="create-user-form" class="well" method="post" action="{% url 'create_user' %}">
+      <form id="create-user-form" class="well" method="post" action=".">
         {% csrf_token %}
 
         <div class="modal-header">
@@ -16,6 +16,7 @@
           <input id="id_last_name" type="text" class="form-control half" name="last_name" placeholder="last name"/><br><br><br>
           <input id="id_password1" type="password" class="form-control half" name="password1" placeholder="password"/>
           <input id="id_password2" type="password" class="form-control half" name="password2" placeholder="password, again"/><br>
+          <span id="create-user-errors" style="color:red;display:inline-block;margin-top:6px;margin-bottom:6px"></span>
         </div>
         <div class="modal-footer">
           <input class="btn btn-primary" name="submit1" type="submit" value="Create" />
