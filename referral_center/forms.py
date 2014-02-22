@@ -41,19 +41,26 @@ class CreateUserForm(forms.Form):
 	email = forms.EmailField(required=True)
 
 	def clean_username(self):
-		try:
-			User.objects.get(username=self.cleaned_data['username']) #get user from user model
-		except User.DoesNotExist :
-			return self.cleaned_data['username']
+		if self.is_valid():
+			try:
+				User.objects.get(username=self.cleaned_data['username']) #get user from user model
+			except User.DoesNotExist:
+				return self.cleaned_data['username']
 
-		raise forms.ValidationError("this username isn't available")
+			raise forms.ValidationError("this username isn't available")
+		else:
+			return False
 
 	def clean(self):
-		if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
-			if self.cleaned_data['password1'] == self.cleaned_data['password2']:
-				return self.cleaned_data
-		
-		raise forms.ValidationError("passwords dont match each other")
+		self.clean_username()
+		if self.is_valid():
+			if 'password1' in self.cleaned_data and 'password2' in self.cleaned_data:
+				if self.cleaned_data['password1'] == self.cleaned_data['password2']:
+					return self.cleaned_data
+			
+			raise forms.ValidationError("passwords dont match each other")
+		else:
+			return False
 		
 	
 	def save(self):
