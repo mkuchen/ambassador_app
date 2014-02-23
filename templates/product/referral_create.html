@@ -5,79 +5,102 @@
 {% load cloudinary %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'css/product/home.css' %}">
 {% endblock %}
 
 {% block content %}
-	<div id="form-block">
-		<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
-		
+	<div id="profile-block">
+		<h2 style="margin-bottom:8px"> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
+		{% if object %} <a href="/landing/?link={{object.link_title}}"> Preview </a> {% endif %}
+		<div id="profile-left">
+			<strong style="top:6px"> Link Title </strong>
+			<strong style="top:38px"> Logo Image </strong>
+			<strong style="top:156px"> Banner Image </strong>
+			<strong style="top:272px"> Banner Text </strong>
+			<strong style="top:490px"> Font Family </strong>
+		</div>
+
 		{% if object %}
-		<a href="/landing/?link={{object.link_title}}"> Preview </a>
-		<form method="post" action="{% url 'edit_referral' referral_id=object.pk %}" enctype="multipart/form-data">
+
+		
+		<div id="profile-right">
+			<form method="post" action="{% url 'edit_referral' referral_id=object.pk %}" enctype="multipart/form-data">
+
 		{% else %}
-		<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
+
+		<div id="profile-right">
+			<form method="post" action="{% url 'create_referral' %}" enctype="multipart/form-data">
+			
 		{% endif %}
 
-			{% csrf_token %}
+				{% csrf_token %}
 
-			{% if posted %}
-		      	<div class="results">
-		      		{% if posted.logo_image %}
-		      			{% cloudinary posted.logo_image THUMBNAIL %}
-		      		{% endif %}
+				{% if posted %}
+			      	<div class="results">
+			      		{% if posted.logo_image %}
+			      		<div class="ref-pic">
+			      			{% cloudinary posted.logo_image THUMBNAIL %}
+			      		</div>
+			      		{% endif %}
 
-		      		{% if posted.banner_image %}
-						{% cloudinary posted.banner_image THUMBNAIL %}
+			      		{% if posted.banner_image %}
+			      		<div class="ref-pic">
+							{% cloudinary posted.banner_image THUMBNAIL %}
+						</div>
+						{% endif %}
+
+			        {% if errors %}
+			          	Errors: {{ errors }}
+			        {% endif %}
+			      	</div>
+				{% endif %}
+
+				<div class="form-group">
+					<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" value="{{ form.link_title.value|default_if_none:'' }}"><br><br>
+				</div>
+				<div class="form-group">
+					{% if object.logo_image %}
+					<div class="ref-pic">
+						{% cloudinary object.logo_image THUMBNAIL %}
+					</div>
+					{% else %}
+					<div class="ref-pic">
+						<img src="http://www.underconsideration.com/brandnew/archives/blank_digital_logo_detail.png" width="200">
+					</div>
 					{% endif %}
+					<input class="referral-files" id="id_logo_image" name="logo_image" type="file">
+				</div>
+				<div class="form-group">
+					{% if object.banner_image %}
+					<div class="ref-pic">
+						{% cloudinary object.banner_image THUMBNAIL %}
+					</div>
+					{% else %}
+					<div class="ref-pic">
+						<img src="http://static7.depositphotos.com/1178962/693/v/950/depositphotos_6931634-Plane-with-blank-banner.jpg" width="200">
+					</div>
+					{% endif %}
+					<input class="referral-files" id="id_banner_image" name="banner_image" type="file">
+				</div>
+				
+				<div class="form-group">
+					<textarea id="id_banner_text" maxlength="1000" name="banner_text" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:700px">{% if object %}{{ object.banner_text }}{% endif %}</textarea><br><br><br>
+				</div>
 
-		        {% if errors %}
-		          	Errors: {{ errors }}
-		        {% endif %}
-		      	</div>
-			{% endif %}
+				<div class="form-group">
+					<select id="id_font_family" maxlength="500" name="font_family" type="select" class="form-control" placeholder="Enter link title" style="width:200px;float:left">
+						<option value="Arial" {% if object %}{% if object.font_family == "Arial" %}selected{% endif %}{% endif %}> Arial </option>
+						<option value="Helvetica" {% if object %}{% if object.font_family == "Helvetica" %}selected{% endif %}{% endif %}> Helvetica </option>
+						<option value="Lucida" {% if object %}{% if object.font_family == "Lucida" %}selected{% endif %}{% endif %}> Lucida </option>
+						<option value="Times" {% if object %}{% if object.font_family == "Times" %}selected{% endif %}{% endif %}> Times </option>
+						<option value="Palatino" {% if object %}{% if object.font_family == "Palatino" %}selected{% endif %}{% endif %}> Palatino </option>
+						<option value="Bookman" {% if object %}{% if object.font_family == "Bookman" %}selected{% endif %}{% endif %}> Bookman </option>
+					</select>
+				</div>
 
-			<div class="form-group">
-				<label for="id_link_title" class="col-lg-2 control-label">Link Title</label>
-				<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" value="{{ form.link_title.value|default_if_none:'' }}"><br><br>
-			</div>
-			<div class="form-group">
-				<label for="id_logo_image" class="col-lg-2 control-label">Logo Image</label>
-				{% if object.logo_image %}
-					{% cloudinary object.logo_image THUMBNAIL %}
-				{% else %}
-					<img src="http://www.underconsideration.com/brandnew/archives/blank_digital_logo_detail.png" width="200">
-				{% endif %}
-				<input class="referral-files" id="id_logo_image" name="logo_image" type="file">
-			</div>
-			<div class="form-group">
-				<label for="id_banner_image" class="col-lg-2 control-label">Banner Image</label>
-				{% if object.banner_image %}
-					{% cloudinary object.banner_image THUMBNAIL %}
-				{% else %}
-					<img src="http://static7.depositphotos.com/1178962/693/v/950/depositphotos_6931634-Plane-with-blank-banner.jpg" width="200">
-				{% endif %}
-				<input class="referral-files" id="id_banner_image" name="banner_image" type="file">
-			</div>
-			
-			<div class="form-group">
-				<label for="id_banner_text" class="col-lg-2 control-label">Banner Text</label>
-				<textarea id="id_banner_text" maxlength="1000" name="banner_text" class="form-control" style="height:200px;float:left;margin-bottom:23px;width:700px">{% if object %}{{ object.banner_text }}{% endif %}</textarea><br><br><br>
-			</div>
-
-			<label for="id_font_family">Font Family</label><br>
-			<select id="id_font_family" maxlength="500" name="font_family" type="select" class="form-control" placeholder="Enter link title" style="width:200px;float:left">
-				<option value="Arial" {% if object %}{% if object.font_family == "Arial" %}selected{% endif %}{% endif %}> Arial </option>
-				<option value="Helvetica" {% if object %}{% if object.font_family == "Helvetica" %}selected{% endif %}{% endif %}> Helvetica </option>
-				<option value="Lucida" {% if object %}{% if object.font_family == "Lucida" %}selected{% endif %}{% endif %}> Lucida </option>
-				<option value="Times" {% if object %}{% if object.font_family == "Times" %}selected{% endif %}{% endif %}> Times </option>
-				<option value="Palatino" {% if object %}{% if object.font_family == "Palatino" %}selected{% endif %}{% endif %}> Palatino </option>
-				<option value="Bookman" {% if object %}{% if object.font_family == "Bookman" %}selected{% endif %}{% endif %}> Bookman </option>
-			</select>
-			<br><br><br>
-
-			<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Create{% endif %}" style="float:left;margin-right:6px"/>
-			<input type="button" class="btn btn-danger" value="Cancel" onclick=location.href='/home/';>
-		</form>
+				<input type="submit" class="btn btn-primary" value="{% if object %}Update{% else %}Create{% endif %}" style="float:left;margin-right:6px"/>
+				<input type="button" class="btn btn-danger" value="Cancel" onclick=location.href='/home/';>
+			</form>
+		</div>
 	</div>
 {% endblock %}

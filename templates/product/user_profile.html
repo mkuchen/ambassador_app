@@ -5,17 +5,17 @@
 {% load cloudinary %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'css/product/home.css' %}">
 {% endblock %}
 
 {% block content %}
 	<div id="profile-block">
 		<h2> Profile for user "{{ member.user.username }}" </h2>
-		<div id="profile-left">
-			<strong style="margin-bottom:130px"> Profile picture </strong>
-			<strong> Display name </strong>
-			<strong> Quote </strong>
-			<strong> Bio </strong>
+		<div id="profile-left" style="height:540px">
+			<strong style="top:6px"> Profile picture </strong>
+			<strong style="top:135px"> Display name </strong>
+			<strong style="top:169px"> Quote </strong>
+			<strong style="top:204px"> Bio </strong>
 		</div>
 		<div id="profile-right">
 			<form method="post" action="{% url 'update_user' username=member.user.username %}" enctype="multipart/form-data">
@@ -24,7 +24,9 @@
 				
 				<div id="cloudinary-input-block">
                     {% if posted %}
-                         {% cloudinary member.profile_image THUMBNAIL %}
+                         <div id="profile-picture">
+                              {% cloudinary member.profile_image THUMBNAIL %}
+                         </div>
                          <div id="profile-pic-info">
                             {% if errors %}
                                    Errors: {{ errors }}
@@ -35,13 +37,15 @@
 
                     {% else %}
 					{% if member.profile_image %}
-						{% cloudinary member.profile_image THUMBNAIL %}
+                              <div id="profile-picture">
+						    {% cloudinary member.profile_image THUMBNAIL %}
+                              </div>
 						<div id="profile-pic-info">
 							<p>Currently: <a href="{{ member.profile_image.url }}">{{ member.profile_image.public_id }}</a></p>
 							<input id="id_profile_image" name="profile_image" type="file">
 						</div>
 					{% else %}
-						<img src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="120" height="120">
+						<img id="profile-pic" src="http://livestockportal.co.ke/img/blank_profile.png" alt="profile-pic" width="120" height="120">
 						<div id="profile-pic-info">
 							<p>Currently: None</p>
 							<input id="id_profile_image" name="profile_image" type="file">

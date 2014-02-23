@@ -5,11 +5,13 @@
 	    {% load staticfiles %}
 	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/reset.css' %}">
 	    <link rel="stylesheet" type="text/css" href="{% static 'css/libs/bootstrap.min.css' %}">
-	    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/splash/splash_base.css' %}">
+	    <link rel="stylesheet" type="text/css" href="{% static 'css/splash/splash.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'css/product/modals.css' %}">
+
 	    <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css">
 		<link href='http://fonts.googleapis.com/css?family=Lato|Mate+SC|Varela+Round' rel='stylesheet' type='text/css'>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/splash.css' %}">
-		<link rel="stylesheet" type="text/css" href="{% static 'css/product/modals.css' %}">
+		
 		<script type="text/javascript" src="{% static 'js/libs/animator.js' %}"></script>
 	    <!--[if IE]>
 	        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -68,7 +70,7 @@
 								<img src="{% static 'img/mitch.jpg' %}" height="150" width="144">
 							</div>
 							<h4><strong>Mitch Kuchenberg</strong></h4>
-							<p> <span>Bachelor of Science in Social Computing Informatics <br> December 2013, University of Michigan, Ann Arbor</span> </p>
+							<p> <span>B.S., Informatics - Social Computing, 2013<br>University of Michigan, Ann Arbor MI</span> </p>
 							<ul>
 								<li>Web developer</li>
 								<li>Fitness enthusiast</li>
@@ -119,6 +121,7 @@
 			                		for (var item in data['errors'][key]) {
 			                			errorListStr = errorListStr + data['errors'][key][item] + "  ";
 			                		}
+
 			                		if (key == 'password1' || key =='password2') {
 			                			errorStr = errorStr + "<li>password: " + errorListStr + "</li>";
 			                		}
