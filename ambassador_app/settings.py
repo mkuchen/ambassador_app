@@ -8,7 +8,11 @@ DEBUG = True
 
 TEMPLATE_DEBUG = DEBUG
 
+LOGIN_URL = '/'
+
 LOGIN_REDIRECT_URL = '/home/?slide=true'
+
+LOGOUT_URL = '/logout/'
 
 INTERNAL_IPS = (
     '127.0.0.1',

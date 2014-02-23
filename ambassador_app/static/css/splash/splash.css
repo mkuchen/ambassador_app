@@ -10,6 +10,10 @@
 	src: url('/static/fonts/Aller/Aller_Rg.ttf');
 }
 
+body {
+	min-height: 960px!important;
+}
+
 div.box-shadow {
 	-webkit-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
 	-moz-box-shadow: 0px 1px 5px rgba(50, 50, 50, 0.75);
@@ -20,7 +24,9 @@ div#main-wrapper {
 	/*background: url('/static/img/banner1.jpg') #82d5db no-repeat;*/
 	/*background: url('/static/img/background.png') #82d5db repeat;*/
 	background: #102E37;
-	height: 1200px;
+	height: 100%;
+	width: 100%;
+	min-width: 1100px;
 }
 
 div.wrapper-outer {
@@ -37,16 +43,6 @@ div.wrapper-inner {
 div.header-slide-1 {
 	position: relative;
 	top: -200px;
-}
-
-div.content-slide-from-left {
-	position: relative;
-	left: -2000px;
-}
-
-div.content-slide-from-right {
-	position: relative;
-	left: 3000px;
 }
 
 div#header-splash-outer {
@@ -172,27 +168,37 @@ div#banner-splash-inner {
 }
 
 div#banner-splash div#banner-splash-left {
-	border-radius: 3px;
-	width: 54%;
-	height: 450px;
+	width: 49%;
 	margin-bottom: 2px;
 	float: left;
-	background: #E8EDE0;
-}
-
-div#banner-splash div#banner-splash-left {
 	position: relative;
 	z-index: 2;
 }
 
+div#banner-splash div#banner-splash-left div.pic-block {
+	margin-top: 6px;
+	background: white;
+	border-radius: 3px;
+	padding: 16px;
+}
+
+div#banner-splash div#banner-splash-left div.pic-block img#img{
+	display: block;
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+
 div#banner-splash div#banner-splash-left div.info-box {
 	position: relative;
+	border-radius: 3px;
 	margin: 0 auto;
 	text-align: center;
 	padding: 20px;
 	width: 100%;
-	height: 450px;
 	text-align: left;
+	background: #E8EDE0;
+
 }
 
 div#banner-splash div#banner-splash-left div.info-box h5 {
@@ -202,11 +208,12 @@ div#banner-splash div#banner-splash-left div.info-box h5 {
 
 div#banner-splash div#banner-splash-left div.info-box p {
 	font-size: 17px;
-	line-height: 17px;
+	line-height: 21px;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul {
-	
+	display: inline-block;
+	width: 100%;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul li {
@@ -214,18 +221,39 @@ div#banner-splash div#banner-splash-left div.info-box ul li {
 	margin-top: 7px;
 	margin-bottom: 7px;
 	line-height: 14px;
-	text-indent: -8px;
+	text-indent: 0px;
+	float: left;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li p {
+	float: left;
+	display: inline-block;
+	font-size: 15px;
+	line-height: 18px;
+	width: 91%;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li p#pic-left {
+	width: 39%;
 }
 
 div#banner-splash div#banner-splash-left div.info-box ul li:before {
 	content: "•    ";
     color: #2BBBD8; /* or whatever color you prefer */
+    float: left;
+    margin-right: 8px;
+    margin-top: 2px;
+}
+
+div#banner-splash div#banner-splash-left div.info-box ul li img {
+	float: left;
+	margin-left: 24px;
+	margin-top: -26px;
 }
 
 div#banner-splash div#banner-splash-right {
 	border-radius: 3px;
-	width: 45%;
-	height: 450px;
+	width: 49%;
 	margin-left: 9px;
 	margin-bottom: 2px;
 	float: left;
@@ -237,7 +265,7 @@ div#banner-splash div#banner-splash-right div#right-top {
 	margin-bottom: 7px;
 	padding-bottom: 13px;
 	background: transparent;
-	padding: 26px 0;
+	padding: 53px 0;
 	border-radius: 4px;
 }
 
@@ -252,12 +280,22 @@ div#banner-splash div#banner-splash-right div#right-top ul li:before {
 }
 
 div#banner-splash div#banner-splash-right div#right-bottom {
-	height: 242px;
 	width: 100%;
 	display: inline-block;
-	background: #E8EDE0;
+	background: white;
 	border-radius: 4px;
-	padding: 12px;
+	padding: 16px;
+}
+
+div#banner-splash div#banner-splash-right div#right-bottom img {
+	float: center;
+	margin-left: auto;
+	margin-right: auto;
+	display: block;
+}
+
+div#banner-splash div#banner-splash-right div#right-bottom img#img-bottom {
+	margin-top: 18px;
 }
 
 

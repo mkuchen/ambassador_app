@@ -230,7 +230,8 @@ class ReferralCreateView(View):
 	@method_decorator(login_required)
 	def post(self, request, referral_id=None, *args, **kwargs):
 		ref = None
-		member = Member.objects.get(user=request.user)
+		user = request.user
+		member = Member.objects.get(user=user)
 		if referral_id:
 			ref = Referral.objects.get(pk=referral_id)
 			
