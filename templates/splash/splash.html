@@ -143,6 +143,47 @@
 			        });
 			        return false;
 				})
+
+				$("#login-form").submit(function(e){
+					var datastring = $("#login-form").serialize();
+					$.ajax({
+			            type: "POST",
+			            url: "/login-auth/",
+			            data: datastring,
+			            dataType: "json",
+			            success: function(data) {
+			                //var obj = jQuery.parseJSON(data); if the dataType is not specified as json uncomment this
+			                // do what ever you want with the server response
+			                if (data['status'] == 'ok' && data['login'] == 'ok') {
+			            		window.location.href = "/home/";
+			                }
+			                else {
+			                	var errorStr = "There was a problem with your submission:<br><ul>";
+			                	for (var key in data['errors']) {
+			                		errorStr = errorStr + "<li>";
+			                		if (key == "__all__") {
+			                			errorStr = errorStr + data['errors'][key];
+			                		}
+			                		else if (key == "username" || key == "password") {
+			                			errorStr = errorStr + "Please enter a valid " + key;
+			                		}
+			                		else {
+			                			errorStr = errorStr + "<li>" + key + ":  " + data['errors'][key] + "</li>";
+			                		}
+			                		
+			                		errorStr = errorStr + "</li>"
+			                	}
+			                	errorStr = errorStr + "</ul>";
+			                	$("span#login-errors").html(errorStr);
+			                }
+			            },
+			            error: function(){
+			            	$("span#create-user-errors").html("There was an error!");
+			            	return false;
+			            }
+			        });
+			        return false;
+				})
 			});
 		</script>
 	</body>
