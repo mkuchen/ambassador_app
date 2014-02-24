@@ -5,10 +5,10 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import resolve, reverse
 from django import http
-from django.http import Http404, HttpResponse, HttpResponseRedirect
+from django.http import Http404, HttpResponse, HttpResponseRedirect, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_POST
 from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
@@ -16,7 +16,7 @@ from ambassador_app.mixins import *
 from braces.views import AjaxResponseMixin, JSONResponseMixin
 from cloudinary.forms import cl_init_js_callbacks
 
-from referral_center.decorators import owns_ref
+from referral_center.decorators import owns_ref, require_AJAX
 from referral_center.forms import AdminLinkForm, CreateUserForm, LinkForm, UpdateMemberForm
 from referral_center.models import Member, Referral, ReferralStat
 from vanilla import CreateView, DetailView, FormView, GenericView, RedirectView, TemplateView, UpdateView
@@ -34,13 +34,14 @@ class LogoutView(GenericView):
 		return redirect('/')
 
 
+@require_AJAX
 class LoginAuthView(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
 
 	def get_content_type(self):
 		return u'application/json'
 
-	@method_decorator(require_http_methods(["POST"]))
+	@method_decorator(require_POST)
 	def post_ajax(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
@@ -53,34 +54,7 @@ class LoginAuthView(JSONResponseMixin, AjaxResponseMixin, View):
 				return self.render_json_response({'status': 'ok', 'next': request.GET.get('next', '/home'), 'login':'ok'})
 			else:
 				return self.render_json_response({'status': 'ok', 'next': '', 'login':'fail', 'errors':form.errors})
-			"""
-			username = request.POST['username']
-			password = request.POST['password']
-			user = authenticate(username=username, password=password)
-
-			if user is not None and user.is_authenticated():
-				login(request, user)
-				return self.render_json_response({'status': 'ok', 'next': request.POST.get('next', '/home/')})
-			else:
-				return self.render_json_response({'status': 'error', 'next': 'fail'})
-				#return redirect('/home/?slide=true')
-			"""
-"""
-	def post(self, request, *args, **kwargs):
-		user = self.request.user
-		if user.is_authenticated():
-			return redirect(request.GET.get('next', '/home/'))
-		else:
-			username = request.POST['username']
-			password = request.POST['password']
-			user = authenticate(username=username, password=password)
-			if user is not None:
-				login(request, user)
-				return redirect('/home/?slide=true')
-			else:
-				return redirect('/home/?slide=true')
-"""
-
+			
 
 class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 	template_name = 'product/user_profile.html'
