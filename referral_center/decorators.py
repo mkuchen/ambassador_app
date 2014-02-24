@@ -30,6 +30,18 @@ def owns_ref(method):
 		return method(self, request, referral_id, args, kwargs)
 	return wrapper
 
+def require_AJAX(view):
+    def ajaxOnly(function):
+        def wrap(request, *args, **kwargs):
+            if not request.is_ajax():
+                return HttpResponseForbidden()
+            return function(request, *args, **kwargs)
+ 
+        return wrap
+ 
+    view.dispatch = method_decorator(ajaxOnly)(view.dispatch)
+    return view
+
 """
 def check_slide(method):
 	@functools.wraps(method)

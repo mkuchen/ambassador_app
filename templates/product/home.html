@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block stylesheets %}
-	<link rel="stylesheet" href="{% static 'css/home.css' %}">
+	<link rel="stylesheet" href="{% static 'css/product/home.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -114,7 +114,7 @@
 				"aoColumnDefs": [
                     { 
                     	"mRender": function ( data, type, row ) {
-                              return '<a href="/landing-preview/?link=' + data + '" class="col-1">' + data + '</a>'
+                              return '<a href="/landing-preview/?link=' + data + '" class="col-1" target="_blank">' + data + '</a>'
                     		//return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
                     	},
                     	"sWidth": "160px",

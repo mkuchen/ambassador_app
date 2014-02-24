@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, PermissionDenied
 from django.core.urlresolvers import resolve, reverse
@@ -7,6 +8,7 @@ from django import http
 from django.http import Http404, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.decorators import method_decorator
+from django.views.decorators.http import require_http_methods
 from django.views.generic import View
 from django_datatables_view.base_datatable_view import BaseDatatableView
 
@@ -32,7 +34,38 @@ class LogoutView(GenericView):
 		return redirect('/')
 
 
-class LoginAuthView(GenericView):
+class LoginAuthView(JSONResponseMixin, AjaxResponseMixin, View):
+	content_type = None
+
+	def get_content_type(self):
+		return u'application/json'
+
+	@method_decorator(require_http_methods(["POST"]))
+	def post_ajax(self, request, *args, **kwargs):
+		user = self.request.user
+		if user.is_authenticated():
+			#return redirect(request.GET.get('next', '/home/'))
+			return self.render_json_response({'status': 'ok', 'next': request.GET.get('next', '/home/'), 'login':'ok'})
+		else:
+			form = AuthenticationForm(data=request.POST)
+			if form.is_valid():
+				login(request, form.get_user())
+				return self.render_json_response({'status': 'ok', 'next': request.GET.get('next', '/home'), 'login':'ok'})
+			else:
+				return self.render_json_response({'status': 'ok', 'next': '', 'login':'fail', 'errors':form.errors})
+			"""
+			username = request.POST['username']
+			password = request.POST['password']
+			user = authenticate(username=username, password=password)
+
+			if user is not None and user.is_authenticated():
+				login(request, user)
+				return self.render_json_response({'status': 'ok', 'next': request.POST.get('next', '/home/')})
+			else:
+				return self.render_json_response({'status': 'error', 'next': 'fail'})
+				#return redirect('/home/?slide=true')
+			"""
+"""
 	def post(self, request, *args, **kwargs):
 		user = self.request.user
 		if user.is_authenticated():
@@ -46,7 +79,7 @@ class LoginAuthView(GenericView):
 				return redirect('/home/?slide=true')
 			else:
 				return redirect('/home/?slide=true')
-
+"""
 
 
 class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
