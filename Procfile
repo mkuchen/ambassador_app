@@ -1,1 +1,1 @@
-web: gunicorn ambassador_app.wsgi
+web: newrelic-admin run-program gunicorn ambassador_app.wsgi
