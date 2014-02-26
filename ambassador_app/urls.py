@@ -2,6 +2,7 @@ from django.conf import settings
 from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.contrib.auth.decorators import login_required, permission_required
+from django.views.generic.base import RedirectView
 from referral_center.views import *
 # Uncomment the next two lines to enable the admin:
 #from django.contrib import admin
@@ -31,7 +32,7 @@ urlpatterns = patterns('',
     url(r'^datatables/all-refs/$', login_required(OrderListJson.as_view()), name='order_list_json'),
     # hicharts AJAX
     url(r'^hicharts/chart-data/(?P<referral_id>[\w|\W]+)/$', ChartDataJson.as_view(), name='chart_data_json'),
-    #url(r'^favicon\.ico$', 'django.views.generic.simple.redirect_to', {'url': '/static/images/favicon.ico'}),# favicon durrr
+    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),# favicon durrr
     #url(r'^admin/doc/$', include('django.contrib.admindocs.urls')),
     #url(r'^admin/$', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
