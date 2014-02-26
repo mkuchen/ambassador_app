@@ -32,7 +32,6 @@ urlpatterns = patterns('',
     url(r'^datatables/all-refs/$', login_required(OrderListJson.as_view()), name='order_list_json'),
     # hicharts AJAX
     url(r'^hicharts/chart-data/(?P<referral_id>[\w|\W]+)/$', ChartDataJson.as_view(), name='chart_data_json'),
-    url(r'^favicon\.ico$', RedirectView.as_view(url='/static/img/favicon.ico')),# favicon durrr
     #url(r'^admin/doc/$', include('django.contrib.admindocs.urls')),
     #url(r'^admin/$', include(admin.site.urls)),
 ) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
