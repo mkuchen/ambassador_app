@@ -35,7 +35,7 @@
 			$(document).on("click", ".chart-link", function(){
 				$('#chartModal').modal('show') // show the modal
                     var search_r = $(this).attr('res'); // grab the pk of the referral we want
-                    var plotting = function plotData(clickData, purchaseData) {
+                    var plotting = function plotData(clickData, purchaseData, clickThruData) {
                          $('#container').highcharts({
                               chart: {
                                    type: 'spline'
@@ -72,6 +72,10 @@
                               }, {
                                    name: 'Purchases',
                                    data: purchaseData
+                              },
+                              {
+                                   name: 'Click Thru',
+                                   data: clickThruData
                               }]
                          });
                     };
@@ -84,15 +88,20 @@
                          success: function (data) {
                               clickData = data['clicks'];
                               purchaseData = data['purchases'];
+                              clickThruData = data['click-thrus'];
                               for (x in clickData) {
                                    clickData[x][0] = Date.UTC(clickData[x][0][0], clickData[x][0][1], clickData[x][0][2], clickData[x][0][3], clickData[x][0][4], clickData[x][0][5], clickData[x][0][6]);
                               }
                               for (x in purchaseData) {
                                    purchaseData[x][0] = Date.UTC(purchaseData[x][0][0], purchaseData[x][0][1], purchaseData[x][0][2], purchaseData[x][0][3], purchaseData[x][0][4], purchaseData[x][0][5], purchaseData[x][0][6]);
                               }
+                              for (x in clickThruData) {
+                                   clickThruData[x][0] = Date.UTC(clickThruData[x][0][0], clickThruData[x][0][1], clickThruData[x][0][2], clickThruData[x][0][3], clickThruData[x][0][4], clickThruData[x][0][5], clickThruData[x][0][6]);
+                              }
                               clickData.sort();
                               purchaseData.sort();
-                              plotting(clickData, purchaseData);
+                              clickThruData.sort();
+                              plotting(clickData, purchaseData, clickThruData);
                               
                          },
                          error: function(data) {

@@ -10,14 +10,16 @@
 
 {% block content %}
 	<div id="profile-block">
-		<h2 style="margin-bottom:8px"> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
-		{% if object %} <a href="/landing/?link={{object.link_title}}"> Preview </a> {% endif %}
+		<div id="ref-create-header">
+			<h2> {% if object %}Edit{% else %}Create{% endif %} Referral </h2>
+			{% if object %} <a href="/landing/?link={{object.link_title}}"> Preview </a> {% endif %}
+		</div>
 		<div id="profile-left">
 			<strong style="top:6px"> Link Title </strong>
 			<strong style="top:38px"> Logo Image </strong>
-			<strong style="top:156px"> Banner Image </strong>
-			<strong style="top:272px"> Banner Text </strong>
-			<strong style="top:490px"> Font Family </strong>
+			<strong style="top:208px"> Banner Image </strong>
+			<strong style="top:356px"> Banner Text </strong>
+			<strong style="top:574px"> Font Family </strong>
 		</div>
 
 		{% if object %}
@@ -58,7 +60,7 @@
 				<div class="form-group">
 					<input id="id_link_title" maxlength="500" name="link_title" type="text" class="form-control" placeholder="Enter link title" style="width:700px;float:left" value="{{ form.link_title.value|default_if_none:'' }}"><br><br>
 				</div>
-				<div class="form-group">
+				<div class="form-group" style="height:175px;">
 					{% if object.logo_image %}
 					<div class="ref-pic">
 						{% cloudinary object.logo_image THUMBNAIL %}
