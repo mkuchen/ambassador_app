@@ -468,7 +468,19 @@ class ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
 				stat.date_recorded.microsecond,
 			),
 			(stat.num_purchases / stat.num_clicks),
+		) if (stat.num_clicks != 0) else (
+			(
+				stat.date_recorded.year, \
+				stat.date_recorded.month-1, \
+				stat.date_recorded.day, \
+				stat.date_recorded.hour, \
+				stat.date_recorded.minute, \
+				stat.date_recorded.second, \
+				stat.date_recorded.microsecond,
+			),
+			0,
 		) for stat in stats ]
+
 		json_dict = { 'clicks': clicks, 'purchases': purchases, 'click-thrus': click_thrus}
 		return self.render_json_response(json_dict)
 
