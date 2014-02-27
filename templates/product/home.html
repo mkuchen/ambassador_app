@@ -126,36 +126,36 @@
                               return '<a href="/landing/' + data + '/" class="col-1" target="_blank">' + data + '</a>'
                     		//return '<a data-toggle="modal" href="#chartLink" res="' + row[4] + '" class="col-1 chart-link">' + data +'</a>'
                     	},
-                    	"sWidth": "160px",
+                    	"sWidth": "140px",
                     	"aTargets": [0],
                     },
                     {
                     	"mRender": function ( data, type, row ) {
                     		return '<span class="col-2">' + data + '</span>'
                     	},
-                    	"sWidth": "40px",
+                    	"sWidth": "30px",
                     	"aTargets": [1],
                     },
                     {
                     	"mRender": function ( data, type, row ) {
                     		return '<span class="col-2">' + data + '</span>'
                     	},
-                    	"sWidth": "40px",
+                    	"sWidth": "30px",
                     	"aTargets": [2],
                     },
                     {
                     	"mRender": function ( data, type, row ) {
                     		return '<span class="col-2">' + data + '</span>'
                     	},
-                    	"sWidth": "48px",
+                    	"sWidth": "60px",
                     	"aTargets": [3],
                     	"iDataSort": 5
                     },
                     {
                     	"mRender": function ( data, type, row ) {
-                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a data-toggle="modal" href="#chartLink" res="' + data + '" class="col-5-a chart-link">stats</a>' + '<a href="/landing-preview/?link=' + row[0] + '" class="col-5-b" target="_blank">preview</a>'
+                    		return '<a class="col-5-a" href="/edit/' + data + '/">edit</a> <a class="col-5-a" href="/delete/' + data + '/">delete</a> <a data-toggle="modal" href="#chartLink" res="' + data + '" class="col-5-a chart-link">stats</a>' + '<a href="/landing-preview/?link=' + row[0] + '" class="col-5-a" target="_blank">preview</a>' + '<a href="/landing/' + row[0] + '/" class="col-5-b" target="_blank">visit</a>'
                     	},
-                    	"sWidth": "140px",
+                    	"sWidth": "100px",
                     	"aTargets": [4],
                     	"bSortable": false,
                     },

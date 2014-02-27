@@ -295,6 +295,7 @@ div#wrapper-outer div#content-main table#all-links th {
 
 div#wrapper-outer div#content-main table#all-links tr {
 	border: 2px solid #fff;
+	vertical-align: middle;
 }
 
 div#wrapper-outer div#content-main table#all-links tr a.col-1 {
@@ -324,6 +325,7 @@ div#wrapper-outer div#content-main table#all-links tr td {
 	background-color: transparent !important;
 	font-size: 12px;
 	line-height: 14px;
+	vertical-align: middle;
 }
 
 div#wrapper-outer div#content-main table#all-links tr:nth-child(odd) {
