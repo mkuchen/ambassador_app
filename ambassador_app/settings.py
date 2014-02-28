@@ -105,6 +105,7 @@ STATICFILES_FINDERS = (
 
 # Make this unique, and don't share it with anybody.
 #SECRET_KEY = 'y^9+%!mu6tt-yf5hf$&ixhvauo6lf^qr3g^7laedl@+tz4+2ea'
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -190,10 +191,18 @@ DATABASES = {
 }
 #DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-DATABASES['default']['NAME'] = 'dfav6a5deb9nt3'
+
+#DATABASES['default']['NAME'] = 'dfav6a5deb9nt3'
+DATABASES['default']['NAME'] = os.getenv('DATABASES_DEFAULT_NAME')
+
 #DATABASES['default']['USER'] = 'wsyneblfwtknsg'
+DATABASES['default']['USER'] = os.getenv('DATABASES_DEFAULT_USER')
+
 #DATABASES['default']['PASSWORD'] = 'Wb2qEmIDFCg6kdys1FSyqgLbiw'
+DATABASES['default']['PASSWORD'] = os.getenv('DATABASES_DEFAULT_PASSWORD')
+
 #DATABASES['default']['HOST'] = 'ec2-54-225-127-246.compute-1.amazonaws.com'
+DATABASES['default']['HOST'] = os.getenv('DATABASES_DEFAULT_HOST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
