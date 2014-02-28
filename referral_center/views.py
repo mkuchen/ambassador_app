@@ -431,6 +431,7 @@ class ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
 	
 		
 		stats = ReferralStat.objects.filter(referral=ref).filter(active=False)
+		
 		clicks = [ (
 			(
 				stat.date_recorded.year, \
