@@ -104,7 +104,7 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
+#SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -191,9 +191,9 @@ DATABASES = {
 #DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 DATABASES['default']['NAME'] = os.getenv('DATABASES_DEFAULT_NAME')
-DATABASES['default']['USER'] = os.getenv('DATABASES_DEFAULT_USER')
-DATABASES['default']['PASSWORD'] = os.getenv('DATABASES_DEFAULT_PASSWORD')
-DATABASES['default']['HOST'] = os.getenv('DATABASES_DEFAULT_HOST')
+#DATABASES['default']['USER'] = os.getenv('DATABASES_DEFAULT_USER')
+#DATABASES['default']['PASSWORD'] = os.getenv('DATABASES_DEFAULT_PASSWORD')
+#DATABASES['default']['HOST'] = os.getenv('DATABASES_DEFAULT_HOST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -211,13 +211,13 @@ STATICFILES_DIRS = (
 )
 
 # Cloudinary config variables
-
+"""
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
-
 cloudinary.config(
     cloud_name= "ambassador-app",
     
     
 )
+"""
