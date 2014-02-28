@@ -25,20 +25,6 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': '',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': '',
-        'PASSWORD': '',
-        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '',                      # Set to empty string for default.
-    }
-}
-"""
-
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.5/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -104,7 +90,6 @@ STATICFILES_FINDERS = (
 )
 
 # Make this unique, and don't share it with anybody.
-#SECRET_KEY = 'y^9+%!mu6tt-yf5hf$&ixhvauo6lf^qr3g^7laedl@+tz4+2ea'
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 # List of callables that know how to import templates from various sources.
@@ -188,19 +173,14 @@ import dj_database_url
 DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
-#DATABASES['default'] =  dj_database_url.config()
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
 
-#DATABASES['default']['NAME'] = 'dfav6a5deb9nt3'
 DATABASES['default']['NAME'] = os.getenv('DATABASES_DEFAULT_NAME')
 
-#DATABASES['default']['USER'] = 'wsyneblfwtknsg'
 DATABASES['default']['USER'] = os.getenv('DATABASES_DEFAULT_USER')
 
-#DATABASES['default']['PASSWORD'] = 'Wb2qEmIDFCg6kdys1FSyqgLbiw'
 DATABASES['default']['PASSWORD'] = os.getenv('DATABASES_DEFAULT_PASSWORD')
 
-#DATABASES['default']['HOST'] = 'ec2-54-225-127-246.compute-1.amazonaws.com'
 DATABASES['default']['HOST'] = os.getenv('DATABASES_DEFAULT_HOST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
@@ -217,15 +197,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
-
-# Cloudinary config variables
-"""
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-cloudinary.config(
-    cloud_name= "ambassador-app",
-    api_key="924578874678548",
-    api_secret="9xMkFj5wVfaitP9WRHTFjcNzqME"
-)
-"""
