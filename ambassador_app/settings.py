@@ -174,13 +174,9 @@ DATABASES = {
     'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql_psycopg2'
-
 DATABASES['default']['NAME'] = os.getenv('DATABASES_DEFAULT_NAME')
-
 DATABASES['default']['USER'] = os.getenv('DATABASES_DEFAULT_USER')
-
 DATABASES['default']['PASSWORD'] = os.getenv('DATABASES_DEFAULT_PASSWORD')
-
 DATABASES['default']['HOST'] = os.getenv('DATABASES_DEFAULT_HOST')
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()

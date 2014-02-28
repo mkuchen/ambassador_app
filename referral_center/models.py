@@ -30,6 +30,7 @@ class Referral(models.Model):
 	date_submitted = models.DateTimeField(auto_now_add=True)
 	logo_image = CloudinaryField("image", default=None, blank=True, null=True)
 	banner_image = CloudinaryField("image", default=None, blank=True, null=True)
+	#favicon_image = CloudinaryField("image", default=None, blank=True, null=True)
 	banner_text = models.CharField(max_length=1000)
 	font_family = models.CharField(max_length=500)
 
