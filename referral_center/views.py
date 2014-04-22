@@ -111,8 +111,6 @@ class UserProfileView(View, AjaxResponseMixin, JSONResponseMixin):
 		return render(request, 'product/user_profile.html', context)
 
 
-
-
 class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 	content_type = None
 
@@ -136,25 +134,6 @@ class CreateUserAJAX(JSONResponseMixin, AjaxResponseMixin, View):
 		else:
 			return self.render_json_response({'status': 'error', 'errors': {'login':['there was an error logging you in!']}})
 
-"""
-class CreateUser(View):
-	def post(self, request, *args, **kwargs):
-		form = CreateUserForm(request.POST)
-		new_user = None
-		if form.is_valid():
-			new_user = form.save()
-		else:
-			return HttpResponseRedirect('/durr/')
-
-		user = authenticate(username=request.POST['username'], password=request.POST['password1'])
-		
-		if user is not None and user.is_active:
-			login(request, user)
-			return HttpResponseRedirect('/home/')
-		else:
-			return HttpResponseRedirect('/hurr/')
-"""
-#############################################
 
 class SplashView(TemplateView):
 	template_name = 'splash/splash.html'
@@ -167,7 +146,6 @@ class SplashView(TemplateView):
 
 		return render(request, self.template_name, {'form':form})
 
-#############################################
 
 class ReferralDeleteView(View):
 	@owns_ref
@@ -327,6 +305,7 @@ class LandingRedirectView(RedirectView):
 		query_params = urllib.urlencode( {'link': title} )
 		return '/landing/?'+query_params
 
+
 class LandingPreviewView(DetailView):
 	model = Referral
 	template_name = 'product/landing.html'
@@ -350,6 +329,7 @@ class LandingPreviewView(DetailView):
 			'preview' : 'true',
 		}
 		return self.render_to_response(context)
+
 
 class LandingView(DetailView):
 	model = Referral
@@ -413,7 +393,6 @@ class OrderListJson(BaseDatatableView):
 				),
 			])
 		return json_data
-
 
 
 class ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
@@ -484,4 +463,3 @@ class ChartDataJson(JSONResponseMixin, AjaxResponseMixin, View):
 
 		json_dict = { 'clicks': clicks, 'purchases': purchases, 'click-thrus': click_thrus}
 		return self.render_json_response(json_dict)
-
